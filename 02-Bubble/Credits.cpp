@@ -18,13 +18,13 @@ void Credits::init()
 	initShaders();
 
 	glm::vec2 geom[2] = { glm::vec2(0.f, 0.f), glm::vec2(640.f, 480.f) };
-	glm::vec2 texCoords[2] = { glm::vec2(0.f, 0.f), glm::vec2(3.f, 3.f) };
+	glm::vec2 texCoords[2] = { glm::vec2(0.f, 0.f), glm::vec2(1.f, 1.f) };
 
 	quad = Quad::createQuad(0.f, 0.f, 128.f, 128.f, simpleProgram);
-	//wallpaper = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
+	wallpaper = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
 	currentTime = 0.0f;
 
-	//textura.loadFromFile("images/test.jpg", TEXTURE_PIXEL_FORMAT_RGB);
+	textura.loadFromFile("images/CreditsTest.jpg", TEXTURE_PIXEL_FORMAT_RGB);
 
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 }
@@ -38,13 +38,23 @@ void Credits::update(int deltaTime)
 void Credits::render()
 {
 
-	glDisable(GL_TEXTURE_2D);
-	glDisable(GL_LIGHTING);
-	glColor3f(1, 1, 1);
-	glRasterPos3f(0.0, 0.0, 0.0);
-	char string[] = "JESUCRISTO!";
-	for (int i = 0; string[i] != '\0'; i++)
-		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, string[i]);
+	glm::mat4 modelview = glm::mat4(1.0f);
+
+	simpleProgram.use();
+	simpleProgram.setUniformMatrix4f("projection", projection);
+	simpleProgram.setUniform4f("color", 0.2f, 0.2f, 0.8f, 1.0f);
+
+	texProgram.use();
+	texProgram.setUniformMatrix4f("projection", projection);
+	texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
+
+
+	//modelview = glm::translate(glm::mat4(1.0f), glm::vec3(260.f, 355.f, 0.f));
+	//modelview = glm::translate(modelview, glm::vec3(64.f, 64.f, 0.f));
+	//modelview = glm::scale(modelview, glm::vec3(6.f, 1.f, 1.f));
+	//modelview = glm::translate(modelview, glm::vec3(-64.f, -64.f, 0.f));
+	texProgram.setUniformMatrix4f("modelview", modelview);
+	wallpaper->render(textura);
 
 }
 

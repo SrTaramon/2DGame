@@ -46,13 +46,10 @@ void Game::render()
 		break;
 	case PLAYING:
 		scene.render();
-		i = true;
 		break;
 	case CREDITS:
-		if (i) {
-			credits.render();
-			i = false;
-		}
+		credits.render();
+		break;
 	default:
 		break;
 	}
@@ -61,7 +58,7 @@ void Game::render()
 void Game::keyPressed(int key)
 {
 	if (key == 27) { // Escape code
-		if (state != MENU) {
+		if (state != MENU && state != CREDITS) {
 			bPlay = false;
 		}
 		else {
