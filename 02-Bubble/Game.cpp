@@ -11,10 +11,12 @@ void Game::init()
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 	scene.init();
 	menu.init();
+	credits.init();
 }
 
 bool Game::update(int deltaTime)
 {
+	bool i = true;
 	switch (state)
 	{
 	case PLAYING:
@@ -22,6 +24,9 @@ bool Game::update(int deltaTime)
 		break;
 	case MENU:
 		menu.update(deltaTime);
+		break;
+	case CREDITS:
+		//credits.update(deltaTime);
 		break;
 	default:
 		break;
@@ -32,6 +37,7 @@ bool Game::update(int deltaTime)
 
 void Game::render()
 {
+	bool i = true;
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	switch (state)
 	{
@@ -40,7 +46,13 @@ void Game::render()
 		break;
 	case PLAYING:
 		scene.render();
+		i = true;
 		break;
+	case CREDITS:
+		if (i) {
+			credits.render();
+			i = false;
+		}
 	default:
 		break;
 	}
@@ -59,8 +71,11 @@ void Game::keyPressed(int key)
 	else if (key == 109) { //M
 		state = MENU;
 	}
-	else if (key == 13) {
+	else if (key == 110) {
 		state = PLAYING;
+	}
+	else if (key == 99) {
+		state = CREDITS;
 	}
 	keys[key] = true;
 }

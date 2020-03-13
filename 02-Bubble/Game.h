@@ -4,6 +4,7 @@
 
 #include "Scene.h"
 #include "Menu.h"
+#include "Credits.h"
 
 
 
@@ -46,6 +47,7 @@ public:
 
 private:
 	Menu menu;
+	Credits credits;
 	bool bPlay;                       // Continue to play game?
 	Scene scene;                      // Scene to render
 	bool keys[256], specialKeys[256]; // Store key states so that 
