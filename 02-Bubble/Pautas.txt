@@ -1,0 +1,17 @@
+Noms: 
+- Baba //dino
+- Rock //cntrl c
+- Wall //cntrl c
+- Flag //bandera amb ani
+- Lava //lava amb animació
+
+Operadors:
+- is
+- and
+
+Propietats:
+- stop (wall is stop, fa no es puguin atravessar, si es trenca si)
+- win (flag is win i tocas bandera passes de lvl)
+- you (baba is you, ets el baba)
+- push (rock is push, es pot empenyar la roca)
+- dead (lava is dead, si toca lava dead)
