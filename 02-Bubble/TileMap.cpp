@@ -32,7 +32,7 @@ TileMap::~TileMap()
 void TileMap::render() const
 {
 	glEnable(GL_TEXTURE_2D);
-	tilesheet.use();
+	vtilesheet[1].use();
 	glBindVertexArray(vao);
 	glEnableVertexAttribArray(posLocation);
 	glEnableVertexAttribArray(texCoordLocation);
@@ -61,17 +61,26 @@ bool TileMap::loadLevel(const string &levelFile)
 	getline(fin, line);
 	sstream.str(line);
 	sstream >> mapSize.x >> mapSize.y;
-	getline(fin, line);
+	getline(fin, line); // 3a linia
 	sstream.str(line);
 	sstream >> tileSize >> blockSize;
-	getline(fin, line);
+
+	getline(fin, line); // 4a linia
 	sstream.str(line);
-	sstream >> tilesheetFile;
-	tilesheet.loadFromFile(tilesheetFile, TEXTURE_PIXEL_FORMAT_RGBA);
-	tilesheet.setWrapS(GL_CLAMP_TO_EDGE);
-	tilesheet.setWrapT(GL_CLAMP_TO_EDGE);
-	tilesheet.setMinFilter(GL_NEAREST);
-	tilesheet.setMagFilter(GL_NEAREST);
+	sstream >> ntilesheet;
+
+	vtilesheet = *new vector<Texture>(ntilesheet+1);
+	for (int i = 0; i < ntilesheet; i++) {
+		getline(fin, line);
+		sstream.str(line);
+		sstream >> tilesheetFile;
+		vtilesheet[i].loadFromFile(tilesheetFile, TEXTURE_PIXEL_FORMAT_RGBA);
+		vtilesheet[i].setWrapS(GL_CLAMP_TO_EDGE);
+		vtilesheet[i].setWrapT(GL_CLAMP_TO_EDGE);
+		vtilesheet[i].setMinFilter(GL_NEAREST);
+		vtilesheet[i].setMagFilter(GL_NEAREST);
+	}
+	
 	getline(fin, line);
 	sstream.str(line);
 	sstream >> tilesheetSize.x >> tilesheetSize.y;
@@ -104,7 +113,7 @@ void TileMap::prepareArrays(const glm::vec2 &minCoords, ShaderProgram &program)
 	glm::vec2 posTile, texCoordTile[2], halfTexel;
 	vector<float> vertices;
 	
-	halfTexel = glm::vec2(0.5f / tilesheet.width(), 0.5f / tilesheet.height());
+	halfTexel = glm::vec2(0.5f / vtilesheet[1].width(), 0.5f / vtilesheet[1].height());
 	for(int j=0; j<mapSize.y; j++)
 	{
 		for(int i=0; i<mapSize.x; i++)
@@ -115,9 +124,9 @@ void TileMap::prepareArrays(const glm::vec2 &minCoords, ShaderProgram &program)
 				// Non-empty tile
 				nTiles++;
 				posTile = glm::vec2(minCoords.x + i * tileSize, minCoords.y + j * tileSize);
-				texCoordTile[0] = glm::vec2(float((tile-1)%2) / tilesheetSize.x, float((tile-1)/2) / tilesheetSize.y);
+				texCoordTile[0] = glm::vec2(float((tile-1)%3) / tilesheetSize.x, float((tile-1)/3) / tilesheetSize.y);
 				texCoordTile[1] = texCoordTile[0] + tileTexSize;
-				//texCoordTile[0] += halfTexel;
+				texCoordTile[0] += halfTexel;
 				texCoordTile[1] -= halfTexel;
 				// First triangle
 				vertices.push_back(posTile.x); vertices.push_back(posTile.y);

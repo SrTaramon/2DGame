@@ -3,6 +3,7 @@
 
 
 #include <glm/glm.hpp>
+#include <vector>
 #include "Texture.h"
 #include "ShaderProgram.h"
 
@@ -27,6 +28,8 @@ public:
 	void free();
 	
 	int getTileSize() const { return tileSize; }
+	int getMapSizex() const { return mapSize.x; }
+	int getMapSizey() const { return mapSize.y; }
 
 	bool collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size) const;
 	bool collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) const;
@@ -41,8 +44,9 @@ private:
 	GLuint vbo;
 	GLint posLocation, texCoordLocation;
 	glm::ivec2 position, mapSize, tilesheetSize;
-	int tileSize, blockSize;
+	int tileSize, blockSize, ntilesheet;
 	Texture tilesheet;
+	vector<Texture> vtilesheet;
 	glm::vec2 tileTexSize;
 	int *map;
 
