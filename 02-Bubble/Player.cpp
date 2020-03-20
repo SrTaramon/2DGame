@@ -92,7 +92,7 @@ void Player::update(int deltaTime)
 		if (sprite->animation() != MOVE_UP)
 			sprite->changeAnimation(MOVE_UP);
 		posPlayer.y -= 2;
-		if (map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y))
+		if (map->collisionMoveUp(posPlayer, glm::ivec2(32, 32), &posPlayer.y))
 		{
 			posPlayer.y += 2;
 			sprite->changeAnimation(STAND_UP);
@@ -105,7 +105,7 @@ void Player::update(int deltaTime)
 		posPlayer.y += 2;
 		if (map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y))
 		{
-			posPlayer.y -= 2;
+			//posPlayer.y -= 2;
 			sprite->changeAnimation(STAND_DOWN);
 		}
 	}
