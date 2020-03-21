@@ -3,8 +3,10 @@
 
 
 #include <glm/glm.hpp>
+#include <vector>
 #include "ShaderProgram.h"
 #include "TileMap.h"
+#include "Rocks.h"
 #include "Player.h"
 
 
@@ -29,6 +31,8 @@ private:
 private:
 	TileMap *map;
 	Player *player;
+	Rocks *rocks;
+	vector< Rocks > *vRocks;
 	ShaderProgram texProgram;
 	float currentTime;
 	glm::mat4 projection;

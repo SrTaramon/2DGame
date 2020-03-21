@@ -4,6 +4,7 @@
 
 #include "Sprite.h"
 #include "TileMap.h"
+#include "Rocks.h"
 
 
 // Player is basically a Sprite that represents the player. As such it has
@@ -19,6 +20,7 @@ public:
 	void render();
 	
 	void setTileMap(TileMap *tileMap);
+	void setRocks(Rocks* rocks);
 	void setPosition(const glm::vec2 &pos);
 	
 private:
@@ -28,6 +30,7 @@ private:
 	Texture spritesheet;
 	Sprite *sprite;
 	TileMap *map;
+	Rocks* rocks;
 
 };
 
