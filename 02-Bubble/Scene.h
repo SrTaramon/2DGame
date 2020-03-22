@@ -32,7 +32,7 @@ private:
 	TileMap *map;
 	Player *player;
 	Rocks *rocks;
-	vector< Rocks > *vRocks;
+	vector< Rocks* > vRocks;
 	ShaderProgram texProgram;
 	float currentTime;
 	glm::mat4 projection;
