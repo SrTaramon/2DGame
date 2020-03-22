@@ -30,7 +30,7 @@ private:
 	Texture spritesheet;
 	Sprite *sprite;
 	TileMap *map;
-	Rocks* rocks;
+	vector< Rocks* > rocks;
 
 };
 
