@@ -17,6 +17,8 @@ Scene::Scene()
 	map = NULL;
 	player = NULL;
 	rocks = NULL;
+	baba = NULL;
+	is = NULL;
 	for (int i = 0; i < vRocks.size(); i++) {
 		vRocks[i] = NULL;
 	}
@@ -30,6 +32,10 @@ Scene::~Scene()
 		delete player;
 	if (rocks != NULL)
 		delete rocks;
+	if (baba != NULL)
+		delete baba;
+	if (is != NULL)
+		delete is;
 	for (int i = 0; i < vRocks.size(); i++) {
 		if (vRocks[i] != NULL)
 			delete vRocks[i];
@@ -52,6 +58,16 @@ void Scene::init()
 	rocks->setTileMap(map);
 	player->setRocks(rocks);
 
+	baba = new Baba();
+	baba->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	baba->setPosition(glm::vec2(64, 64));
+	baba->setTileMap(map);
+
+	is = new Is();
+	is->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	is->setPosition(glm::vec2(96, 64));
+	is->setTileMap(map);
+
 	// Aqui demanar a title map quantes roques shan de creaar i les posicions d'elles
 	vRocks.push_back(new Rocks());
 	vRocks[0]->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
@@ -72,6 +88,8 @@ void Scene::update(int deltaTime)
 	currentTime += deltaTime;
 	player->update(deltaTime);
 	rocks->update(deltaTime);
+	baba->update(deltaTime);
+	is->update(deltaTime);
 	for (int i = 0; i < vRocks.size(); i++) {
 		vRocks[i]->update(deltaTime);
 	}
@@ -90,6 +108,8 @@ void Scene::render()
 	map->render();
 	player->render();
 	rocks->render();
+	baba->render();
+	is->render();
 	for (int i = 0; i < vRocks.size(); i++) {
 		vRocks[i]->render();
 	}
