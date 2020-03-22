@@ -97,8 +97,8 @@ bool TileMap::loadLevel(const string &levelFile)
 		getline(fin, line);
 		sstream.str(line);
 		sstream >> y >> x;
-		vrocksPos[i] = y;
-		vrocksPos[i + 1] = x;
+		vrocksPos[i] = x;
+		vrocksPos[i + 1] = y;
 	}
 	
 	map = new int[mapSize.x * mapSize.y];
