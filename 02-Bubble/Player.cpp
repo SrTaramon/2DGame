@@ -75,8 +75,10 @@ void Player::update(int deltaTime)
 			posPlayer.x += 2;
 			sprite->changeAnimation(STAND_LEFT);
 		}
-		else if (rocks->collisionMoveLeft(posPlayer, glm::ivec2(32, 32))) {
-			rocks->setPosition(glm::ivec2((rocks->getposicionx() - 32) - 2, (rocks->getposiciony() - 16)));
+		for (int i = 0; i < rocks.size(); ++i){
+			if (rocks[i]->collisionMoveLeft(posPlayer, glm::ivec2(32, 32))) {
+				rocks[i]->setPosition(glm::ivec2((rocks[i]->getposicionx() - 32) - 2, (rocks[i]->getposiciony() - 16)));
+			}
 		}
 	}
 	else if(Game::instance().getSpecialKey(GLUT_KEY_RIGHT))
@@ -89,8 +91,10 @@ void Player::update(int deltaTime)
 			posPlayer.x -= 2;
 			sprite->changeAnimation(STAND_RIGHT);
 		} 
-		else if (rocks->collisionMoveRight(posPlayer, glm::ivec2(32, 32))) {
-			rocks->setPosition(glm::ivec2((rocks->getposicionx() - 32) + 2 , (rocks->getposiciony() - 16)));
+		for (int i = 0; i < rocks.size(); ++i){
+			if (rocks[i]->collisionMoveRight(posPlayer, glm::ivec2(32, 32))) {
+				rocks[i]->setPosition(glm::ivec2((rocks[i]->getposicionx() - 32) + 2, (rocks[i]->getposiciony() - 16)));
+			}
 		}
 	}
 	else if (Game::instance().getSpecialKey(GLUT_KEY_UP))
@@ -103,8 +107,10 @@ void Player::update(int deltaTime)
 			posPlayer.y += 2;
 			sprite->changeAnimation(STAND_UP);
 		}
-		else if (rocks->collisionMoveUp(posPlayer, glm::ivec2(32, 32))) {
-			rocks->setPosition(glm::ivec2((rocks->getposicionx() - 32), (rocks->getposiciony() - 16) - 2));
+		for (int i = 0; i < rocks.size(); ++i){
+			if (rocks[i]->collisionMoveUp(posPlayer, glm::ivec2(32, 32))) {
+				rocks[i]->setPosition(glm::ivec2((rocks[i]->getposicionx() - 32), (rocks[i]->getposiciony() - 16) - 2));
+			}
 		}
 	}
 	else if (Game::instance().getSpecialKey(GLUT_KEY_DOWN))
@@ -117,8 +123,10 @@ void Player::update(int deltaTime)
 			//posPlayer.y -= 2;
 			sprite->changeAnimation(STAND_DOWN);
 		}
-		else if (rocks->collisionMoveDown(posPlayer, glm::ivec2(32, 32))) {
-			rocks->setPosition(glm::ivec2((rocks->getposicionx() - 32), (rocks->getposiciony() - 16) + 2));
+		for (int i = 0; i < rocks.size(); ++i){
+			if (rocks[i]->collisionMoveDown(posPlayer, glm::ivec2(32, 32))) {
+				rocks[i]->setPosition(glm::ivec2((rocks[i]->getposicionx() - 32), (rocks[i]->getposiciony() - 16) + 2));
+			}
 		}
 	}
 	else
@@ -183,7 +191,7 @@ void Player::setTileMap(TileMap *tileMap)
 
 void Player::setRocks(Rocks* Rocks)
 {
-	rocks = Rocks;
+	rocks.push_back(Rocks);
 }
 
 void Player::setPosition(const glm::vec2 &pos)
