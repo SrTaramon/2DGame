@@ -38,6 +38,7 @@ private:
 	Baba *baba;
 	Is *is;
 	You *you;
+	vector<int> coordRocks;
 	vector< Rocks* > vRocks;
 	ShaderProgram texProgram;
 	float currentTime;
