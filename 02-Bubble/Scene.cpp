@@ -16,7 +16,6 @@ Scene::Scene()
 {
 	map = NULL;
 	player = NULL;
-	rocks = NULL;
 	baba = NULL;
 	is = NULL;
 	you = NULL;
