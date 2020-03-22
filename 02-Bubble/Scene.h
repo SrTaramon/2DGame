@@ -8,6 +8,9 @@
 #include "TileMap.h"
 #include "Rocks.h"
 #include "Player.h"
+#include "Baba.h"
+#include "Is.h"
+#include "You.h"
 
 
 // Scene contains all the entities of our game.
@@ -32,7 +35,10 @@ private:
 	TileMap *map;
 	Player *player;
 	Rocks *rocks;
-	vector< Rocks > *vRocks;
+	Baba *baba;
+	Is *is;
+	You *you;
+	vector< Rocks* > vRocks;
 	ShaderProgram texProgram;
 	float currentTime;
 	glm::mat4 projection;

@@ -30,6 +30,7 @@ public:
 	int getTileSize() const { return tileSize; }
 	int getMapSizex() const { return mapSize.x; }
 	int getMapSizey() const { return mapSize.y; }
+	vector<int> getRockPos() { return vrocksPos; }
 
 	bool collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size) const;
 	bool collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) const;
@@ -45,8 +46,9 @@ private:
 	GLuint vbo;
 	GLint posLocation, texCoordLocation;
 	glm::ivec2 position, mapSize, tilesheetSize;
-	int tileSize, blockSize, ntilesheet;
+	int tileSize, blockSize, ntilesheet, numberRocks;
 	Texture tilesheet;
+	vector< int > vrocksPos; //sempre parell, primer y després x
 	vector<Texture> vtilesheet;
 	glm::vec2 tileTexSize;
 	int *map;

@@ -80,11 +80,26 @@ bool TileMap::loadLevel(const string &levelFile)
 		vtilesheet[i].setMinFilter(GL_NEAREST);
 		vtilesheet[i].setMagFilter(GL_NEAREST);
 	}
-	
+
 	getline(fin, line);
 	sstream.str(line);
 	sstream >> tilesheetSize.x >> tilesheetSize.y;
 	tileTexSize = glm::vec2(1.f / tilesheetSize.x, 1.f / tilesheetSize.y);
+
+	//roques
+	getline(fin, line);
+	sstream.str(line);
+	sstream >> numberRocks;
+
+	vrocksPos = *new vector<int>(numberRocks * 2);
+	for (int i = 0; i < vrocksPos.size() - 1; i += 2) {
+		int x, y;
+		getline(fin, line);
+		sstream.str(line);
+		sstream >> y >> x;
+		vrocksPos[i] = x;
+		vrocksPos[i + 1] = y;
+	}
 	
 	map = new int[mapSize.x * mapSize.y];
 	for(int j=0; j<mapSize.y; j++)
