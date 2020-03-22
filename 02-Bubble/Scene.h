@@ -10,6 +10,7 @@
 #include "Player.h"
 #include "Baba.h"
 #include "Is.h"
+#include "You.h"
 
 
 // Scene contains all the entities of our game.
@@ -36,6 +37,7 @@ private:
 	Rocks *rocks;
 	Baba *baba;
 	Is *is;
+	You *you;
 	vector< Rocks* > vRocks;
 	ShaderProgram texProgram;
 	float currentTime;
