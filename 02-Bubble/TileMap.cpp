@@ -100,6 +100,7 @@ bool TileMap::loadLevel(const string &levelFile)
 		vrocksPos[i] = x;
 		vrocksPos[i + 1] = y;
 	}
+	//
 	
 	map = new int[mapSize.x * mapSize.y];
 	for(int j=0; j<mapSize.y; j++)
