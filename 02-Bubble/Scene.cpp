@@ -16,7 +16,6 @@ Scene::Scene()
 {
 	map = NULL;
 	player = NULL;
-	rocks = NULL;
 	for (int i = 0; i < vRocks.size(); i++) {
 		vRocks[i] = NULL;
 	}
@@ -28,8 +27,6 @@ Scene::~Scene()
 		delete map;
 	if(player != NULL)
 		delete player;
-	if (rocks != NULL)
-		delete rocks;
 	for (int i = 0; i < vRocks.size(); i++) {
 		if (vRocks[i] != NULL)
 			delete vRocks[i];
@@ -46,24 +43,16 @@ void Scene::init()
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getMapSizex(), INIT_PLAYER_Y_TILES * map->getMapSizey()));
 	player->setTileMap(map);
 
-	rocks = new Rocks();
-	rocks->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	rocks->setPosition(glm::vec2(160, 160));
-	rocks->setTileMap(map);
-	player->setRocks(rocks);
+	coordRocks = map->getRockPos();
+	for (int i = 0; i < coordRocks.size(); i += 2) {
+		Rocks *rock = new Rocks();
+		rock->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		rock->setPosition(glm::vec2(32 * coordRocks[i], 32 * coordRocks[i + 1]));
+		rock->setTileMap(map);
+		player->setRocks(rock);
+		vRocks.push_back(rock);
 
-	// Aqui demanar a title map quantes roques shan de creaar i les posicions d'elles
-	vRocks.push_back(new Rocks());
-	vRocks[0]->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	vRocks[0]->setPosition(glm::vec2(192, 192));
-	vRocks[0]->setTileMap(map);
-	player->setRocks(vRocks[0]);
-	
-	vRocks.push_back(new Rocks());
-	vRocks[1]->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	vRocks[1]->setPosition(glm::vec2(224, 224));
-	vRocks[1]->setTileMap(map);
-	player->setRocks(vRocks[1]);
+	}
 
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 	currentTime = 0.0f;
@@ -73,7 +62,6 @@ void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
 	player->update(deltaTime);
-	rocks->update(deltaTime);
 	for (int i = 0; i < vRocks.size(); i++) {
 		vRocks[i]->update(deltaTime);
 	}
@@ -91,7 +79,6 @@ void Scene::render()
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 	map->render();
 	player->render();
-	rocks->render();
 	for (int i = 0; i < vRocks.size(); i++) {
 		vRocks[i]->render();
 	}

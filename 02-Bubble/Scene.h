@@ -31,7 +31,7 @@ private:
 private:
 	TileMap *map;
 	Player *player;
-	Rocks *rocks;
+	vector<int> coordRocks;
 	vector< Rocks* > vRocks;
 	ShaderProgram texProgram;
 	float currentTime;
