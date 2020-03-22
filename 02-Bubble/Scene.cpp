@@ -76,17 +76,15 @@ void Scene::init()
 	you->setTileMap(map);
 
 	// Aqui demanar a title map quantes roques shan de creaar i les posicions d'elles
-	vRocks.push_back(new Rocks());
-	vRocks[0]->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	vRocks[0]->setPosition(glm::vec2(192, 192));
-	vRocks[0]->setTileMap(map);
-	player->setRocks(vRocks[0]);
-	
-	vRocks.push_back(new Rocks());
-	vRocks[1]->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	vRocks[1]->setPosition(glm::vec2(224, 224));
-	vRocks[1]->setTileMap(map);
-	player->setRocks(vRocks[1]);
+	coordRocks = map->getRockPos();
+	for (int i = 0; i < coordRocks.size(); i += 2) {
+		Rocks* rock = new Rocks();
+		rock->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		rock->setPosition(glm::vec2(32 * coordRocks[i], 32 * coordRocks[i + 1]));
+		rock->setTileMap(map);
+		player->setRocks(rock);
+		vRocks.push_back(rock);
+	}
 
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 	currentTime = 0.0f;
