@@ -194,6 +194,10 @@ void Player::setRocks(Rocks* Rocks)
 	rocks.push_back(Rocks);
 }
 
+void Player::setbabaCartell(Baba* babaCar) {
+	baba = babaCar;
+}
+
 void Player::setPosition(const glm::vec2 &pos)
 {
 	posPlayer = pos;

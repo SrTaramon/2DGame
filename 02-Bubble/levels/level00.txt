@@ -5,20 +5,32 @@ TILEMAP
 images/blocks.png 	-- Tilesheet
 images/blocks2.png  
 3 3 								-- Number of tiles in tilesheet
-5					-- Number of rocks
-3 7					-- Y & X
-5 3					-- Y & X
-7 14				-- Y & X
-8 3					-- Y & X
-9 4					-- Y & X
+15					-- Number of rocks
+1 5					-- Y & X
+3 1					-- Y & X
+3 8					-- Y & X
+4 9					-- Y & X
+4 11				-- Y & X
+5 7					-- Y & X
+5 10				-- Y & X
+5 12				-- Y & X
+6 1					-- Y & X
+6 7					-- Y & X
+7 2					-- Y & X
+7 7					-- Y & X
+7 10				-- Y & X
+8 5					-- Y & X
+8 8					-- Y & X
+2 2					-- cartell baba
+2 4					-- cartell you
 11111111111111
-1  6 2       1
+1  6         1
 1            1
-12 7         1
+1  7         1
 1            1
-1           21
-12           1
-1 2          1
+1            1
+1            1
+1            1
 1            1
 11111111111111
 

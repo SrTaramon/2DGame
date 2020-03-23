@@ -54,26 +54,26 @@ void Scene::init()
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getMapSizex(), INIT_PLAYER_Y_TILES * map->getMapSizey()));
 	player->setTileMap(map);
 
-	rocks = new Rocks();
-	rocks->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	rocks->setPosition(glm::vec2(160, 160));
-	rocks->setTileMap(map);
-	player->setRocks(rocks);
-
-	baba = new Baba();
-	baba->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	baba->setPosition(glm::vec2(64, 64));
-	baba->setTileMap(map);
+	babaPos = map->getBabaPos();
+	if (babaPos.x != NULL & babaPos.y != NULL) {
+		baba = new Baba();
+		baba->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		baba->setPosition(glm::vec2(babaPos.x * 32, babaPos.y * 32));
+		baba->setTileMap(map);
+	}
 
 	is = new Is();
 	is->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 	is->setPosition(glm::vec2(96, 64));
 	is->setTileMap(map);
 
-	you = new You();
-	you->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	you->setPosition(glm::vec2(128, 64));
-	you->setTileMap(map);
+	youPos = map->getYouPos();
+	if (youPos.x != NULL & youPos.y != NULL) {
+		you = new You();
+		you->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		you->setPosition(glm::vec2(youPos.x * 32, youPos.y * 32));
+		you->setTileMap(map);
+	}
 
 	// Aqui demanar a title map quantes roques shan de creaar i les posicions d'elles
 	coordRocks = map->getRockPos();
@@ -94,7 +94,6 @@ void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
 	player->update(deltaTime);
-	rocks->update(deltaTime);
 	baba->update(deltaTime);
 	is->update(deltaTime);
 	you->update(deltaTime);
@@ -115,7 +114,6 @@ void Scene::render()
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 	map->render();
 	player->render();
-	rocks->render();
 	baba->render();
 	is->render();
 	you->render();
