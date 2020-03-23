@@ -17,10 +17,12 @@ Scene::Scene()
 	map = NULL;
 	player = NULL;
 	baba = NULL;
-	is = NULL;
 	you = NULL;
 	for (int i = 0; i < vRocks.size(); i++) {
 		vRocks[i] = NULL;
+	}
+	for (int i = 0; i < vIs.size(); i++) {
+		vIs[i] = NULL;
 	}
 }
 
@@ -30,17 +32,17 @@ Scene::~Scene()
 		delete map;
 	if(player != NULL)
 		delete player;
-	if (rocks != NULL)
-		delete rocks;
 	if (baba != NULL)
 		delete baba;
-	if (is != NULL)
-		delete is;
 	if (you != NULL)
 		delete you;
 	for (int i = 0; i < vRocks.size(); i++) {
 		if (vRocks[i] != NULL)
 			delete vRocks[i];
+	}
+	for (int i = 0; i < vIs.size(); i++) {
+		if (vIs[i] != NULL)
+			delete vIs[i];
 	}
 }
 
@@ -62,11 +64,6 @@ void Scene::init()
 		baba->setTileMap(map);
 	}
 
-	is = new Is();
-	is->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	is->setPosition(glm::vec2(96, 64));
-	is->setTileMap(map);
-
 	youPos = map->getYouPos();
 	if (youPos.x != NULL & youPos.y != NULL) {
 		you = new You();
@@ -86,6 +83,16 @@ void Scene::init()
 		vRocks.push_back(rock);
 	}
 
+	coordIs = map->getIsPos();
+	for (int i = 0; i < coordIs.size(); i += 2) {
+		Is* is = new Is();
+		is->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		is->setPosition(glm::vec2(32 * coordIs[i], 32* coordIs[i + 1]));
+		is->setTileMap(map);
+		player->setIs(is);
+		vIs.push_back(is);
+	}
+
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 	currentTime = 0.0f;
 }
@@ -95,10 +102,12 @@ void Scene::update(int deltaTime)
 	currentTime += deltaTime;
 	player->update(deltaTime);
 	baba->update(deltaTime);
-	is->update(deltaTime);
 	you->update(deltaTime);
 	for (int i = 0; i < vRocks.size(); i++) {
 		vRocks[i]->update(deltaTime);
+	}
+	for (int i = 0; i < vIs.size(); i++) {
+		vIs[i]->update(deltaTime);
 	}
 }
 
@@ -115,10 +124,12 @@ void Scene::render()
 	map->render();
 	player->render();
 	baba->render();
-	is->render();
 	you->render();
 	for (int i = 0; i < vRocks.size(); i++) {
 		vRocks[i]->render();
+	}
+	for (int i = 0; i < vIs.size(); i++) {
+		vIs[i]->render();
 	}
 }
 

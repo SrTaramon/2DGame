@@ -31,6 +31,7 @@ public:
 	int getMapSizex() const { return mapSize.x; }
 	int getMapSizey() const { return mapSize.y; }
 	vector<int> getRockPos() { return vrocksPos; }
+	vector<int> getIsPos() { return visPos; }
 	glm::ivec2 getBabaPos() { return babaPos; }
 	glm::ivec2 getYouPos() { return youPos; }
 
@@ -48,9 +49,9 @@ private:
 	GLuint vbo;
 	GLint posLocation, texCoordLocation;
 	glm::ivec2 position, mapSize, tilesheetSize, babaPos, youPos;
-	int tileSize, blockSize, ntilesheet, numberRocks;
+	int tileSize, blockSize, ntilesheet, numberRocks, numberIs;
 	Texture tilesheet;
-	vector< int > vrocksPos; //sempre parell, primer y després x
+	vector< int > vrocksPos, visPos; //sempre parell, primer y després x
 	vector<Texture> vtilesheet;
 	glm::vec2 tileTexSize;
 	int *map;

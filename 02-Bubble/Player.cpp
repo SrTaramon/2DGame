@@ -194,6 +194,11 @@ void Player::setRocks(Rocks* Rocks)
 	rocks.push_back(Rocks);
 }
 
+void Player::setIs(Is* Is)
+{
+	vIs.push_back(Is);
+}
+
 void Player::setbabaCartell(Baba* babaCar) {
 	baba = babaCar;
 }

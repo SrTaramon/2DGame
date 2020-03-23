@@ -6,6 +6,7 @@
 #include "TileMap.h"
 #include "Rocks.h"
 #include "Baba.h"
+#include "Is.h"
 
 
 // Player is basically a Sprite that represents the player. As such it has
@@ -22,6 +23,7 @@ public:
 	
 	void setTileMap(TileMap *tileMap);
 	void setRocks(Rocks* rocks);
+	void setIs(Is* Is);
 	void setPosition(const glm::vec2 &pos);
 	void setbabaCartell(Baba* babaCar);
 	
@@ -33,6 +35,7 @@ private:
 	Sprite *sprite;
 	TileMap *map;
 	vector< Rocks* > rocks;
+	vector< Is* > vIs;
 	Baba* baba;
 
 };

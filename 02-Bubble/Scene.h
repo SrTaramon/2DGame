@@ -34,12 +34,11 @@ private:
 private:
 	TileMap *map;
 	Player *player;
-	Rocks *rocks;
 	Baba *baba;
-	Is *is;
 	You *you;
-	vector<int> coordRocks;
+	vector<int> coordRocks, coordIs;
 	vector< Rocks* > vRocks;
+	vector< Is* > vIs;
 	ShaderProgram texProgram;
 	float currentTime;
 	glm::mat4 projection;
