@@ -126,6 +126,11 @@ bool TileMap::loadLevel(const string &levelFile)
 		visPos[i + 1] = y;
 	}
 
+	//Flag
+	getline(fin, line);
+	sstream.str(line);
+	sstream >> flagPos.y >> flagPos.x;
+
 	map = new int[mapSize.x * mapSize.y];
 	for(int j=0; j<mapSize.y; j++)
 	{

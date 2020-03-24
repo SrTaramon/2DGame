@@ -194,6 +194,16 @@ void Player::setRocks(Rocks* Rocks)
 	rocks.push_back(Rocks);
 }
 
+void Player::setFlagg(Flagg* flag)
+{
+	flagg = flag;
+}
+
+void Player::setYou(You* youu)
+{
+	you = youu;
+}
+
 void Player::setIs(Is* Is)
 {
 	vIs.push_back(Is);

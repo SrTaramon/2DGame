@@ -34,6 +34,7 @@ public:
 	vector<int> getIsPos() { return visPos; }
 	glm::ivec2 getBabaPos() { return babaPos; }
 	glm::ivec2 getYouPos() { return youPos; }
+	glm::ivec2 getFlagPos() { return flagPos; }
 
 	bool collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size) const;
 	bool collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) const;
@@ -48,7 +49,7 @@ private:
 	GLuint vao;
 	GLuint vbo;
 	GLint posLocation, texCoordLocation;
-	glm::ivec2 position, mapSize, tilesheetSize, babaPos, youPos;
+	glm::ivec2 position, mapSize, tilesheetSize, babaPos, youPos, flagPos;
 	int tileSize, blockSize, ntilesheet, numberRocks, numberIs;
 	Texture tilesheet;
 	vector< int > vrocksPos, visPos; //sempre parell, primer y després x

@@ -18,6 +18,7 @@ Scene::Scene()
 	player = NULL;
 	baba = NULL;
 	you = NULL;
+	flag = NULL;
 	for (int i = 0; i < vRocks.size(); i++) {
 		vRocks[i] = NULL;
 	}
@@ -36,6 +37,8 @@ Scene::~Scene()
 		delete baba;
 	if (you != NULL)
 		delete you;
+	if (flag != NULL)
+		delete flag;
 	for (int i = 0; i < vRocks.size(); i++) {
 		if (vRocks[i] != NULL)
 			delete vRocks[i];
@@ -61,6 +64,7 @@ void Scene::init()
 		baba = new Baba();
 		baba->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 		baba->setPosition(glm::vec2(babaPos.x * 32, babaPos.y * 32));
+		player->setbabaCartell(baba);
 		baba->setTileMap(map);
 	}
 
@@ -69,7 +73,17 @@ void Scene::init()
 		you = new You();
 		you->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 		you->setPosition(glm::vec2(youPos.x * 32, youPos.y * 32));
+		player->setYou(you);
 		you->setTileMap(map);
+	}
+
+	flagPos = map->getFlagPos();
+	if (flagPos.x != NULL & flagPos.y != NULL) {
+		flag = new Flagg();
+		flag->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		flag->setPosition(glm::vec2(flagPos.x * 32, flagPos.y * 32));
+		player->setFlagg(flag);
+		flag->setTileMap(map);
 	}
 
 	// Aqui demanar a title map quantes roques shan de creaar i les posicions d'elles

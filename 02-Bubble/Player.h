@@ -7,6 +7,8 @@
 #include "Rocks.h"
 #include "Baba.h"
 #include "Is.h"
+#include "Flagg.h"
+#include "You.h"
 
 
 // Player is basically a Sprite that represents the player. As such it has
@@ -26,6 +28,8 @@ public:
 	void setIs(Is* Is);
 	void setPosition(const glm::vec2 &pos);
 	void setbabaCartell(Baba* babaCar);
+	void setFlagg(Flagg* flag);
+	void setYou(You* youu);
 	
 private:
 	bool bJumping;
@@ -36,7 +40,9 @@ private:
 	TileMap *map;
 	vector< Rocks* > rocks;
 	vector< Is* > vIs;
-	Baba* baba;
+	Baba *baba;
+	Flagg *flagg;
+	You *you;
 
 };
 
