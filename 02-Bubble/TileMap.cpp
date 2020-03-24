@@ -100,8 +100,37 @@ bool TileMap::loadLevel(const string &levelFile)
 		vrocksPos[i] = x;
 		vrocksPos[i + 1] = y;
 	}
-	//
 	
+	//cartell Baba
+	getline(fin, line);
+	sstream.str(line);
+	sstream >> babaPos.y >> babaPos.x;
+
+	//cartell You
+	getline(fin, line);
+	sstream.str(line);
+	sstream >> youPos.y >> youPos.x;
+
+	//cartells Is
+	getline(fin, line);
+	sstream.str(line);
+	sstream >> numberIs;
+
+	visPos = *new vector<int>(numberIs * 2);
+	for (int i = 0; i < visPos.size() - 1; i += 2) {
+		int x, y;
+		getline(fin, line);
+		sstream.str(line);
+		sstream >> y >> x;
+		visPos[i] = x;
+		visPos[i + 1] = y;
+	}
+
+	//Flag
+	getline(fin, line);
+	sstream.str(line);
+	sstream >> flagPos.y >> flagPos.x;
+
 	map = new int[mapSize.x * mapSize.y];
 	for(int j=0; j<mapSize.y; j++)
 	{
