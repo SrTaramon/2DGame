@@ -117,6 +117,7 @@ void Scene::update(int deltaTime)
 	player->update(deltaTime);
 	baba->update(deltaTime);
 	you->update(deltaTime);
+	flag->update(deltaTime);
 	for (int i = 0; i < vRocks.size(); i++) {
 		vRocks[i]->update(deltaTime);
 	}
@@ -139,6 +140,7 @@ void Scene::render()
 	player->render();
 	baba->render();
 	you->render();
+	flag->render();
 	for (int i = 0; i < vRocks.size(); i++) {
 		vRocks[i]->render();
 	}
