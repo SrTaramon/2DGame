@@ -82,21 +82,18 @@ bool Rocks::collisionWallMoveRight(const glm::ivec2& pos, const glm::ivec2& size
 						x2 = VRock[j]->getposicionx() - 32;
 						y2 = VRock[j]->getposiciony() - 16;
 						y2_2 = y2 + 32;
-						if ((x + 32) == x2) {
+						if ((x + 32)  == x2) {
 							if (y_2 <= y2) RockCollision = false;
 							else if (y >= y2_2) RockCollision = false;
-							else  RockCollision = true;
+							else  return true;
 						}
 				
 					}
 				}
 				if (map->collisionMoveRight(glm::ivec2(pos.x + 32, pos.y), glm::ivec2(32, 32))) {
-					RockCollision = true;
+					return true;
 				}
 			}
-		}
-		if (RockCollision) {
-			RockCollision = true;
 		}
 
 	return (RockCollision);
