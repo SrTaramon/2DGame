@@ -19,6 +19,8 @@ Scene::Scene()
 	baba = NULL;
 	you = NULL;
 	flag = NULL;
+	flagC = NULL;
+	win = NULL;
 	for (int i = 0; i < vRocks.size(); i++) {
 		vRocks[i] = NULL;
 	}
@@ -39,6 +41,10 @@ Scene::~Scene()
 		delete you;
 	if (flag != NULL)
 		delete flag;
+	if (flagC != NULL)
+		delete flagC;
+	if (win != NULL)
+		delete win;
 	for (int i = 0; i < vRocks.size(); i++) {
 		if (vRocks[i] != NULL)
 			delete vRocks[i];
@@ -75,6 +81,24 @@ void Scene::init()
 		you->setPosition(glm::vec2(youPos.x * 32, youPos.y * 32));
 		player->setYou(you);
 		you->setTileMap(map);
+	}
+
+	flagCarPos = map->getFlagCarPos();
+	if (flagCarPos.x != NULL & flagCarPos.y != NULL) {
+		flagC = new FlagCar();
+		flagC->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		flagC->setPosition(glm::vec2(flagCarPos.x * 32, flagCarPos.y * 32));
+		player->setFlagCar(flagC);
+		flagC->setTileMap(map);
+	}
+
+	winPos = map->getWinPos();
+	if (winPos.x != NULL & winPos.y != NULL) {
+		win = new Win();
+		win->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		win->setPosition(glm::vec2(winPos.x * 32, winPos.y * 32));
+		player->setWin(win);
+		win->setTileMap(map);
 	}
 
 	flagPos = map->getFlagPos();
@@ -118,6 +142,8 @@ void Scene::update(int deltaTime)
 	baba->update(deltaTime);
 	you->update(deltaTime);
 	flag->update(deltaTime);
+	flagC->update(deltaTime);
+	win->update(deltaTime);
 	for (int i = 0; i < vRocks.size(); i++) {
 		vRocks[i]->update(deltaTime);
 	}
@@ -141,6 +167,8 @@ void Scene::render()
 	baba->render();
 	you->render();
 	flag->render();
+	flagC->render();
+	win->render();
 	for (int i = 0; i < vRocks.size(); i++) {
 		vRocks[i]->render();
 	}

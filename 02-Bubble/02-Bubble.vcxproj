@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClInclude Include="AnimKeyframes.h" />
     <ClInclude Include="Baba.h" />
+    <ClInclude Include="FlagCar.h" />
     <ClInclude Include="Flagg.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Is.h" />
@@ -27,10 +28,12 @@
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TexturedQuad.h" />
     <ClInclude Include="TileMap.h" />
+    <ClInclude Include="Win.h" />
     <ClInclude Include="You.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Baba.cpp" />
+    <ClCompile Include="FlagCar.cpp" />
     <ClCompile Include="Flagg.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Is.cpp" />
@@ -46,6 +49,7 @@
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TexturedQuad.cpp" />
     <ClCompile Include="TileMap.cpp" />
+    <ClCompile Include="Win.cpp" />
     <ClCompile Include="You.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

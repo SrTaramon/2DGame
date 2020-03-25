@@ -1,5 +1,5 @@
-#ifndef _BABA_INCLUDE
-#define _BABA_INCLUDE
+#ifndef _WIN_INCLUDE
+#define _WIN_INCLUDE
 
 
 #include "Sprite.h"
@@ -10,7 +10,7 @@
 // all properties it needs to track its movement, jumping, and collisions.
 
 
-class Baba
+class Win
 {
 
 public:
@@ -38,6 +38,6 @@ private:
 };
 
 
-#endif // _BABA_INCLUDE
+#endif 
 
 

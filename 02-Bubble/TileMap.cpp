@@ -45,18 +45,18 @@ void TileMap::free()
 	glDeleteBuffers(1, &vbo);
 }
 
-bool TileMap::loadLevel(const string &levelFile)
+bool TileMap::loadLevel(const string& levelFile)
 {
 	ifstream fin;
 	string line, tilesheetFile;
 	stringstream sstream;
 	char tile;
-	
+
 	fin.open(levelFile.c_str());
-	if(!fin.is_open())
+	if (!fin.is_open())
 		return false;
 	getline(fin, line);
-	if(line.compare(0, 7, "TILEMAP") != 0)
+	if (line.compare(0, 7, "TILEMAP") != 0)
 		return false;
 	getline(fin, line);
 	sstream.str(line);
@@ -69,7 +69,7 @@ bool TileMap::loadLevel(const string &levelFile)
 	sstream.str(line);
 	sstream >> ntilesheet;
 
-	vtilesheet = *new vector<Texture>(ntilesheet+1);
+	vtilesheet = *new vector<Texture>(ntilesheet + 1);
 	for (int i = 0; i < ntilesheet; i++) {
 		getline(fin, line);
 		sstream.str(line);
@@ -86,50 +86,125 @@ bool TileMap::loadLevel(const string &levelFile)
 	sstream >> tilesheetSize.x >> tilesheetSize.y;
 	tileTexSize = glm::vec2(1.f / tilesheetSize.x, 1.f / tilesheetSize.y);
 
-	//roques
+	// Quins cartells hem de pintar?
+	// Baba
 	getline(fin, line);
 	sstream.str(line);
-	sstream >> numberRocks;
+	sstream >> hihaBaba;
+	// Rock
+	getline(fin, line);
+	sstream.str(line);
+	sstream >> hihaRock;
+	// Wall
+	getline(fin, line);
+	sstream.str(line);
+	sstream >> hihaWall;
+	// Flag
+	getline(fin, line);
+	sstream.str(line);
+	sstream >> hihaFlag;
+	// Lava
+	getline(fin, line);
+	sstream.str(line);
+	sstream >> hihaLava;
+	// Is
+	getline(fin, line);
+	sstream.str(line);
+	sstream >> hihaIs;
+	// And
+	getline(fin, line);
+	sstream.str(line);
+	sstream >> hihaAnd;
+	// Stop
+	getline(fin, line);
+	sstream.str(line);
+	sstream >> hihaStop;
+	// Win
+	getline(fin, line);
+	sstream.str(line);
+	sstream >> hihaWin;
+	// You
+	getline(fin, line);
+	sstream.str(line);
+	sstream >> hihaYou;
+	// Push
+	getline(fin, line);
+	sstream.str(line);
+	sstream >> hihaPush;
+	// Dead
+	getline(fin, line);
+	sstream.str(line);
+	sstream >> hihaDead;
 
-	vrocksPos = *new vector<int>(numberRocks * 2);
-	for (int i = 0; i < vrocksPos.size() - 1; i += 2) {
-		int x, y;
+
+	if (hihaRock) {
+		//roques
 		getline(fin, line);
 		sstream.str(line);
-		sstream >> y >> x;
-		vrocksPos[i] = x;
-		vrocksPos[i + 1] = y;
+		sstream >> numberRocks;
+
+		vrocksPos = *new vector<int>(numberRocks * 2);
+		for (int i = 0; i < vrocksPos.size() - 1; i += 2) {
+			int x, y;
+			getline(fin, line);
+			sstream.str(line);
+			sstream >> y >> x;
+			vrocksPos[i] = x;
+			vrocksPos[i + 1] = y;
+		}
 	}
-	
-	//cartell Baba
-	getline(fin, line);
-	sstream.str(line);
-	sstream >> babaPos.y >> babaPos.x;
 
-	//cartell You
-	getline(fin, line);
-	sstream.str(line);
-	sstream >> youPos.y >> youPos.x;
-
-	//cartells Is
-	getline(fin, line);
-	sstream.str(line);
-	sstream >> numberIs;
-
-	visPos = *new vector<int>(numberIs * 2);
-	for (int i = 0; i < visPos.size() - 1; i += 2) {
-		int x, y;
+	if (hihaBaba) {
+		//cartell Baba
 		getline(fin, line);
 		sstream.str(line);
-		sstream >> y >> x;
-		visPos[i] = x;
-		visPos[i + 1] = y;
+		sstream >> babaPos.y >> babaPos.x;
 	}
 
+	if (hihaYou) {
+		//cartell You
+		getline(fin, line);
+		sstream.str(line);
+		sstream >> youPos.y >> youPos.x;
+	}
+
+	if (hihaFlag) {
+		//cartell Flag
+		getline(fin, line);
+		sstream.str(line);
+		sstream >> flagCarPos.y >> flagCarPos.x;
+	}
+
+	if (hihaWin) {
+		//cartell Win
+		getline(fin, line);
+		sstream.str(line);
+		sstream >> winPos.y >> winPos.x;
+	}
+
+	if (hihaIs) {
+		//cartells Is
+		getline(fin, line);
+		sstream.str(line);
+		sstream >> numberIs;
+
+		visPos = *new vector<int>(numberIs * 2);
+		for (int i = 0; i < visPos.size() - 1; i += 2) {
+			int x, y;
+			getline(fin, line);
+			sstream.str(line);
+			sstream >> y >> x;
+			visPos[i] = x;
+			visPos[i + 1] = y;
+		}
+	}
+
+	if (hihaFlag) {
 	//Flag
 	getline(fin, line);
 	sstream.str(line);
 	sstream >> flagPos.y >> flagPos.x;
+	}
 
 	map = new int[mapSize.x * mapSize.y];
 	for(int j=0; j<mapSize.y; j++)

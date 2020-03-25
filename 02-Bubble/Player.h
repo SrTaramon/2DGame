@@ -9,6 +9,8 @@
 #include "Is.h"
 #include "Flagg.h"
 #include "You.h"
+#include "FlagCar.h"
+#include "Win.h"
 
 
 // Player is basically a Sprite that represents the player. As such it has
@@ -30,6 +32,8 @@ public:
 	void setbabaCartell(Baba* babaCar);
 	void setFlagg(Flagg* flag);
 	void setYou(You* youu);
+	void setFlagCar(FlagCar* flagCar);
+	void setWin(Win* winCar);
 	
 private:
 	bool bJumping;
@@ -43,6 +47,8 @@ private:
 	Baba *baba;
 	Flagg *flagg;
 	You *you;
+	FlagCar* flagC;
+	Win* win;
 
 };
 

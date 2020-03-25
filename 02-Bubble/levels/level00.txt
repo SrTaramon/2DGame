@@ -5,6 +5,18 @@ TILEMAP
 images/blocks.png 	-- Tilesheet
 images/blocks2.png  
 3 3 								-- Number of tiles in tilesheet
+1					-- hi ha baba
+1					-- hi ha rock
+0					-- hi ha wall
+1					-- hi ha flag
+0					-- hi ha lava
+1					-- hi ha is
+0					-- hi ha and
+0					-- hi ha stop
+1					-- hi ha win
+1					-- hi ha you
+0					-- hi ha push
+0					-- hi ha dead
 15					-- Number of rocks
 1 5					-- Y & X
 3 1					-- Y & X
@@ -23,13 +35,15 @@ images/blocks2.png
 8 8					-- Y & X
 2 2					-- cartell baba
 2 4					-- cartell you
+1 3					-- cartell flag
+3 3					-- cartell win
 1					-- number of Is cartells
 2 3					-- Y & X
 2 11				-- flag
 11111111111111
-1  6         1
 1            1
-1  7         1
+1            1
+1            1
 1            1
 1            1
 1            1

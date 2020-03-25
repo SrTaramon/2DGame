@@ -199,6 +199,11 @@ void Player::setFlagg(Flagg* flag)
 	flagg = flag;
 }
 
+void Player::setFlagCar(FlagCar* flagCar)
+{
+	flagC = flagCar;
+}
+
 void Player::setYou(You* youu)
 {
 	you = youu;
@@ -211,6 +216,10 @@ void Player::setIs(Is* Is)
 
 void Player::setbabaCartell(Baba* babaCar) {
 	baba = babaCar;
+}
+
+void Player::setWin(Win* winCar) {
+	win = winCar;
 }
 
 void Player::setPosition(const glm::vec2 &pos)

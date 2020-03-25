@@ -35,6 +35,8 @@ public:
 	glm::ivec2 getBabaPos() { return babaPos; }
 	glm::ivec2 getYouPos() { return youPos; }
 	glm::ivec2 getFlagPos() { return flagPos; }
+	glm::ivec2 getFlagCarPos() { return flagCarPos; }
+	glm::ivec2 getWinPos() { return winPos; }
 
 	bool collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size) const;
 	bool collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) const;
@@ -49,13 +51,25 @@ private:
 	GLuint vao;
 	GLuint vbo;
 	GLint posLocation, texCoordLocation;
-	glm::ivec2 position, mapSize, tilesheetSize, babaPos, youPos, flagPos;
+	glm::ivec2 position, mapSize, tilesheetSize, babaPos, youPos, flagPos, flagCarPos, winPos;
 	int tileSize, blockSize, ntilesheet, numberRocks, numberIs;
 	Texture tilesheet;
 	vector< int > vrocksPos, visPos; //sempre parell, primer y després x
 	vector<Texture> vtilesheet;
 	glm::vec2 tileTexSize;
 	int *map;
+	bool hihaBaba = false;
+	bool hihaRock = false;
+	bool hihaWall = false;
+	bool hihaFlag = false;
+	bool hihaLava = false;
+	bool hihaIs = false;
+	bool hihaAnd = false;
+	bool hihaStop = false;
+	bool hihaWin = false;
+	bool hihaYou = false;
+	bool hihaPush = false;
+	bool hihaDead = false;
 
 };
 

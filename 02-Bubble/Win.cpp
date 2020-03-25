@@ -2,7 +2,7 @@
 #include <iostream>
 #include <GL/glew.h>
 #include <GL/glut.h>
-#include "Baba.h"
+#include "Win.h"
 #include "Game.h"
 
 
@@ -12,40 +12,40 @@
 
 
 
-void Baba::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
+void Win::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 {
-	spritesheet.loadFromFile("images/baba.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	spritesheet.loadFromFile("images/win.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(1, 1), &spritesheet, &shaderProgram); //tamany quad on aplico imag
 	tileMapDispl = tileMapPos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x), float(tileMapDispl.y)));
 
 }
 
-void Baba::update(int deltaTime)
+void Win::update(int deltaTime)
 {
 	sprite->update(deltaTime);
 
 	//sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 }
 
-void Baba::render()
+void Win::render()
 {
 	sprite->render();
 }
 
-void Baba::setTileMap(TileMap* tileMap)
+void Win::setTileMap(TileMap* tileMap)
 {
 	map = tileMap;
 }
 
-void Baba::setPosition(const glm::vec2& pos)
+void Win::setPosition(const glm::vec2& pos)
 {
 	posPlayer = pos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 }
 
 
-bool Baba::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size) {
+bool Win::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size) {
 	int x, y;
 	x = sprite->getposicionx() - 32;
 	y = sprite->getposiciony() - 16;
@@ -56,7 +56,7 @@ bool Baba::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size) {
 	int py2 = pos.y + 32;
 
 
-	if (((px) > x & px < x + size.x)) {
+	if (((px) > x& px < x + size.x)) {
 
 		if (py > y) {
 			if (py < y2) {
@@ -79,7 +79,7 @@ bool Baba::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size) {
 	return false;
 }
 
-bool Baba::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size) {
+bool Win::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size) {
 	int x, y;
 	x = sprite->getposicionx() - 32;
 	y = sprite->getposiciony() - 16;
@@ -90,7 +90,7 @@ bool Baba::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size) {
 	int py2 = pos.y + 32;
 
 
-	if (((px) > x & px < x + size.x)) {
+	if (((px) > x& px < x + size.x)) {
 
 		if (py > y) {
 			if (py < y2) {
@@ -113,7 +113,7 @@ bool Baba::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size) {
 	return false;
 }
 
-bool Baba::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size) {
+bool Win::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size) {
 	int x, y;
 	x = sprite->getposicionx() - 32;
 	y = sprite->getposiciony() - 16;
@@ -122,7 +122,7 @@ bool Baba::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size) {
 	int py = pos.y;
 	int px2 = pos.x + 32;
 
-	if (((py) > y & py < y + size.y)) {
+	if (((py) > y& py < y + size.y)) {
 		if (x < px) {
 			if (px < x2) {
 				return true;
@@ -142,7 +142,7 @@ bool Baba::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size) {
 	return false;
 }
 
-bool Baba::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size) {
+bool Win::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size) {
 	int x, y;
 	x = sprite->getposicionx() - 32;
 	y = sprite->getposiciony() - 16;
@@ -151,7 +151,7 @@ bool Baba::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size) {
 	int py = pos.y + 32;
 	int px2 = pos.x + 32;
 
-	if (((py) > y & py < y + size.y)) {
+	if (((py) > y& py < y + size.y)) {
 		if (x < px) {
 			if (px < x2) {
 				return true;

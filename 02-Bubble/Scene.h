@@ -12,6 +12,8 @@
 #include "Is.h"
 #include "You.h"
 #include "Flagg.h"
+#include "FlagCar.h"
+#include "Win.h"
 
 
 // Scene contains all the entities of our game.
@@ -38,13 +40,15 @@ private:
 	Baba *baba;
 	You *you;
 	Flagg *flag;
+	FlagCar *flagC;
+	Win *win;
 	vector<int> coordRocks, coordIs;
 	vector< Rocks* > vRocks;
 	vector< Is* > vIs;
 	ShaderProgram texProgram;
 	float currentTime;
 	glm::mat4 projection;
-	glm::vec2 babaPos, youPos, flagPos;
+	glm::vec2 babaPos, youPos, flagPos, flagCarPos, winPos;
 
 };
 
