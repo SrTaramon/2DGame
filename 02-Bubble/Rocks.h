@@ -23,6 +23,9 @@ public:
 	bool collisionMove(const glm::ivec2& pos, const glm::ivec2& size);
 	bool collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size);
 	bool collisionWallMoveRight(const glm::ivec2& pos, const glm::ivec2& size, const vector<Rocks*>& VRock);
+	bool collisionWallMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, const vector<Rocks*>& VRock);
+	bool collisionWallMoveUp(const glm::ivec2& pos, const glm::ivec2& size, const vector<Rocks*>& VRock);
+	bool collisionWallMoveDown(const glm::ivec2& pos, const glm::ivec2& size, const vector<Rocks*>& VRock);
 	bool collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size);
 	bool collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size);
 	bool collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size);

@@ -99,6 +99,110 @@ bool Rocks::collisionWallMoveRight(const glm::ivec2& pos, const glm::ivec2& size
 	return (RockCollision);
 }
 
+bool Rocks::collisionWallMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, const vector<Rocks*>& VRock) {
+
+	//bool Mapcollision = map->collisionMoveRight(glm::ivec2(pos.x, pos.y), glm::ivec2(32, 32));
+	bool RockCollision = false;
+
+	for (int i = 0; i < VRock.size(); i++) {
+		if (VRock[i]->collisionMoveLeft(glm::ivec2(pos.x, pos.y), glm::ivec2(32, 32))) {
+			int x, y, y_2;
+			x = VRock[i]->getposicionx() - 32;
+			y = VRock[i]->getposiciony() - 16;
+			y_2 = y + 32;
+			for (int j = 0; j < VRock.size(); j++) {
+				if (i != j) {
+					int x2, y2, y2_2;
+					x2 = VRock[j]->getposicionx() - 32;
+					y2 = VRock[j]->getposiciony() - 16;
+					y2_2 = y2 + 32;
+					if ((x - 32) == x2) {
+						if (y_2 <= y2) RockCollision = false;
+						else if (y >= y2_2) RockCollision = false;
+						else  return true;
+					}
+
+				}
+			}
+			if (map->collisionMoveLeft(glm::ivec2(pos.x - 32, pos.y), glm::ivec2(32, 32))) {
+				return true;
+			}
+		}
+	}
+
+	return (RockCollision);
+}
+
+bool Rocks::collisionWallMoveUp(const glm::ivec2& pos, const glm::ivec2& size, const vector<Rocks*>& VRock) {
+
+	//bool Mapcollision = map->collisionMoveRight(glm::ivec2(pos.x, pos.y), glm::ivec2(32, 32));
+	bool RockCollision = false;
+
+	for (int i = 0; i < VRock.size(); i++) {
+		if (VRock[i]->collisionMoveUp(glm::ivec2(pos.x, pos.y), glm::ivec2(32, 32))) {
+			int x, y, x_2;
+			x = VRock[i]->getposicionx() - 32;
+			x_2 = x + 32;
+			y = VRock[i]->getposiciony() - 16;
+
+			for (int j = 0; j < VRock.size(); j++) {
+				if (i != j) {
+					int x2, y2, x2_2;
+					x2 = VRock[j]->getposicionx() - 32;
+					x2_2 = x2 + 32;
+					y2 = VRock[j]->getposiciony() - 16;
+					if ((y - 32) == y2) {
+						if (x_2 <= x2) RockCollision = false;
+						else if (x >= x2_2) RockCollision = false;
+						else  return true;
+					}
+
+				}
+			}
+			if (map->collisionMoveUp(glm::ivec2(pos.x , pos.y - 32), glm::ivec2(32, 32), (&posPlayer.y))) {
+				return true;
+			}
+		}
+	}
+
+	return (RockCollision);
+}
+
+bool Rocks::collisionWallMoveDown(const glm::ivec2& pos, const glm::ivec2& size, const vector<Rocks*>& VRock) {
+
+	//bool Mapcollision = map->collisionMoveRight(glm::ivec2(pos.x, pos.y), glm::ivec2(32, 32));
+	bool RockCollision = false;
+
+	for (int i = 0; i < VRock.size(); i++) {
+		if (VRock[i]->collisionMoveDown(glm::ivec2(pos.x, pos.y), glm::ivec2(32, 32))) {
+			int x, y, x_2;
+			x = VRock[i]->getposicionx() - 32;
+			x_2 = x + 32;
+			y = VRock[i]->getposiciony() - 16;
+
+			for (int j = 0; j < VRock.size(); j++) {
+				if (i != j) {
+					int x2, y2, x2_2;
+					x2 = VRock[j]->getposicionx() - 32;
+					x2_2 = x2 + 32;
+					y2 = VRock[j]->getposiciony() - 16;
+					if ((y + 32) == y2) {
+						if (x_2 <= x2) RockCollision = false;
+						else if (x >= x2_2) RockCollision = false;
+						else  return true;
+					}
+
+				}
+			}
+			if (map->collisionMoveDown(glm::ivec2(pos.x, pos.y + 32), glm::ivec2(32, 32), &posPlayer.y)) {
+				return true;
+			}
+		}
+	}
+
+	return (RockCollision);
+}
+
 
 bool Rocks::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size) {
 	int x, y;

@@ -75,8 +75,12 @@ void Player::update(int deltaTime)
 			posPlayer.x += 2;
 			sprite->changeAnimation(STAND_LEFT);
 		}
-		for (int i = 0; i < rocks.size(); ++i){
-			if (rocks[i]->collisionMoveLeft(posPlayer, glm::ivec2(32, 32))) {
+		for (int i = 0; i < rocks.size(); ++i) {
+			if (rocks[i]->collisionWallMoveLeft(posPlayer, glm::ivec2(32, 32), rocks)) {
+				posPlayer.x += 2;
+				sprite->changeAnimation(STAND_RIGHT);
+			}
+			else if (rocks[i]->collisionMoveLeft(posPlayer, glm::ivec2(32, 32))) {
 				rocks[i]->setPosition(glm::ivec2((rocks[i]->getposicionx() - 32) - 2, (rocks[i]->getposiciony() - 16)));
 			}
 		}
@@ -111,9 +115,13 @@ void Player::update(int deltaTime)
 			posPlayer.y += 2;
 			sprite->changeAnimation(STAND_UP);
 		}
-		for (int i = 0; i < rocks.size(); ++i){
-			if (rocks[i]->collisionMoveUp(posPlayer, glm::ivec2(32, 32))) {
-				rocks[i]->setPosition(glm::ivec2((rocks[i]->getposicionx() - 32), (rocks[i]->getposiciony() - 16) - 2));
+		for (int i = 0; i < rocks.size(); ++i) {
+			if (rocks[i]->collisionWallMoveUp(posPlayer, glm::ivec2(32, 32), rocks)) {
+				posPlayer.y += 2;
+				sprite->changeAnimation(STAND_RIGHT);
+			}
+			else if (rocks[i]->collisionMoveUp(posPlayer, glm::ivec2(32, 32))) {
+				rocks[i]->setPosition(glm::ivec2((rocks[i]->getposicionx() - 32) , (rocks[i]->getposiciony() - 16 - 2)));
 			}
 		}
 	}
@@ -127,9 +135,13 @@ void Player::update(int deltaTime)
 			//posPlayer.y -= 2;
 			sprite->changeAnimation(STAND_DOWN);
 		}
-		for (int i = 0; i < rocks.size(); ++i){
-			if (rocks[i]->collisionMoveDown(posPlayer, glm::ivec2(32, 32))) {
-				rocks[i]->setPosition(glm::ivec2((rocks[i]->getposicionx() - 32), (rocks[i]->getposiciony() - 16) + 2));
+		for (int i = 0; i < rocks.size(); ++i) {
+			if (rocks[i]->collisionWallMoveDown(posPlayer, glm::ivec2(32, 32), rocks)) {
+				posPlayer.y -= 2;
+				sprite->changeAnimation(STAND_RIGHT);
+			}
+			else if (rocks[i]->collisionMoveDown(posPlayer, glm::ivec2(32, 32))) {
+				rocks[i]->setPosition(glm::ivec2((rocks[i]->getposicionx() - 32) , (rocks[i]->getposiciony() - 16 + 2)));
 			}
 		}
 	}
