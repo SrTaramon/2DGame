@@ -92,7 +92,11 @@ void Player::update(int deltaTime)
 			sprite->changeAnimation(STAND_RIGHT);
 		} 
 		for (int i = 0; i < rocks.size(); ++i){
-			if (rocks[i]->collisionMoveRight(posPlayer, glm::ivec2(32, 32))) {
+			if (rocks[i]->collisionWallMoveRight(posPlayer, glm::ivec2(32, 32), rocks)) {
+				posPlayer.x -= 2;
+				sprite->changeAnimation(STAND_RIGHT);
+			}
+			else if (rocks[i]->collisionMoveRight(posPlayer, glm::ivec2(32, 32))) {
 				rocks[i]->setPosition(glm::ivec2((rocks[i]->getposicionx() - 32) + 2, (rocks[i]->getposiciony() - 16)));
 			}
 		}

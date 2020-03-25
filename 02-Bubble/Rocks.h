@@ -1,7 +1,7 @@
 #ifndef _ROCKS_INCLUDE
 #define _ROCKS_INCLUDE
 
-
+#include <vector>
 #include "Sprite.h"
 #include "TileMap.h"
 
@@ -22,6 +22,7 @@ public:
 	void setPosition(const glm::vec2& pos);
 	bool collisionMove(const glm::ivec2& pos, const glm::ivec2& size);
 	bool collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size);
+	bool collisionWallMoveRight(const glm::ivec2& pos, const glm::ivec2& size, const vector<Rocks*>& VRock);
 	bool collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size);
 	bool collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size);
 	bool collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size);
