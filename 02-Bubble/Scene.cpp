@@ -21,11 +21,19 @@ Scene::Scene()
 	flag = NULL;
 	flagC = NULL;
 	win = NULL;
+	and = NULL;
+	die = NULL;
+	lava = NULL;
+	push = NULL;
+	rockCar = NULL;
 	for (int i = 0; i < vRocks.size(); i++) {
 		vRocks[i] = NULL;
 	}
 	for (int i = 0; i < vIs.size(); i++) {
 		vIs[i] = NULL;
+	}
+	for (int i = 0; i < vLavas.size(); i++) {
+		vLavas[i] = NULL;
 	}
 }
 
@@ -45,6 +53,16 @@ Scene::~Scene()
 		delete flagC;
 	if (win != NULL)
 		delete win;
+	if (and != NULL)
+		delete and;
+	if (die != NULL)
+		delete die;
+	if (lava != NULL)
+		delete lava;
+	if (push != NULL)
+		delete push;
+	if (rockCar != NULL)
+		delete rockCar;
 	for (int i = 0; i < vRocks.size(); i++) {
 		if (vRocks[i] != NULL)
 			delete vRocks[i];
@@ -52,6 +70,10 @@ Scene::~Scene()
 	for (int i = 0; i < vIs.size(); i++) {
 		if (vIs[i] != NULL)
 			delete vIs[i];
+	}
+	for (int i = 0; i < vLavas.size(); i++) {
+		if (vLavas[i] != NULL)
+			delete vLavas[i];
 	}
 }
 
@@ -110,6 +132,69 @@ void Scene::init()
 		flag->setTileMap(map);
 	}
 
+	andPos = map->getAndPos();
+	if (andPos.x != NULL & andPos.y != NULL) {
+		and = new And();
+		and ->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		and ->setPosition(glm::vec2(andPos.x * 32, andPos.y * 32));
+		player->setAnd(and);
+		and ->setTileMap(map);
+	}
+
+	diePos = map->getDiePos();
+	if (diePos.x != NULL & diePos.y != NULL) {
+		die = new Die();
+		die ->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		die ->setPosition(glm::vec2(diePos.x * 32, diePos.y * 32));
+		player->setDie(die);
+		die ->setTileMap(map);
+	}
+
+	lavaPos = map->getLavaPos();
+	if (lavaPos.x != NULL & lavaPos.y != NULL) {
+		lava = new Lava();
+		lava->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		lava->setPosition(glm::vec2(lavaPos.x * 32, lavaPos.y * 32));
+		player->setLava(lava);
+		lava->setTileMap(map);
+	}
+
+	pushPos = map->getPushPos();
+	if (pushPos.x != NULL & pushPos.y != NULL) {
+		push = new Push();
+		push->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		push->setPosition(glm::vec2(pushPos.x * 32, pushPos.y * 32));
+		player->setPush(push);
+		push->setTileMap(map);
+	}
+
+	rockCarPos = map->getRockCarPos();
+	if (rockCarPos.x != NULL & rockCarPos.y != NULL) {
+		rockCar = new RockCar();
+		rockCar->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		rockCar->setPosition(glm::vec2(rockCarPos.x * 32, rockCarPos.y * 32));
+		player->setRockCar(rockCar);
+		rockCar->setTileMap(map);
+	}
+
+	stopPos = map->getStopPos();
+	if (stopPos.x != NULL & stopPos.y != NULL) {
+		stop = new Stop();
+		stop->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		stop->setPosition(glm::vec2(stopPos.x * 32, stopPos.y * 32));
+		player->setStop(stop);
+		stop->setTileMap(map);
+	}
+
+	wallPos = map->getWallPos();
+	if (wallPos.x != NULL & wallPos.y != NULL) {
+		wall = new Wall();
+		wall->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		wall->setPosition(glm::vec2(wallPos.x * 32, wallPos.y * 32));
+		player->setWall(wall);
+		wall->setTileMap(map);
+	}
+
 	// Aqui demanar a title map quantes roques shan de creaar i les posicions d'elles
 	coordRocks = map->getRockPos();
 	for (int i = 0; i < coordRocks.size(); i += 2) {
@@ -131,6 +216,16 @@ void Scene::init()
 		vIs.push_back(is);
 	}
 
+	coordLavas = map->getLavasPos();
+	for (int i = 0; i < coordLavas.size(); i += 2) {
+		LavaTile*  lavaTile = new LavaTile();
+		lavaTile->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		lavaTile->setPosition(glm::vec2(32 * coordLavas[i], 32 * coordLavas[i + 1]));
+		lavaTile->setTileMap(map);
+		player->setLavaTile(lavaTile);
+		vLavas.push_back(lavaTile);
+	}
+
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 	currentTime = 0.0f;
 }
@@ -138,18 +233,40 @@ void Scene::init()
 void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
-	player->update(deltaTime);
-	baba->update(deltaTime);
-	you->update(deltaTime);
-	flag->update(deltaTime);
-	flagC->update(deltaTime);
-	win->update(deltaTime);
+	if (baba != NULL) 
+		baba->update(deltaTime);
+	if (you != NULL)
+		you->update(deltaTime);
+	if (flag != NULL)
+		flag->update(deltaTime);
+	if (flagC != NULL)
+		flagC->update(deltaTime);
+	if (win != NULL)
+		win->update(deltaTime);
+	if (and != NULL)
+		and->update(deltaTime);
+	if (die != NULL)
+		die->update(deltaTime);
+	if (lava != NULL)
+		lava->update(deltaTime);
+	if (push != NULL)
+		push->update(deltaTime);
+	if (rockCar != NULL)
+		rockCar->update(deltaTime);
+	if (stop != NULL)
+		stop->update(deltaTime);
+	if (wall != NULL)
+		wall->update(deltaTime);
 	for (int i = 0; i < vRocks.size(); i++) {
 		vRocks[i]->update(deltaTime);
 	}
 	for (int i = 0; i < vIs.size(); i++) {
 		vIs[i]->update(deltaTime);
 	}
+	for (int i = 0; i < vLavas.size(); i++) {
+		vLavas[i]->update(deltaTime);
+	}
+	player->update(deltaTime);
 }
 
 void Scene::render()
@@ -163,18 +280,40 @@ void Scene::render()
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 	map->render();
-	player->render();
-	baba->render();
-	you->render();
-	flag->render();
-	flagC->render();
-	win->render();
+	if (baba != NULL)
+		baba->render();
+	if (you != NULL)
+		you->render();
+	if (flag != NULL)
+		flag->render();
+	if (flagC != NULL)
+		flagC->render();
+	if (win != NULL)
+		win->render();
+	if (and != NULL)
+		and ->render();
+	if (die != NULL)
+		die->render();
+	if (lava != NULL)
+		lava->render();
+	if (push != NULL)
+		push->render();
+	if (rockCar != NULL)
+		rockCar->render();
+	if (stop != NULL)
+		stop->render();
+	if (wall != NULL)
+		wall->render();
 	for (int i = 0; i < vRocks.size(); i++) {
 		vRocks[i]->render();
 	}
 	for (int i = 0; i < vIs.size(); i++) {
 		vIs[i]->render();
 	}
+	for (int i = 0; i < vLavas.size(); i++) {
+		vLavas[i]->render();
+	}
+	player->render();
 }
 
 void Scene::initShaders()

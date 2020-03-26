@@ -11,44 +11,60 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="And.h" />
     <ClInclude Include="AnimKeyframes.h" />
     <ClInclude Include="Baba.h" />
+    <ClInclude Include="Die.h" />
     <ClInclude Include="FlagCar.h" />
     <ClInclude Include="Flagg.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Is.h" />
+    <ClInclude Include="Lava.h" />
+    <ClInclude Include="LavaTile.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Push.h" />
     <ClInclude Include="Quad.h" />
+    <ClInclude Include="RockCar.h" />
     <ClInclude Include="Rocks.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="Sprite.h" />
+    <ClInclude Include="Stop.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TexturedQuad.h" />
     <ClInclude Include="TileMap.h" />
+    <ClInclude Include="Wall.h" />
     <ClInclude Include="Win.h" />
     <ClInclude Include="You.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="And.cpp" />
     <ClCompile Include="Baba.cpp" />
+    <ClCompile Include="Die.cpp" />
     <ClCompile Include="FlagCar.cpp" />
     <ClCompile Include="Flagg.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Is.cpp" />
+    <ClCompile Include="Lava.cpp" />
+    <ClCompile Include="LavaTile.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Push.cpp" />
     <ClCompile Include="Quad.cpp" />
+    <ClCompile Include="RockCar.cpp" />
     <ClCompile Include="Rocks.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="Stop.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TexturedQuad.cpp" />
     <ClCompile Include="TileMap.cpp" />
+    <ClCompile Include="Wall.cpp" />
     <ClCompile Include="Win.cpp" />
     <ClCompile Include="You.cpp" />
   </ItemGroup>

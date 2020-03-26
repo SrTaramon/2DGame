@@ -14,6 +14,14 @@
 #include "Flagg.h"
 #include "FlagCar.h"
 #include "Win.h"
+#include "And.h"
+#include "Die.h"
+#include "Lava.h"
+#include "LavaTile.h"
+#include "Push.h"
+#include "RockCar.h"
+#include "Stop.h"
+#include "Wall.h"
 
 
 // Scene contains all the entities of our game.
@@ -42,13 +50,21 @@ private:
 	Flagg *flag;
 	FlagCar *flagC;
 	Win *win;
-	vector<int> coordRocks, coordIs;
+	And *and;
+	Die* die;
+	Lava* lava;
+	Push* push;
+	RockCar* rockCar;
+	Stop* stop;
+	Wall* wall;
+	vector<int> coordRocks, coordIs, coordLavas;
 	vector< Rocks* > vRocks;
 	vector< Is* > vIs;
+	vector< LavaTile* > vLavas;
 	ShaderProgram texProgram;
 	float currentTime;
 	glm::mat4 projection;
-	glm::vec2 babaPos, youPos, flagPos, flagCarPos, winPos;
+	glm::vec2 babaPos, youPos, flagPos, flagCarPos, winPos, andPos, diePos, lavaPos, pushPos, rockCarPos, stopPos, wallPos;
 
 };
 

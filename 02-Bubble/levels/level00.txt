@@ -16,7 +16,8 @@ images/blocks2.png
 1					-- hi ha win
 1					-- hi ha you
 0					-- hi ha push
-0					-- hi ha dead
+0					-- hi ha die
+0					-- hi ha rockCar
 15					-- Number of rocks
 1 5					-- Y & X
 3 1					-- Y & X

@@ -11,6 +11,14 @@
 #include "You.h"
 #include "FlagCar.h"
 #include "Win.h"
+#include "And.h"
+#include "Die.h"
+#include "Lava.h"
+#include "LavaTile.h"
+#include "Push.h"
+#include "RockCar.h"
+#include "Stop.h"
+#include "Wall.h"
 
 
 // Player is basically a Sprite that represents the player. As such it has
@@ -24,7 +32,7 @@ public:
 	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram);
 	void update(int deltaTime);
 	void render();
-	
+
 	void setTileMap(TileMap *tileMap);
 	void setRocks(Rocks* rocks);
 	void setIs(Is* Is);
@@ -34,6 +42,14 @@ public:
 	void setYou(You* youu);
 	void setFlagCar(FlagCar* flagCar);
 	void setWin(Win* winCar);
+	void setAnd(And* andCar);
+	void setDie(Die* dieCar);
+	void setLava(Lava* lavaCar);
+	void setPush(Push* pushCar);
+	void setLavaTile(LavaTile* lavaTile);
+	void setRockCar(RockCar* rockCar);
+	void setStop(Stop* stopCar);
+	void setWall(Wall* wallCar);
 	
 private:
 	bool bJumping;
@@ -44,11 +60,19 @@ private:
 	TileMap *map;
 	vector< Rocks* > rocks;
 	vector< Is* > vIs;
+	vector< LavaTile* > vLavas;
 	Baba *baba;
 	Flagg *flagg;
 	You *you;
 	FlagCar* flagC;
 	Win* win;
+	And* and;
+	Die* die;
+	Lava* lava;
+	Push* push;
+	RockCar* rockC;
+	Stop* stop;
+	Wall* wall;
 
 };
 

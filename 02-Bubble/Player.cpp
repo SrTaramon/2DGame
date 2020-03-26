@@ -209,9 +209,49 @@ void Player::setYou(You* youu)
 	you = youu;
 }
 
+void Player::setAnd(And* andCar)
+{
+	and = andCar;
+}
+
+void Player::setDie(Die* dieCar)
+{
+	die = dieCar;
+}
+
+void Player::setStop(Stop* stopCar)
+{
+	stop = stopCar;
+}
+
+void Player::setWall(Wall* wallCar)
+{
+	wall = wallCar;
+}
+
+void Player::setLava(Lava* lavaCar)
+{
+	lava = lavaCar;
+}
+
+void Player::setRockCar(RockCar* rockCar)
+{
+	rockC = rockCar;
+}
+
+void Player::setPush(Push* pushCar)
+{
+	push = pushCar;
+}
+
 void Player::setIs(Is* Is)
 {
 	vIs.push_back(Is);
+}
+
+void Player::setLavaTile(LavaTile* lavaTile)
+{
+	vLavas.push_back(lavaTile);
 }
 
 void Player::setbabaCartell(Baba* babaCar) {

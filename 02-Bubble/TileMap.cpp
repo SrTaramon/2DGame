@@ -135,6 +135,10 @@ bool TileMap::loadLevel(const string& levelFile)
 	getline(fin, line);
 	sstream.str(line);
 	sstream >> hihaDead;
+	// RockCar
+	getline(fin, line);
+	sstream.str(line);
+	sstream >> hihaRockCar;
 
 
 	if (hihaRock) {
@@ -200,10 +204,74 @@ bool TileMap::loadLevel(const string& levelFile)
 	}
 
 	if (hihaFlag) {
-	//Flag
-	getline(fin, line);
-	sstream.str(line);
-	sstream >> flagPos.y >> flagPos.x;
+		//Flag
+		getline(fin, line);
+		sstream.str(line);
+		sstream >> flagPos.y >> flagPos.x;
+	}
+
+	if (hihaAnd) {
+		//Cartell And
+		getline(fin, line);
+		sstream.str(line);
+		sstream >> andPos.y >> andPos.x;
+	}
+
+	if (hihaDead) {
+		//Cartell Die
+		getline(fin, line);
+		sstream.str(line);
+		sstream >> diePos.y >> diePos.x;
+	}
+
+	if (hihaLava) {
+		//Cartell Lava
+		getline(fin, line);
+		sstream.str(line);
+		sstream >> lavaPos.y >> lavaPos.x;
+
+		//lavas
+		getline(fin, line);
+		sstream.str(line);
+		sstream >> numberLava;
+
+		vlavaPos = *new vector<int>(numberLava * 2);
+		for (int i = 0; i < vlavaPos.size() - 1; i += 2) {
+			int x, y;
+			getline(fin, line);
+			sstream.str(line);
+			sstream >> y >> x;
+			vlavaPos[i] = x;
+			vlavaPos[i + 1] = y;
+		}
+	}
+
+	if (hihaPush) {
+		//Cartell Die
+		getline(fin, line);
+		sstream.str(line);
+		sstream >> pushPos.y >> pushPos.x;
+	}
+
+	if (hihaRockCar) {
+		//Cartell Die
+		getline(fin, line);
+		sstream.str(line);
+		sstream >> rockCarPos.y >> rockCarPos.x;
+	}
+
+	if (hihaStop) {
+		//Cartell Die
+		getline(fin, line);
+		sstream.str(line);
+		sstream >> stopPos.y >> stopPos.x;
+	}
+
+	if (hihaWall) {
+		//Cartell Die
+		getline(fin, line);
+		sstream.str(line);
+		sstream >> wallPos.y >> wallPos.x;
 	}
 
 	map = new int[mapSize.x * mapSize.y];

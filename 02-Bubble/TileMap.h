@@ -32,11 +32,19 @@ public:
 	int getMapSizey() const { return mapSize.y; }
 	vector<int> getRockPos() { return vrocksPos; }
 	vector<int> getIsPos() { return visPos; }
+	vector<int> getLavasPos() { return vlavaPos; }
 	glm::ivec2 getBabaPos() { return babaPos; }
 	glm::ivec2 getYouPos() { return youPos; }
 	glm::ivec2 getFlagPos() { return flagPos; }
 	glm::ivec2 getFlagCarPos() { return flagCarPos; }
 	glm::ivec2 getWinPos() { return winPos; }
+	glm::ivec2 getAndPos() { return andPos; }
+	glm::ivec2 getDiePos() { return diePos; }
+	glm::ivec2 getLavaPos() { return lavaPos; }
+	glm::ivec2 getPushPos() { return pushPos; }
+	glm::ivec2 getRockCarPos() { return rockCarPos; }
+	glm::ivec2 getStopPos() { return stopPos; }
+	glm::ivec2 getWallPos() { return wallPos; }
 
 	bool collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size) const;
 	bool collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) const;
@@ -51,15 +59,16 @@ private:
 	GLuint vao;
 	GLuint vbo;
 	GLint posLocation, texCoordLocation;
-	glm::ivec2 position, mapSize, tilesheetSize, babaPos, youPos, flagPos, flagCarPos, winPos;
-	int tileSize, blockSize, ntilesheet, numberRocks, numberIs;
+	glm::ivec2 position, mapSize, tilesheetSize, babaPos, youPos, flagPos, flagCarPos, winPos, andPos, diePos, lavaPos, pushPos, rockCarPos, stopPos, wallPos;
+	int tileSize, blockSize, ntilesheet, numberRocks, numberIs, numberLava;
 	Texture tilesheet;
-	vector< int > vrocksPos, visPos; //sempre parell, primer y després x
+	vector< int > vrocksPos, visPos, vlavaPos; //sempre parell, primer y després x
 	vector<Texture> vtilesheet;
 	glm::vec2 tileTexSize;
 	int *map;
 	bool hihaBaba = false;
 	bool hihaRock = false;
+	bool hihaRockCar = false;
 	bool hihaWall = false;
 	bool hihaFlag = false;
 	bool hihaLava = false;
