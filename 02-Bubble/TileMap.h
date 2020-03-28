@@ -33,6 +33,7 @@ public:
 	vector<int> getRockPos() { return vrocksPos; }
 	vector<int> getIsPos() { return visPos; }
 	vector<int> getLavasPos() { return vlavaPos; }
+	vector<int> getWallTilePos() { return vwallPos; }
 	glm::ivec2 getBabaPos() { return babaPos; }
 	glm::ivec2 getYouPos() { return youPos; }
 	glm::ivec2 getFlagPos() { return flagPos; }
@@ -60,9 +61,9 @@ private:
 	GLuint vbo;
 	GLint posLocation, texCoordLocation;
 	glm::ivec2 position, mapSize, tilesheetSize, babaPos, youPos, flagPos, flagCarPos, winPos, andPos, diePos, lavaPos, pushPos, rockCarPos, stopPos, wallPos;
-	int tileSize, blockSize, ntilesheet, numberRocks, numberIs, numberLava;
+	int tileSize, blockSize, ntilesheet, numberRocks, numberIs, numberLava, numberWalls;
 	Texture tilesheet;
-	vector< int > vrocksPos, visPos, vlavaPos; //sempre parell, primer y després x
+	vector< int > vrocksPos, visPos, vlavaPos, vwallPos; //sempre parell, primer y després x
 	vector<Texture> vtilesheet;
 	glm::vec2 tileTexSize;
 	int *map;
@@ -79,6 +80,7 @@ private:
 	bool hihaYou = false;
 	bool hihaPush = false;
 	bool hihaDead = false;
+	bool hihaWallTile = false;
 
 };
 

@@ -22,6 +22,7 @@
 #include "RockCar.h"
 #include "Stop.h"
 #include "Wall.h"
+#include "WallTile.h"
 
 
 // Scene contains all the entities of our game.
@@ -57,10 +58,11 @@ private:
 	RockCar* rockCar;
 	Stop* stop;
 	Wall* wall;
-	vector<int> coordRocks, coordIs, coordLavas;
+	vector<int> coordRocks, coordIs, coordLavas, coordWall;
 	vector< Rocks* > vRocks;
 	vector< Is* > vIs;
 	vector< LavaTile* > vLavas;
+	vector< WallTile* > vWall;
 	ShaderProgram texProgram;
 	float currentTime;
 	glm::mat4 projection;

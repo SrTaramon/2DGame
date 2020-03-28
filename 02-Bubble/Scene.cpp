@@ -35,6 +35,9 @@ Scene::Scene()
 	for (int i = 0; i < vLavas.size(); i++) {
 		vLavas[i] = NULL;
 	}
+	for (int i = 0; i < vWall.size(); i++) {
+		vWall[i] = NULL;
+	}
 }
 
 Scene::~Scene()
@@ -74,6 +77,10 @@ Scene::~Scene()
 	for (int i = 0; i < vLavas.size(); i++) {
 		if (vLavas[i] != NULL)
 			delete vLavas[i];
+	}
+	for (int i = 0; i < vWall.size(); i++) {
+		if (vWall[i] != NULL)
+			delete vWall[i];
 	}
 }
 
@@ -226,6 +233,16 @@ void Scene::init()
 		vLavas.push_back(lavaTile);
 	}
 
+	coordWall = map->getWallTilePos();
+	for (int i = 0; i < coordWall.size(); i += 2) {
+		WallTile* wallTile = new WallTile();
+		wallTile->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		wallTile->setPosition(glm::vec2(32 * coordWall[i], 32 * coordWall[i + 1]));
+		wallTile->setTileMap(map);
+		player->setWallTile(wallTile);
+		vWall.push_back(wallTile);
+	}
+
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 	currentTime = 0.0f;
 }
@@ -265,6 +282,9 @@ void Scene::update(int deltaTime)
 	}
 	for (int i = 0; i < vLavas.size(); i++) {
 		vLavas[i]->update(deltaTime);
+	}
+	for (int i = 0; i < vWall.size(); i++) {
+		vWall[i]->update(deltaTime);
 	}
 	player->update(deltaTime);
 }
@@ -312,6 +332,9 @@ void Scene::render()
 	}
 	for (int i = 0; i < vLavas.size(); i++) {
 		vLavas[i]->render();
+	}
+	for (int i = 0; i < vWall.size(); i++) {
+		vWall[i]->render();
 	}
 	player->render();
 }

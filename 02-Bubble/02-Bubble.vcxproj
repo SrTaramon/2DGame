@@ -36,6 +36,7 @@
     <ClInclude Include="TexturedQuad.h" />
     <ClInclude Include="TileMap.h" />
     <ClInclude Include="Wall.h" />
+    <ClInclude Include="WallTile.h" />
     <ClInclude Include="Win.h" />
     <ClInclude Include="You.h" />
   </ItemGroup>
@@ -65,6 +66,7 @@
     <ClCompile Include="TexturedQuad.cpp" />
     <ClCompile Include="TileMap.cpp" />
     <ClCompile Include="Wall.cpp" />
+    <ClCompile Include="WallTile.cpp" />
     <ClCompile Include="Win.cpp" />
     <ClCompile Include="You.cpp" />
   </ItemGroup>

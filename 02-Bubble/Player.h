@@ -19,6 +19,7 @@
 #include "RockCar.h"
 #include "Stop.h"
 #include "Wall.h"
+#include "WallTile.h"
 
 
 // Player is basically a Sprite that represents the player. As such it has
@@ -47,6 +48,7 @@ public:
 	void setLava(Lava* lavaCar);
 	void setPush(Push* pushCar);
 	void setLavaTile(LavaTile* lavaTile);
+	void setWallTile(WallTile* wallTile);
 	void setRockCar(RockCar* rockCar);
 	void setStop(Stop* stopCar);
 	void setWall(Wall* wallCar);
@@ -61,6 +63,7 @@ private:
 	vector< Rocks* > rocks;
 	vector< Is* > vIs;
 	vector< LavaTile* > vLavas;
+	vector< WallTile* > vWall;
 	Baba *baba;
 	Flagg *flagg;
 	You *you;

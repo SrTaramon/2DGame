@@ -249,6 +249,11 @@ void Player::setIs(Is* Is)
 	vIs.push_back(Is);
 }
 
+void Player::setWallTile(WallTile* wallTile)
+{
+	vWall.push_back(wallTile);
+}
+
 void Player::setLavaTile(LavaTile* lavaTile)
 {
 	vLavas.push_back(lavaTile);

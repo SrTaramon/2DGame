@@ -139,7 +139,10 @@ bool TileMap::loadLevel(const string& levelFile)
 	getline(fin, line);
 	sstream.str(line);
 	sstream >> hihaRockCar;
-
+	// WallTile
+	getline(fin, line);
+	sstream.str(line);
+	sstream >> hihaWallTile;
 
 	if (hihaRock) {
 		//roques
@@ -272,6 +275,23 @@ bool TileMap::loadLevel(const string& levelFile)
 		getline(fin, line);
 		sstream.str(line);
 		sstream >> wallPos.y >> wallPos.x;
+	}
+
+	if (hihaWallTile) {
+		//cartells Is
+		getline(fin, line);
+		sstream.str(line);
+		sstream >> numberWalls;
+
+		vwallPos = *new vector<int>(numberWalls * 2);
+		for (int i = 0; i < vwallPos.size() - 1; i += 2) {
+			int x, y;
+			getline(fin, line);
+			sstream.str(line);
+			sstream >> y >> x;
+			vwallPos[i] = x;
+			vwallPos[i + 1] = y;
+		}
 	}
 
 	map = new int[mapSize.x * mapSize.y];

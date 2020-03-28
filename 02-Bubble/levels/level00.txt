@@ -18,6 +18,7 @@ images/blocks2.png
 0					-- hi ha push
 0					-- hi ha die
 0					-- hi ha rockCar
+1					-- hi ha WallTile
 15					-- Number of rocks
 1 5					-- Y & X
 3 1					-- Y & X
@@ -41,6 +42,9 @@ images/blocks2.png
 1					-- number of Is cartells
 2 3					-- Y & X
 2 11				-- flag
+2					-- number of WallTiles
+2 6					-- wall
+2 7					-- wall
 11111111111111
 1            1
 1            1
