@@ -33,37 +33,11 @@ void WallTile::render()
 	sprite->render();
 }
 
-void WallTile::setTileMap(TileMap* tileMap)
-{
-	map = tileMap;
-}
 
 void WallTile::setPosition(const glm::vec2& pos)
 {
 	posPlayer = pos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
-}
-
-bool WallTile::collisionMove(const glm::ivec2& pos, const glm::ivec2& size) {
-	int x, y;
-	x = sprite->getposicionx() - 32;
-	y = sprite->getposiciony() - 16;
-
-	int px = pos.x + 32;
-	int py = pos.y;
-
-	cout << pos.x << pos.y << endl;
-
-
-	if (((px) > x& px < x + size.x)) {
-		//return true;
-		if (((py) > y& py < y + size.y)) {
-			return true;
-		}
-	}
-
-
-	return false;
 }
 
 bool WallTile::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size) {

@@ -33,10 +33,6 @@ void RockCar::render()
 	sprite->render();
 }
 
-void RockCar::setTileMap(TileMap* tileMap)
-{
-	map = tileMap;
-}
 
 void RockCar::setPosition(const glm::vec2& pos)
 {

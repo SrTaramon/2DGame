@@ -33,10 +33,6 @@ void FlagCar::render()
 	sprite->render();
 }
 
-void FlagCar::setTileMap(TileMap* tileMap)
-{
-	map = tileMap;
-}
 
 void FlagCar::setPosition(const glm::vec2& pos)
 {

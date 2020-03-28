@@ -1,11 +1,27 @@
-#ifndef _TILE_MAP_INCLUDE
-#define _TILE_MAP_INCLUDE
+#ifndef _TILEMAP_INCLUDE
+#define _TILEMAP_INCLUDE
 
 
 #include <glm/glm.hpp>
 #include <vector>
 #include "Texture.h"
 #include "ShaderProgram.h"
+#include "Rocks.h"
+#include "Baba.h"
+#include "Is.h"
+#include "You.h"
+#include "Flagg.h"
+#include "FlagCar.h"
+#include "Win.h"
+#include "And.h"
+#include "Die.h"
+#include "Lava.h"
+#include "LavaTile.h"
+#include "Push.h"
+#include "RockCar.h"
+#include "Stop.h"
+#include "Wall.h"
+#include "WallTile.h"
 
 
 // Class Tilemap is capable of loading a tile map from a text file in a very
@@ -25,6 +41,7 @@ public:
 	~TileMap();
 
 	void render() const;
+	void update(int deltaTime);
 	void free();
 	
 	int getTileSize() const { return tileSize; }
@@ -53,7 +70,7 @@ public:
 	bool collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, int* posY) const;
 	
 private:
-	bool loadLevel(const string &levelFile);
+	bool loadLevel(const string &levelFile, ShaderProgram& program);
 	void prepareArrays(const glm::vec2 &minCoords, ShaderProgram &program);
 
 private:
@@ -81,6 +98,22 @@ private:
 	bool hihaPush = false;
 	bool hihaDead = false;
 	bool hihaWallTile = false;
+	Baba* baba;
+	You* you;
+	Flagg* flag;
+	FlagCar* flagC;
+	Win* win;
+	And*and;
+	Die* die;
+	Lava* lava;
+	Push* push;
+	RockCar* rockCar;
+	Stop* stop;
+	Wall* wall;
+	vector< Rocks* > vRocks;
+	vector< Is* > vIs;
+	vector< LavaTile* > vLavas;
+	vector< WallTile* > vWall;
 
 };
 

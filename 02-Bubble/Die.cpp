@@ -33,11 +33,6 @@ void Die::render()
 	sprite->render();
 }
 
-void Die::setTileMap(TileMap* tileMap)
-{
-	map = tileMap;
-}
-
 void Die::setPosition(const glm::vec2& pos)
 {
 	posPlayer = pos;

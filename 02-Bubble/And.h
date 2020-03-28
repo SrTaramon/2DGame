@@ -3,7 +3,6 @@
 
 
 #include "Sprite.h"
-#include "TileMap.h"
 
 
 // Player is basically a Sprite that represents the player. As such it has
@@ -18,7 +17,6 @@ public:
 	void update(int deltaTime);
 	void render();
 
-	void setTileMap(TileMap* tileMap);
 	void setPosition(const glm::vec2& pos);
 	bool collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size);
 	bool collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size);
@@ -33,7 +31,6 @@ private:
 	int jumpAngle, startY;
 	Texture spritesheet;
 	Sprite* sprite;
-	TileMap* map;
 
 };
 

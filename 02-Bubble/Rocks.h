@@ -3,7 +3,6 @@
 
 #include <vector>
 #include "Sprite.h"
-#include "TileMap.h"
 
 
 // Player is basically a Sprite that represents the player. As such it has
@@ -18,9 +17,7 @@ public:
 	void update(int deltaTime);
 	void render();
 
-	void setTileMap(TileMap* tileMap);
 	void setPosition(const glm::vec2& pos);
-	bool collisionMove(const glm::ivec2& pos, const glm::ivec2& size);
 	bool collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size);
 	bool collisionWallMoveRight(const glm::ivec2& pos, const glm::ivec2& size, const vector<Rocks*>& VRock);
 	bool collisionWallMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, const vector<Rocks*>& VRock);
@@ -38,7 +35,6 @@ private:
 	int jumpAngle, startY;
 	Texture spritesheet;
 	Sprite* sprite;
-	TileMap* map;
 
 };
 

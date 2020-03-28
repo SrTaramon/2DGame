@@ -33,11 +33,6 @@ void Stop::render()
 	sprite->render();
 }
 
-void Stop::setTileMap(TileMap* tileMap)
-{
-	map = tileMap;
-}
-
 void Stop::setPosition(const glm::vec2& pos)
 {
 	posPlayer = pos;

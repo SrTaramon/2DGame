@@ -33,10 +33,6 @@ void Rocks::render()
 	sprite->render();
 }
 
-void Rocks::setTileMap(TileMap* tileMap)
-{
-	map = tileMap;
-}
 
 void Rocks::setPosition(const glm::vec2& pos)
 {
@@ -44,28 +40,8 @@ void Rocks::setPosition(const glm::vec2& pos)
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 }
 
-bool Rocks::collisionMove(const glm::ivec2& pos, const glm::ivec2& size) {
-	int x, y;
-	x = sprite->getposicionx() - 32;
-	y = sprite->getposiciony() - 32;
 
-	int px = pos.x + 32;
-	int py = pos.y;
-
-	cout << pos.x << pos.y << endl;
-
-
-	if (((px) > x & px < x + size.x) ) {
-		//return true;
-		if (((py) > y & py < y + size.y)) {
-			return true;
-		}
-	}
-
-
-	return false;
-}
-bool Rocks::collisionWallMoveRight(const glm::ivec2& pos, const glm::ivec2& size, const vector<Rocks *>& VRock) {
+/*bool Rocks::collisionWallMoveRight(const glm::ivec2& pos, const glm::ivec2& size, const vector<Rocks *>& VRock) {
 	
 	//bool Mapcollision = map->collisionMoveRight(glm::ivec2(pos.x, pos.y), glm::ivec2(32, 32));
 	bool RockCollision = false;
@@ -201,7 +177,7 @@ bool Rocks::collisionWallMoveDown(const glm::ivec2& pos, const glm::ivec2& size,
 	}
 
 	return (RockCollision);
-}
+}*/
 
 
 bool Rocks::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size) {

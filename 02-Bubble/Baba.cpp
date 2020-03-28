@@ -33,10 +33,6 @@ void Baba::render()
 	sprite->render();
 }
 
-void Baba::setTileMap(TileMap* tileMap)
-{
-	map = tileMap;
-}
 
 void Baba::setPosition(const glm::vec2& pos)
 {

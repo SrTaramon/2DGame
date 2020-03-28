@@ -33,10 +33,6 @@ void Win::render()
 	sprite->render();
 }
 
-void Win::setTileMap(TileMap* tileMap)
-{
-	map = tileMap;
-}
 
 void Win::setPosition(const glm::vec2& pos)
 {

@@ -33,10 +33,6 @@ void Lava::render()
 	sprite->render();
 }
 
-void Lava::setTileMap(TileMap* tileMap)
-{
-	map = tileMap;
-}
 
 void Lava::setPosition(const glm::vec2& pos)
 {

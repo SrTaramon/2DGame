@@ -8,17 +8,38 @@
 using namespace std;
 
 
+#define SCREEN_X 32
+#define SCREEN_Y 32
+
 TileMap *TileMap::createTileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProgram &program)
 {
 	TileMap *map = new TileMap(levelFile, minCoords, program);
 	
+	/*baba = NULL;
+	you = NULL;
+	flag = NULL;
+	flagC = NULL;
+	win = NULL;
+	and = NULL;
+	die = NULL;
+	lava = NULL;
+	push = NULL;
+	rockCar = NULL;
+	stop = NULL;
+	wall = NULL;
+	
+	vector< Rocks* > vRocks;
+	vector< Is* > vIs;
+	vector< LavaTile* > vLavas;
+	vector< WallTile* > vWall;*/
+
 	return map;
 }
 
 
 TileMap::TileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProgram &program)
 {
-	loadLevel(levelFile);
+	loadLevel(levelFile, program);
 	prepareArrays(minCoords, program);
 }
 
@@ -38,6 +59,79 @@ void TileMap::render() const
 	glEnableVertexAttribArray(texCoordLocation);
 	glDrawArrays(GL_TRIANGLES, 0, 6 * mapSize.x * mapSize.y);
 	glDisable(GL_TEXTURE_2D);
+	if (hihaBaba != false)
+		baba->render();
+	if (hihaYou != false)
+		you->render();
+	if (hihaFlag != false)
+		flag->render();
+		flagC->render();
+	if (hihaWin != false)
+		win->render();
+	if (hihaAnd != false)
+		and ->render();
+	if (hihaDead != false)
+		die->render();
+	if (hihaLava != false)
+		lava->render();
+	if (hihaPush != false)
+		push->render();
+	if (hihaRockCar != false)
+		rockCar->render();
+	if (hihaStop != false)
+		stop->render();
+	if (hihaWall != false)
+		wall->render();
+	for (int i = 0; i < vRocks.size(); i++) {
+		vRocks[i]->render();
+	}
+	for (int i = 0; i < vIs.size(); i++) {
+		vIs[i]->render();
+	}
+	for (int i = 0; i < vLavas.size(); i++) {
+		vLavas[i]->render();
+	}
+	for (int i = 0; i < vWall.size(); i++) {
+		vWall[i]->render();
+	}
+}
+
+void TileMap::update(int deltaTime) {
+	if (hihaBaba != false)
+		baba->update(deltaTime);
+	if (hihaYou != false)
+		you->update(deltaTime);
+	if (hihaFlag != false)
+		flag->update(deltaTime);
+		flagC->update(deltaTime);
+	if (hihaWin != false)
+		win->update(deltaTime);
+	if (hihaAnd != false)
+		and ->update(deltaTime);
+	if (hihaDead != false)
+		die->update(deltaTime);
+	if (hihaLava != false)
+		lava->update(deltaTime);
+	if (hihaPush != false)
+		push->update(deltaTime);
+	if (hihaRockCar != false)
+		rockCar->update(deltaTime);
+	if (hihaStop != false)
+		stop->update(deltaTime);
+	if (hihaWall != false)
+		wall->update(deltaTime);
+	for (int i = 0; i < vRocks.size(); i++) {
+		vRocks[i]->update(deltaTime);
+	}
+	for (int i = 0; i < vIs.size(); i++) {
+		vIs[i]->update(deltaTime);
+	}
+	for (int i = 0; i < vLavas.size(); i++) {
+		vLavas[i]->update(deltaTime);
+	}
+	for (int i = 0; i < vWall.size(); i++) {
+		vWall[i]->update(deltaTime);
+	}
 }
 
 void TileMap::free()
@@ -45,7 +139,7 @@ void TileMap::free()
 	glDeleteBuffers(1, &vbo);
 }
 
-bool TileMap::loadLevel(const string& levelFile)
+bool TileMap::loadLevel(const string& levelFile, ShaderProgram& program)
 {
 	ifstream fin;
 	string line, tilesheetFile;
@@ -159,6 +253,13 @@ bool TileMap::loadLevel(const string& levelFile)
 			vrocksPos[i] = x;
 			vrocksPos[i + 1] = y;
 		}
+
+		for (int i = 0; i < vrocksPos.size(); i += 2) {
+			Rocks* rock = new Rocks();
+			rock->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
+			rock->setPosition(glm::vec2(32 * vrocksPos[i], 32 * vrocksPos[i + 1]));
+			vRocks.push_back(rock);
+		}
 	}
 
 	if (hihaBaba) {
@@ -166,6 +267,10 @@ bool TileMap::loadLevel(const string& levelFile)
 		getline(fin, line);
 		sstream.str(line);
 		sstream >> babaPos.y >> babaPos.x;
+
+		baba = new Baba();
+		baba->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
+		baba->setPosition(glm::vec2(babaPos.x * 32, babaPos.y * 32));
 	}
 
 	if (hihaYou) {
@@ -173,6 +278,10 @@ bool TileMap::loadLevel(const string& levelFile)
 		getline(fin, line);
 		sstream.str(line);
 		sstream >> youPos.y >> youPos.x;
+
+		you = new You();
+		you->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
+		you->setPosition(glm::vec2(youPos.x * 32, youPos.y * 32));
 	}
 
 	if (hihaFlag) {
@@ -180,6 +289,10 @@ bool TileMap::loadLevel(const string& levelFile)
 		getline(fin, line);
 		sstream.str(line);
 		sstream >> flagCarPos.y >> flagCarPos.x;
+
+		flagC = new FlagCar();
+		flagC->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
+		flagC->setPosition(glm::vec2(flagCarPos.x * 32, flagCarPos.y * 32));
 	}
 
 	if (hihaWin) {
@@ -187,6 +300,11 @@ bool TileMap::loadLevel(const string& levelFile)
 		getline(fin, line);
 		sstream.str(line);
 		sstream >> winPos.y >> winPos.x;
+
+		win = new Win();
+		win->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
+		win->setPosition(glm::vec2(winPos.x * 32, winPos.y * 32));
+
 	}
 
 	if (hihaIs) {
@@ -204,6 +322,13 @@ bool TileMap::loadLevel(const string& levelFile)
 			visPos[i] = x;
 			visPos[i + 1] = y;
 		}
+
+		for (int i = 0; i < visPos.size(); i += 2) {
+			Is* is = new Is();
+			is->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
+			is->setPosition(glm::vec2(32 * visPos[i], 32 * visPos[i + 1]));
+			vIs.push_back(is);
+		}
 	}
 
 	if (hihaFlag) {
@@ -211,6 +336,10 @@ bool TileMap::loadLevel(const string& levelFile)
 		getline(fin, line);
 		sstream.str(line);
 		sstream >> flagPos.y >> flagPos.x;
+
+		flag = new Flagg();
+		flag->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
+		flag->setPosition(glm::vec2(flagPos.x * 32, flagPos.y * 32));
 	}
 
 	if (hihaAnd) {
@@ -218,6 +347,10 @@ bool TileMap::loadLevel(const string& levelFile)
 		getline(fin, line);
 		sstream.str(line);
 		sstream >> andPos.y >> andPos.x;
+
+		and = new And();
+		and ->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
+		and ->setPosition(glm::vec2(andPos.x * 32, andPos.y * 32));
 	}
 
 	if (hihaDead) {
@@ -225,6 +358,10 @@ bool TileMap::loadLevel(const string& levelFile)
 		getline(fin, line);
 		sstream.str(line);
 		sstream >> diePos.y >> diePos.x;
+
+		die = new Die();
+		die->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
+		die->setPosition(glm::vec2(diePos.x * 32, diePos.y * 32));
 	}
 
 	if (hihaLava) {
@@ -232,6 +369,10 @@ bool TileMap::loadLevel(const string& levelFile)
 		getline(fin, line);
 		sstream.str(line);
 		sstream >> lavaPos.y >> lavaPos.x;
+
+		lava = new Lava();
+		lava->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
+		lava->setPosition(glm::vec2(lavaPos.x * 32, lavaPos.y * 32));
 
 		//lavas
 		getline(fin, line);
@@ -247,6 +388,14 @@ bool TileMap::loadLevel(const string& levelFile)
 			vlavaPos[i] = x;
 			vlavaPos[i + 1] = y;
 		}
+
+
+		for (int i = 0; i < vlavaPos.size(); i += 2) {
+			LavaTile* lavaTile = new LavaTile();
+			lavaTile->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
+			lavaTile->setPosition(glm::vec2(32 * vlavaPos[i], 32 * vlavaPos[i + 1]));
+			vLavas.push_back(lavaTile);
+		}
 	}
 
 	if (hihaPush) {
@@ -254,6 +403,10 @@ bool TileMap::loadLevel(const string& levelFile)
 		getline(fin, line);
 		sstream.str(line);
 		sstream >> pushPos.y >> pushPos.x;
+
+		push = new Push();
+		push->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
+		push->setPosition(glm::vec2(pushPos.x * 32, pushPos.y * 32));
 	}
 
 	if (hihaRockCar) {
@@ -261,6 +414,10 @@ bool TileMap::loadLevel(const string& levelFile)
 		getline(fin, line);
 		sstream.str(line);
 		sstream >> rockCarPos.y >> rockCarPos.x;
+
+		rockCar = new RockCar();
+		rockCar->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
+		rockCar->setPosition(glm::vec2(rockCarPos.x * 32, rockCarPos.y * 32));
 	}
 
 	if (hihaStop) {
@@ -268,6 +425,10 @@ bool TileMap::loadLevel(const string& levelFile)
 		getline(fin, line);
 		sstream.str(line);
 		sstream >> stopPos.y >> stopPos.x;
+
+		stop = new Stop();
+		stop->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
+		stop->setPosition(glm::vec2(stopPos.x * 32, stopPos.y * 32));
 	}
 
 	if (hihaWall) {
@@ -275,6 +436,10 @@ bool TileMap::loadLevel(const string& levelFile)
 		getline(fin, line);
 		sstream.str(line);
 		sstream >> wallPos.y >> wallPos.x;
+
+		wall = new Wall();
+		wall->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
+		wall->setPosition(glm::vec2(wallPos.x * 32, wallPos.y * 32));
 	}
 
 	if (hihaWallTile) {
@@ -292,6 +457,14 @@ bool TileMap::loadLevel(const string& levelFile)
 			vwallPos[i] = x;
 			vwallPos[i + 1] = y;
 		}
+
+		for (int i = 0; i < vwallPos.size(); i += 2) {
+			WallTile* wallTile = new WallTile();
+			wallTile->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
+			wallTile->setPosition(glm::vec2(32 * vwallPos[i], 32 * vwallPos[i + 1]));
+			vWall.push_back(wallTile);
+		}
+
 	}
 
 	map = new int[mapSize.x * mapSize.y];

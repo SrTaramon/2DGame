@@ -33,10 +33,6 @@ void And::render()
 	sprite->render();
 }
 
-void And::setTileMap(TileMap* tileMap)
-{
-	map = tileMap;
-}
 
 void And::setPosition(const glm::vec2& pos)
 {

@@ -32,10 +32,6 @@ void You::render()
 	sprite->render();
 }
 
-void You::setTileMap(TileMap* tileMap)
-{
-	map = tileMap;
-}
 
 void You::setPosition(const glm::vec2& pos)
 {

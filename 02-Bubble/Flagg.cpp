@@ -47,11 +47,6 @@ void Flagg::render()
 	sprite->render();
 }
 
-void Flagg::setTileMap(TileMap* tileMap)
-{
-	map = tileMap;
-}
-
 void Flagg::setPosition(const glm::vec2& pos)
 {
 	posPlayer = pos;
@@ -59,5 +54,128 @@ void Flagg::setPosition(const glm::vec2& pos)
 }
 
 
+bool Flagg::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size) {
+	int x, y;
+	x = sprite->getposicionx() - 32;
+	y = sprite->getposiciony() - 16;
+	int y2 = sprite->getposiciony() - 16 + 32;
+
+	int px = pos.x + 32;
+	int py = pos.y;
+	int py2 = pos.y + 32;
 
 
+	if (((px) > x& px < x + size.x)) {
+
+		if (py > y) {
+			if (py < y2) {
+				return true;
+			}
+			else return false;
+		}
+		else if (py < y) {
+			if (py2 > y) {
+				return true;
+			}
+			else false;
+		}
+		else return true;
+
+	}
+
+
+
+	return false;
+}
+
+bool Flagg::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size) {
+	int x, y;
+	x = sprite->getposicionx() - 32;
+	y = sprite->getposiciony() - 16;
+	int y2 = sprite->getposiciony() - 16 + 32;
+
+	int px = pos.x;
+	int py = pos.y;
+	int py2 = pos.y + 32;
+
+
+	if (((px) > x& px < x + size.x)) {
+
+		if (py > y) {
+			if (py < y2) {
+				return true;
+			}
+			else return false;
+		}
+		else if (py < y) {
+			if (py2 > y) {
+				return true;
+			}
+			else false;
+		}
+		else return true;
+
+	}
+
+
+
+	return false;
+}
+
+bool Flagg::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size) {
+	int x, y;
+	x = sprite->getposicionx() - 32;
+	y = sprite->getposiciony() - 16;
+	int x2 = sprite->getposicionx() - 32 + 32;
+	int px = pos.x;
+	int py = pos.y;
+	int px2 = pos.x + 32;
+
+	if (((py) > y& py < y + size.y)) {
+		if (x < px) {
+			if (px < x2) {
+				return true;
+			}
+			else return false;
+		}
+		else if (px < x) {
+			if (x < px2) {
+				return true;
+			}
+			else return false;
+		}
+		else return true;
+	}
+
+
+	return false;
+}
+
+bool Flagg::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size) {
+	int x, y;
+	x = sprite->getposicionx() - 32;
+	y = sprite->getposiciony() - 16;
+	int x2 = sprite->getposicionx() - 32 + 32;
+	int px = pos.x;
+	int py = pos.y + 32;
+	int px2 = pos.x + 32;
+
+	if (((py) > y& py < y + size.y)) {
+		if (x < px) {
+			if (px < x2) {
+				return true;
+			}
+			else return false;
+		}
+		else if (px < x) {
+			if (x < px2) {
+				return true;
+			}
+			else return false;
+		}
+		else return true;
+	}
+
+
+	return false;
+}

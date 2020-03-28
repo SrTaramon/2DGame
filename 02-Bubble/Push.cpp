@@ -33,10 +33,6 @@ void Push::render()
 	sprite->render();
 }
 
-void Push::setTileMap(TileMap* tileMap)
-{
-	map = tileMap;
-}
 
 void Push::setPosition(const glm::vec2& pos)
 {
