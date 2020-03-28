@@ -48,15 +48,15 @@ void Baba::setPosition(const glm::vec2& pos)
 bool Baba::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size) {
 	int x, y;
 	x = sprite->getposicionx() - 32;
-	y = sprite->getposiciony() - 16;
-	int y2 = sprite->getposiciony() - 16 + 32;
+	y = sprite->getposiciony() - 32;
+	int y2 = sprite->getposiciony() - 32 + 32;
 
 	int px = pos.x + 32;
 	int py = pos.y;
 	int py2 = pos.y + 32;
 
 
-	if (((px) > x & px < x + size.x)) {
+	if ((px) > x & (px < x + size.x)) {
 
 		if (py > y) {
 			if (py < y2) {
@@ -82,8 +82,8 @@ bool Baba::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size) {
 bool Baba::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size) {
 	int x, y;
 	x = sprite->getposicionx() - 32;
-	y = sprite->getposiciony() - 16;
-	int y2 = sprite->getposiciony() - 16 + 32;
+	y = sprite->getposiciony() - 32;
+	int y2 = sprite->getposiciony() - 32 + 32;
 
 	int px = pos.x;
 	int py = pos.y;
@@ -116,7 +116,7 @@ bool Baba::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size) {
 bool Baba::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size) {
 	int x, y;
 	x = sprite->getposicionx() - 32;
-	y = sprite->getposiciony() - 16;
+	y = sprite->getposiciony() - 32;
 	int x2 = sprite->getposicionx() - 32 + 32;
 	int px = pos.x;
 	int py = pos.y;
@@ -145,7 +145,7 @@ bool Baba::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size) {
 bool Baba::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size) {
 	int x, y;
 	x = sprite->getposicionx() - 32;
-	y = sprite->getposiciony() - 16;
+	y = sprite->getposiciony() - 32;
 	int x2 = sprite->getposicionx() - 32 + 32;
 	int px = pos.x;
 	int py = pos.y + 32;
