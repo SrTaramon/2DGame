@@ -19,6 +19,9 @@ public:
 
 	void setPosition(const glm::vec2& pos);
 	bool collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size);
+
+	bool collisionMoveRightWithRocks(const glm::ivec2& pos, const glm::ivec2& size, const vector<Rocks*>& VRock);
+
 	bool collisionWallMoveRight(const glm::ivec2& pos, const glm::ivec2& size, const vector<Rocks*>& VRock);
 	bool collisionWallMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, const vector<Rocks*>& VRock);
 	bool collisionWallMoveUp(const glm::ivec2& pos, const glm::ivec2& size, const vector<Rocks*>& VRock);

@@ -65,10 +65,13 @@ public:
 	glm::ivec2 getWallPos() { return wallPos; }
 
 	bool collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size) const;
-	bool collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) const;
+	/*bool collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) const;*/
 	bool collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, int *posY) const;
 	bool collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, int* posY) const;
 	
+	void collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, string &accio) const;
+	bool collisionMoveRightLimit(const glm::ivec2& pos, const glm::ivec2& size) const;
+
 private:
 	bool loadLevel(const string &levelFile, ShaderProgram& program);
 	void prepareArrays(const glm::vec2 &minCoords, ShaderProgram &program);
@@ -89,7 +92,9 @@ private:
 	bool hihaRockCar = false;
 	bool hihaWall = false;
 	bool hihaFlag = false;
+
 	bool hihaLava = false;
+
 	bool hihaIs = false;
 	bool hihaAnd = false;
 	bool hihaStop = false;
@@ -110,10 +115,18 @@ private:
 	RockCar* rockCar;
 	Stop* stop;
 	Wall* wall;
-	vector< Rocks* > vRocks;
+	std::vector< Rocks* > vRocks;
 	vector< Is* > vIs;
+	vector< And* > vAnd;
 	vector< LavaTile* > vLavas;
 	vector< WallTile* > vWall;
+	enum
+	{
+		rockSTOP,
+		rockPUSH,
+		rockNOTHING
+	};
+	int stateRock;
 
 };
 

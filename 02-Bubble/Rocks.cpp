@@ -186,30 +186,16 @@ bool Rocks::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size) {
 	y = sprite->getposiciony() - 32;
 	int y2 = sprite->getposiciony() - 32 + 32;
 
-	int px = (pos.x-2) + 32;
+	int px = (pos.x) + 32;
 	int py = pos.y;
 	int py2 = pos.y + 32;
-
-	bool collision = false;
-	if (px == x) {
-
-		if (py > y) {
-			if (py < y2) {
-				collision = true;
-			}
-			else collision = false;
-		}
-		else if (py < y) {
-			if (py2 > y) {
-				collision = true;
-			}
-			else collision = false;
-		}
-		else collision = true;
-		
+	
+	if ((px) == x) {
+		if (py >= y2) return false;
+		else if (py2 <= y) return false;
+		else  return true;
 	}
-
-	return collision;
+	else return false;
 }
 
 bool Rocks::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size) {

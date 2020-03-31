@@ -28,25 +28,66 @@ TileMap *TileMap::createTileMap(const string &levelFile, const glm::vec2 &minCoo
 	stop = NULL;
 	wall = NULL;
 	
+
 	vector< Rocks* > vRocks;
 	vector< Is* > vIs;
 	vector< LavaTile* > vLavas;
 	vector< WallTile* > vWall;*/
-
 	return map;
 }
 
 
 TileMap::TileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProgram &program)
 {
+	hihaLava = false;
+	hihaFlag = false;
+	flagC = NULL;
+	hihaBaba = false;
+	hihaYou = false;
+	hihaFlag = false;
+	hihaWin = false;
+	hihaAnd = false;
+	hihaDead = false;
+	hihaLava = false;
+	hihaPush = false;
+	hihaRockCar = false;
+	hihaStop = false;
+	hihaWall = false;
+
+
+	baba = NULL;
+	you = NULL;
+	flag = NULL;
+	flagC = NULL;
+	win = NULL;
+	//and = NULL;
+	die = NULL;
+	lava = NULL;
+	push = NULL;
+	rockCar = NULL;
+	stop = NULL;
+	wall = NULL;
+
 	loadLevel(levelFile, program);
 	prepareArrays(minCoords, program);
+	//Aixo s'ha de fer al moment de lleguir el nivell
+	stateRock = rockNOTHING;
 }
 
 TileMap::~TileMap()
 {
 	if(map != NULL)
 		delete map;
+	if (flag != NULL)
+		delete map;
+	if (map != NULL)
+		delete map;
+	if (flagC != NULL)
+		delete map;
+	for (int i = 0; i < vLavas.size(); i++) {
+		if (vLavas[i] != NULL)
+			delete vLavas[i];
+	}
 }
 
 
@@ -59,21 +100,27 @@ void TileMap::render() const
 	glEnableVertexAttribArray(texCoordLocation);
 	glDrawArrays(GL_TRIANGLES, 0, 6 * mapSize.x * mapSize.y);
 	glDisable(GL_TEXTURE_2D);
+
 	if (hihaBaba != false)
 		baba->render();
+
 	if (hihaYou != false)
 		you->render();
-	if (hihaFlag != false)
-		flag->render();
 		flagC->render();
-	if (hihaWin != false)
-		win->render();
-	if (hihaAnd != false)
-		and ->render();
-	if (hihaDead != false)
-		die->render();
 	if (hihaLava != false)
 		lava->render();
+	/*	
+		
+			*/
+	if (hihaFlag != false)
+		flag->render();
+	if (hihaWin != false)
+		win->render();
+	//if (hihaAnd != false)
+	//	and ->render();
+	if (hihaDead != false)
+		die->render();
+
 	if (hihaPush != false)
 		push->render();
 	if (hihaRockCar != false)
@@ -94,24 +141,49 @@ void TileMap::render() const
 	for (int i = 0; i < vWall.size(); i++) {
 		vWall[i]->render();
 	}
+	if (hihaAnd) {
+		for (int i = 0; i < vAnd.size(); i++) {
+			vAnd[i]->render();
+		}
+	}
 }
 
 void TileMap::update(int deltaTime) {
+
 	if (hihaBaba != false)
 		baba->update(deltaTime);
+
 	if (hihaYou != false)
 		you->update(deltaTime);
+
 	if (hihaFlag != false)
 		flag->update(deltaTime);
 		flagC->update(deltaTime);
+		/*
+		
+			
+			
+	}*/
+		if (hihaLava != false) {
+			lava->update(deltaTime);
+			for (int i = 0; i < vLavas.size(); i++) {
+				vLavas[i]->update(deltaTime);
+			}
+		}
+
+		if (hihaAnd) {
+			for (int i = 0; i < vAnd.size(); i++) {
+				vAnd[i]->update(deltaTime);
+			}
+		}
+
 	if (hihaWin != false)
 		win->update(deltaTime);
-	if (hihaAnd != false)
-		and ->update(deltaTime);
+	//if (hihaAnd != false)
+	//	and ->update(deltaTime);
 	if (hihaDead != false)
 		die->update(deltaTime);
-	if (hihaLava != false)
-		lava->update(deltaTime);
+
 	if (hihaPush != false)
 		push->update(deltaTime);
 	if (hihaRockCar != false)
@@ -126,9 +198,7 @@ void TileMap::update(int deltaTime) {
 	for (int i = 0; i < vIs.size(); i++) {
 		vIs[i]->update(deltaTime);
 	}
-	for (int i = 0; i < vLavas.size(); i++) {
-		vLavas[i]->update(deltaTime);
-	}
+
 	for (int i = 0; i < vWall.size(); i++) {
 		vWall[i]->update(deltaTime);
 	}
@@ -180,6 +250,7 @@ bool TileMap::loadLevel(const string& levelFile, ShaderProgram& program)
 	sstream >> tilesheetSize.x >> tilesheetSize.y;
 	tileTexSize = glm::vec2(1.f / tilesheetSize.x, 1.f / tilesheetSize.y);
 
+	/*
 	// Quins cartells hem de pintar?
 	// Baba
 	getline(fin, line);
@@ -302,6 +373,7 @@ bool TileMap::loadLevel(const string& levelFile, ShaderProgram& program)
 		sstream >> winPos.y >> winPos.x;
 
 		win = new Win();
+
 		win->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
 		win->setPosition(glm::vec2(winPos.x * 32, winPos.y * 32));
 
@@ -466,6 +538,7 @@ bool TileMap::loadLevel(const string& levelFile, ShaderProgram& program)
 		}
 
 	}
+	*/
 
 	map = new int[mapSize.x * mapSize.y];
 	for(int j=0; j<mapSize.y; j++)
@@ -475,8 +548,130 @@ bool TileMap::loadLevel(const string& levelFile, ShaderProgram& program)
 			fin.get(tile);
 			if(tile == ' ')
 				map[j*mapSize.x+i] = 0;
-			else
-				map[j*mapSize.x+i] = tile - int('0');
+			else {
+				// ------------------------------------------------- OBJECTES -----------------------------------------------
+				if (tile == '1') map[j * mapSize.x + i] = tile - int('0'); // Limits
+				else if (tile == '2') { // Flag nomes 1
+
+					hihaFlag = true;
+					flag = new Flagg();
+					flag->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
+					flag->setPosition(glm::vec2(32 * i, 32 * j));
+				}
+				else if (tile == '3') { // Wall poden haver molts
+
+					hihaWallTile = true;
+					WallTile* wa = new WallTile();
+					wa->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
+					wa->setPosition(glm::vec2(32 * i, 32 * j));
+					vWall.push_back(wa);
+				}
+				else if (tile == '4') { // Rocks poden haver molts
+
+					hihaRock = true;
+					Rocks* rock = new Rocks();
+					rock->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
+					rock->setPosition(glm::vec2(32 * i, 32 * j));
+					vRocks.push_back(rock);
+				}
+				else if (tile == '5') { // Lava poden haver molts
+
+					hihaLava = true;
+					LavaTile* lavaTile = new LavaTile();
+					lavaTile->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
+					lavaTile->setPosition(glm::vec2(32 * i, 32 * j));
+					vLavas.push_back(lavaTile);
+
+				} // --------------------------------------------- CARTELLS ---------------------------------------------
+				else if (tile == 'I') { // Cartell IS
+
+					hihaIs = true;
+					Is* is = new Is();
+					is->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
+					is->setPosition(glm::vec2(32 * i, 32 * j));
+					vIs.push_back(is);
+				}
+				else if (tile == 'A') { // Cartell AND
+					
+					hihaAnd = true;
+					And* an = new And();
+					an->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
+					an->setPosition(glm::vec2(32 * i, 32 * j));
+					vAnd.push_back(an);
+				}
+				else if (tile == 'B') { // Cartell BABA
+
+					hihaBaba = true;
+					baba = new Baba();
+					baba->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
+					baba->setPosition(glm::vec2(32 * i, 32 * j));
+				}
+				else if (tile == 'Y') { // Cartell YOU
+
+					hihaYou = true;
+					you = new You();
+					you->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
+					you->setPosition(glm::vec2(32 * i, 32 * j));
+				}
+				else if (tile == 'F') { // Cartell FLAG
+
+					hihaFlag = true;
+					flagC = new FlagCar();
+					flagC->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
+					flagC->setPosition(glm::vec2(32 * i, 32 * j));
+				}
+				else if (tile == 'W') { // Cartell WIN
+
+					hihaWin = true;
+					win = new Win();
+					win->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
+					win->setPosition(glm::vec2(32 * i, 32 * j));
+				}
+				else if (tile == 'w') { // Cartell WALL
+
+					hihaWall = true;
+					wall = new Wall();
+					wall->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
+					wall->setPosition(glm::vec2(32 * i, 32 * j));
+				}
+				else if (tile == 'S') { // Cartell WALL
+
+					hihaStop = true;
+					stop = new Stop();
+					stop->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
+					stop->setPosition(glm::vec2(32 * i, 32 * j));
+				}
+				else if (tile == 'L') { // Cartell WALL
+
+					hihaLava = true;
+					lava = new Lava();
+					lava->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
+					lava->setPosition(glm::vec2(32 * i, 32 * j));
+				}
+				else if (tile == 'D') { // Cartell WALL
+
+					hihaDead = true;
+					die = new Die();
+					die->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
+					die->setPosition(glm::vec2(32 * i, 32 * j));
+				}
+				else if (tile == 'R') { // Cartell WALL
+
+					hihaRockCar = true;
+					rockCar = new RockCar();
+					rockCar->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
+					rockCar->setPosition(glm::vec2(32 * i, 32 * j));
+				}
+				else if (tile == 'P') { // Cartell WALL
+
+					hihaPush = true;
+					push = new Push();
+					push->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
+					push->setPosition(glm::vec2(32 * i, 32 * j));
+				}
+
+			}
+				
 		}
 		fin.get(tile);
 #ifndef _WIN32
@@ -500,8 +695,9 @@ void TileMap::prepareArrays(const glm::vec2 &minCoords, ShaderProgram &program)
 		for(int i=0; i<mapSize.x; i++)
 		{
 			tile = map[j * mapSize.x + i];
-			if(tile != 0)
-			{
+			if(tile == 1)
+			{	
+
 				// Non-empty tile
 				nTiles++;
 				posTile = glm::vec2(minCoords.x + i * tileSize, minCoords.y + j * tileSize);
@@ -555,7 +751,7 @@ bool TileMap::collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size) c
 	
 	return false;
 }
-
+/*
 bool TileMap::collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) const
 {
 	int x, y0, y1;
@@ -570,7 +766,7 @@ bool TileMap::collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) 
 	}
 	
 	return false;
-}
+}*/
 
 bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, int *posY) const
 {
@@ -607,7 +803,7 @@ bool TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, int
 		{
 			if (*posY - tileSize * y - size.y <= 4)
 			{
-				*posY = (tileSize * y) ;
+				*posY = (tileSize * (y+1)) ;
 				return true;
 			}
 		}
@@ -619,8 +815,220 @@ bool TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, int
 
 
 
+bool TileMap::collisionMoveRightLimit(const glm::ivec2& pos, const glm::ivec2& size) const
+{
+	int x, y0, y1;
+
+	x = (pos.x + size.x - 1) / tileSize;
+	y0 = pos.y / tileSize;
+	y1 = (pos.y + size.y - 1) / tileSize;
+	for (int y = y0; y <= y1; y++)
+	{
+		if (map[y * mapSize.x + x] == 1)
+			return true;
+	}
+
+	return false;
+}
+
+void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, string &accio) const
+{	
+
+	accio = "PUSH";
+	if (collisionMoveRightLimit(pos, size)) accio = "STOP";
+	else {
+		if (hihaRock) { // MIrar si colisiona amb una roca. No te que ser el primer, Millor el WIn o Dead o algo aixi.
+			int numRocks = 0;
+			int i1, i2;
+			bool osbtacle = false;
+			for (int i = 0; i < vRocks.size(); i++) {
+				if (vRocks[i]->collisionMoveRight(glm::vec2(pos.x, pos.y), size)) {
+
+					if (stateRock == rockSTOP) {
+						accio = "STOP";
+						return;
+					}
+					else if (stateRock == rockPUSH) {
+						//es podria fer un while  fer push de totes les pedres amb una variable o eso creo 
+						//int contWhile = 32;
+						//while (vRocks[i]->collisionMoveRightWithRocks(glm::vec2(pos.x + contWhile, pos.y), size, vRocks)){
+						//	contWhile += 32;
+						//}
+						if (collisionMoveRightLimit(glm::vec2(pos.x + 32 + 2, pos.y), size)) { // Miro si a la psosicio on es va a moure es colisio o no.
+							accio = "STOP";
+							return;
+						}
+						else {
+							if (hihaIs) { // Cartells Is
+								for (int i2 = 0; i2 < vIs.size(); i2++) {
+									if (vIs[i2]->collisionMoveRight(glm::vec2((vRocks[i]->getposicionx() - 32), (vRocks[i]->getposiciony() - 32)), size)) {
+										accio = "STOP";
+										return;
+									}
+								}
+							}
+							if (hihaAnd) { // Cartells And
+								for (int i2 = 0; i2 < vAnd.size(); i2++) {
+									if (vAnd[i2]->collisionMoveRight(glm::vec2((vRocks[i]->getposicionx() - 32), (vRocks[i]->getposiciony() - 32)), size)) {
+										accio = "STOP";
+										return;
+									}
+								}
+							}
+							if (hihaBaba) { //Cartell Baba
+								if (baba->collisionMoveRight(glm::vec2((vRocks[i]->getposicionx() - 32), (vRocks[i]->getposiciony() - 32)), size)) {
+									accio = "STOP";
+									return;
+								}
+							}
+							if (hihaYou) { // Cartell You
+								if (you->collisionMoveRight(glm::vec2((vRocks[i]->getposicionx() - 32), (vRocks[i]->getposiciony() - 32)), size)) {
+									accio = "STOP";
+									return;
+								}
+							}
+							if (hihaFlag) { // Cartell FALG
+								if (flagC->collisionMoveRight(glm::vec2((vRocks[i]->getposicionx() - 32), (vRocks[i]->getposiciony() - 32)), size)) {
+									accio = "STOP";
+									return;
+								}
+							}
+							if (hihaWin) { // Cartell Win
+								if (win->collisionMoveRight(glm::vec2((vRocks[i]->getposicionx() - 32), (vRocks[i]->getposiciony() - 32)), size)) {
+									accio = "STOP";
+									return;
+								}
+							}
+							if (hihaWall) { // Cartell Wall
+								if (wall->collisionMoveRight(glm::vec2((vRocks[i]->getposicionx() - 32), (vRocks[i]->getposiciony() - 32)), size)) {
+									accio = "STOP";
+									return;
+								}
+							}
+							if (hihaStop) { // Cartell Stop
+								if (stop->collisionMoveRight(glm::vec2((vRocks[i]->getposicionx() - 32), (vRocks[i]->getposiciony() - 32)), size)) {
+									accio = "STOP";
+									return;
+								}
+							}
+							if (hihaLava) { // Cartell Lava
+								if (lava->collisionMoveRight(glm::vec2((vRocks[i]->getposicionx() - 32), (vRocks[i]->getposiciony() - 32)), size)) {
+									accio = "STOP";
+									return;
+								}
+							}
+							if (hihaDead) { // Cartell Dead
+								if (die->collisionMoveRight(glm::vec2((vRocks[i]->getposicionx() - 32), (vRocks[i]->getposiciony() - 32)), size)) {
+									accio = "STOP";
+									return;
+								}
+							}
+							if (hihaRockCar) { // Cartell Rock
+								if (rockCar->collisionMoveRight(glm::vec2((vRocks[i]->getposicionx() - 32), (vRocks[i]->getposiciony() - 32)), size)) {
+									accio = "STOP";
+									return;
+								}
+							}
+							if (hihaPush) { // Cartell Push 
+								if (push->collisionMoveRight(glm::vec2((vRocks[i]->getposicionx() - 32), (vRocks[i]->getposiciony() - 32)), size)) {
+									accio = "STOP";
+									return;
+								}
+							}
+							// Flag ingnorem
 
 
+							// ARA MIREM ELS OBJECTES I ELS ESTATS D'ELLS (per a fer encara)
+							if (hihaWallTile) { //Walls (Falta mirar els estats)
+								for (int i22 = 0; i22 < vWall.size(); i22++) {
+									if (vWall[i22]->collisionMoveRight(glm::vec2((vRocks[i]->getposicionx() - 32), (vRocks[i]->getposiciony() - 32)), size)) {
+										accio = "STOP";
+										return;
+									}
+								}
+							} 
+							if (hihaLava) { // Lava
+								//fer una enum de moment. (Falta mirar els estats)
+								for (int i2 = 0; i2 < vLavas.size(); i2++) {
+									if (vLavas[i2]->collisionMoveRight(glm::vec2((vRocks[i]->getposicionx() - 32), (vRocks[i]->getposiciony() - 32)), size)) {
+										vRocks[i]->setPosition(glm::vec2(1000, 1000));
+									}
+								}
+							} 
+							for (int i2 = 0; i2 < vRocks.size(); i2++) {
+								if (vRocks[i2]->collisionMoveRight(glm::vec2((vRocks[i]->getposicionx() - 32), (vRocks[i]->getposiciony() - 32)), size)) {
+									accio = "STOP";
+									return;
+									osbtacle = true;
+								}
+							}
+							accio = "PUSH";
+						}
+					} 
+					else {
+						accio = "PUSH";
+						return;
+					}
+
+					++numRocks; // Player colisiona amb roca
+					if (numRocks == 1) { // si es la primera es mira i es gurada la i ;
+						i1 = i;
+					} 
+					else if (numRocks == 2) { // si es la segona es mira i es gurada la i;
+						i2 = i;
+					}
+				}
+			}
+			int xx;
+			xx = numRocks;
+			if (!osbtacle) { // si les roquen no han colisionat amb algo push sino stop
+				if (numRocks == 1) {
+					vRocks[i1]->setPosition(glm::vec2(vRocks[i1]->getposicionx() - 32 + 2, vRocks[i1]->getposiciony() - 32));
+				}
+				else if (numRocks == 2) {
+					vRocks[i1]->setPosition(glm::vec2(vRocks[i1]->getposicionx() - 32 + 2, vRocks[i1]->getposiciony() - 32));
+					vRocks[i2]->setPosition(glm::vec2(vRocks[i2]->getposicionx() - 32 + 2, vRocks[i2]->getposiciony() - 32));
+				}
+			}
+		}
+
+		if (hihaBaba) { //Cartell Baba
+			if (baba->collisionMoveRight(glm::vec2(pos.x, pos.y), size)) {
+				bool colisio = false;
+				if (collisionMoveRightLimit(glm::vec2(pos.x + 32 + 2, pos.y), size)) { // Miro si a la psosicio on es va a moure es colisio o no.
+					accio = "STOP";
+					colisio = true;
+					return;
+				}
+				else {
+					if (hihaRock) { // miro si hi ha una roca radera del caretll, si es aixi no es pot moure
+						for (int i2 = 0; i2 < vRocks.size(); i2++) {
+
+							if (vRocks[i2]->collisionMoveRight(glm::vec2(baba->getposicionx() - 32 , baba->getposiciony() - 32), size)) {
+								accio = "STOP";
+								return;
+								colisio = true;
+							}
+						}
+					}
+					/*
+					if () { // MIrar si radera del cartel baba hi ha is;
+
+					}
+					if () { // MIrar si radera del cartel baba hi ha And;
+
+					}
+					if () { // MIrar si radera del cartel baba hi ha And;
+
+					}
+					*/
+
+					if (!colisio) baba->setPosition(glm::vec2(baba->getposicionx() - 32 + 2, baba->getposiciony() - 32));
+				}
+			}
+		}
+	}
+}
 
 
 

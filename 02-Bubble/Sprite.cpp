@@ -111,6 +111,7 @@ int Sprite::getposicionx() const {
 }
 
 int Sprite::getposiciony() const {
+	int xx;
 	return position.y;
 }
 

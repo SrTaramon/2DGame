@@ -89,10 +89,15 @@ void Player::update(int deltaTime)
 	{
 		if(sprite->animation() != MOVE_RIGHT)
 			sprite->changeAnimation(MOVE_RIGHT);
-		posPlayer.x += 2;
-		if(map->collisionMoveRight(posPlayer, glm::ivec2(32, 32)))
+		
+		string accio;
+		map->collisionMoveRight(posPlayer, glm::ivec2(32, 32), accio);
+		int z;
+		if (accio == "PUSH") {
+			posPlayer.x += 2;
+		}
+		if (accio == "STOP")
 		{
-			posPlayer.x -= 2;
 			sprite->changeAnimation(STAND_RIGHT);
 		} 
 		/*for (int i = 0; i < rocks.size(); ++i){
@@ -112,7 +117,7 @@ void Player::update(int deltaTime)
 		posPlayer.y -= 2;
 		if (map->collisionMoveUp(posPlayer, glm::ivec2(32, 32), &posPlayer.y))
 		{
-			posPlayer.y += 2;
+			//posPlayer.y += 2;
 			sprite->changeAnimation(STAND_UP);
 		}
 		/*for (int i = 0; i < rocks.size(); ++i) {

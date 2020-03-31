@@ -42,7 +42,28 @@ void LavaTile::setPosition(const glm::vec2& pos)
 
 
 bool LavaTile::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size) {
+
+
+	
 	int x, y;
+	x = sprite->getposicionx() - 32;
+	y = sprite->getposiciony() - 32;
+	int y2 = sprite->getposiciony() - 32 + 32;
+
+	int px = (pos.x) + 32 - 2;
+	int py = pos.y;
+	int py2 = pos.y + 32;
+
+	if ((px) == x) {
+		if (py >= y2) return false;
+		else if (py2 <= y) return false;
+		else  return true;
+	}
+	else return false;
+	
+
+	/*
+		int x, y;
 	x = sprite->getposicionx() - 32;
 	y = sprite->getposiciony() - 16;
 	int y2 = sprite->getposiciony() - 16 + 32;
@@ -73,6 +94,8 @@ bool LavaTile::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size)
 
 
 	return false;
+	*/
+
 }
 
 bool LavaTile::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size) {
