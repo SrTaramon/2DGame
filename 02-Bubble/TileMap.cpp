@@ -1940,6 +1940,22 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 		}
 
 		// ------------------------------------------------- OBJECTES ---------------------------------------------------- (Falta a tots el xoc amb objectes + els estats)
+		if (hihaFlag) {
+			int i1;
+			bool osbtacle = false;
+			if (flag->collisionMoveRight(glm::vec2(pos.x, pos.y), size)) {
+
+				if (stateWin == flagWIN) {
+					accio = "WIN";
+					return;
+				}
+				else if (stateWin == flagNOTHING) {
+					accio = "PUSH";
+					return;
+				}
+
+			}
+		}
 		if (hihaRock) { // --------------------------------- (Falta objectes + els estats)
 			int numRocks = 0;
 			int i1, i2;
@@ -2094,6 +2110,9 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 				}
 			}
 		}
+		
+
+
 
 
 	}

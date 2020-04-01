@@ -3,7 +3,7 @@ TILEMAP
 32 32 							-- Tile size & block size
 2							    -- Number of textures
 images/blocks.png 	-- Tilesheet
-images/blocks2.png  
+images/blocks2.png  	--
 3 3 								-- Number of tiles in tilesheet
 11111111111111
 1  B  R  4 551
@@ -13,7 +13,7 @@ images/blocks2.png
 1  A  F   43I1
 1  A  w    4 1
 1  A  W    451
-1  S  P    4 1
+1  P  P    4 1
 11111111111111
 
 

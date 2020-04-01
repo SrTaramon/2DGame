@@ -126,7 +126,13 @@ private:
 		rockPUSH,
 		rockNOTHING
 	};
-	int stateRock;
+
+	enum {
+		flagWIN,
+		falgPUSH,
+		flagNOTHING
+	};
+	int stateRock, stateWin;
 
 };
 
