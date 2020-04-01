@@ -6,14 +6,14 @@ images/blocks.png 	-- Tilesheet
 images/blocks2.png  	--
 3 3 								-- Number of tiles in tilesheet
 11111111111111
-1  B  R  4 551
-1  A  P  4 351
-1  4  L   3  1
-1  I       2 1
-1  A  F   43I1
-1  A  w    4 1
-1  A  W    451
-1  P  P    4 1
+1 R3     3 551
+1 P3     3 351
+1 L3      3  1
+1  3       2 1
+1  3  F   43I1
+1  3  w    351
+1  3  W    3 1
+1  3  P    3 1
 11111111111111
 
 

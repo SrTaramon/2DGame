@@ -64,13 +64,16 @@ public:
 	glm::ivec2 getStopPos() { return stopPos; }
 	glm::ivec2 getWallPos() { return wallPos; }
 
-	bool collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size) const;
+	//bool collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size) const;
 	/*bool collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) const;*/
 	bool collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, int *posY) const;
 	bool collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, int* posY) const;
 	
 	void collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, string &accio) const;
 	bool collisionMoveRightLimit(const glm::ivec2& pos, const glm::ivec2& size) const;
+
+	void collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, string& accio) const;
+	bool collisionMoveLeftLimit(const glm::ivec2& pos, const glm::ivec2& size) const;
 
 private:
 	bool loadLevel(const string &levelFile, ShaderProgram& program);
@@ -132,7 +135,21 @@ private:
 		falgPUSH,
 		flagNOTHING
 	};
-	int stateRock, stateWin;
+
+	enum {
+		wallSTOP,
+		wallPUSH,
+		wallNOTHING
+	};
+
+	enum {
+		lavaSTOP,
+		lavaPUSH,
+		lavaDIE,
+		lavaNOTHING
+	};
+
+	int stateRock, stateFlag, stateWall, stateLava;
 
 };
 

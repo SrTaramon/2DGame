@@ -67,14 +67,21 @@ void Player::update(int deltaTime)
 	sprite->update(deltaTime);
 	if(Game::instance().getSpecialKey(GLUT_KEY_LEFT))
 	{
-		if(sprite->animation() != MOVE_LEFT)
+
+		if (sprite->animation() != MOVE_LEFT)
 			sprite->changeAnimation(MOVE_LEFT);
-		posPlayer.x -= 2;
-		if(map->collisionMoveLeft(posPlayer, glm::ivec2(32, 32)))
+
+		string accio;
+		map->collisionMoveLeft(posPlayer, glm::ivec2(32, 32), accio);
+		int z;
+		if (accio == "PUSH") {
+			posPlayer.x -= 2;
+		}
+		if (accio == "STOP")
 		{
-			posPlayer.x += 2;
 			sprite->changeAnimation(STAND_LEFT);
 		}
+
 		/*for (int i = 0; i < rocks.size(); ++i) {
 			if (rocks[i]->collisionWallMoveLeft(posPlayer, glm::ivec2(32, 32), rocks)) {
 				posPlayer.x += 2;
@@ -87,6 +94,7 @@ void Player::update(int deltaTime)
 	}
 	else if(Game::instance().getSpecialKey(GLUT_KEY_RIGHT))
 	{
+
 		if(sprite->animation() != MOVE_RIGHT)
 			sprite->changeAnimation(MOVE_RIGHT);
 		
