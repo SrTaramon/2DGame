@@ -4,7 +4,7 @@
 
 #include "Scene.h"
 #include "Menu.h"
-
+#include <irrKlang.h>
 
 
 #define SCREEN_WIDTH 640
@@ -29,6 +29,7 @@ public:
 	}
 	
 	void init();
+	void sounds(int id);
 	bool update(int deltaTime);
 	void render();
 	
