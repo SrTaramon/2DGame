@@ -71,7 +71,7 @@ TileMap::TileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProg
 	loadLevel(levelFile, program);
 	prepareArrays(minCoords, program);
 	//Aixo s'ha de fer al moment de lleguir el nivell
-	stateRock = rockNOTHING;
+	stateRock = rockPUSH;
 }
 
 TileMap::~TileMap()
@@ -837,7 +837,1110 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 	accio = "PUSH";
 	if (collisionMoveRightLimit(pos, size)) accio = "STOP";
 	else {
-		if (hihaRock) { // MIrar si colisiona amb una roca. No te que ser el primer, Millor el WIn o Dead o algo aixi.
+		// --------------------------------------------------- CARTELLS ------------------------------------------------- (Falta a tots el xoc amb objectes + els estats)
+		if (hihaIs) {
+			int numIs = 0;
+			int i1, i2;
+			bool osbtacle = false;
+			for (int i = 0; i < vIs.size(); i++) {
+				if (vIs[i]->collisionMoveRight(glm::vec2(pos.x, pos.y), size)) {
+					
+					// Mira limits
+					if (collisionMoveRightLimit(glm::vec2(pos.x + 32 + 2, pos.y), size)) { // Miro si a la psosicio on es va a moure es colisio o no.
+						accio = "STOP";
+						return;
+					}
+					// -------------------------------------CARTELLS--------------------------------------------
+					for (int j = 0; j < vIs.size(); j++) { // Cartells is
+						if (vIs[j]->collisionMoveRight(glm::vec2((vIs[i]->getposicionx() - 32), (vIs[i]->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+					if (hihaAnd) { // Cartell AND
+						for (int j = 0; j < vAnd.size(); j++) {
+							if (vAnd[j]->collisionMoveRight(glm::vec2((vIs[i]->getposicionx() - 32), (vIs[i]->getposiciony() - 32)), size)) {
+								accio = "STOP";
+								return;
+							}
+						}
+					}
+					if (hihaBaba) { //Cartell Baba
+						if (baba->collisionMoveRight(glm::vec2((vIs[i]->getposicionx() - 32), (vIs[i]->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+					if (hihaYou) { // Cartell You
+						if (you->collisionMoveRight(glm::vec2((vIs[i]->getposicionx() - 32), (vIs[i]->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+					if (hihaFlag) { // Cartell FALG
+						if (flagC->collisionMoveRight(glm::vec2((vIs[i]->getposicionx() - 32), (vIs[i]->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+					if (hihaWin) { // Cartell Win
+						if (win->collisionMoveRight(glm::vec2((vIs[i]->getposicionx() - 32), (vIs[i]->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+					if (hihaWall) { // Cartell Wall
+						if (wall->collisionMoveRight(glm::vec2((vIs[i]->getposicionx() - 32), (vIs[i]->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+					if (hihaStop) { // Cartell Stop
+						if (stop->collisionMoveRight(glm::vec2((vIs[i]->getposicionx() - 32), (vIs[i]->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+					if (hihaLava) { // Cartell Lava
+						if (lava->collisionMoveRight(glm::vec2((vIs[i]->getposicionx() - 32), (vIs[i]->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+					if (hihaDead) { // Cartell Dead
+						if (die->collisionMoveRight(glm::vec2((vIs[i]->getposicionx() - 32), (vIs[i]->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+					if (hihaRockCar) { // Cartell Rock
+						if (rockCar->collisionMoveRight(glm::vec2((vIs[i]->getposicionx() - 32), (vIs[i]->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+					if (hihaPush) { // Cartell Push 
+						if (push->collisionMoveRight(glm::vec2((vIs[i]->getposicionx() - 32), (vIs[i]->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+					// ---------------------------------------------OBJECTES----------------------------------------
+
+					accio = "PUSH";
+					++numIs; // Player colisiona amb roca
+					if (numIs == 1) { // si es la primera es mira i es gurada la i ;
+						i1 = i;
+					}
+					else if (numIs == 2) { // si es la segona es mira i es gurada la i;
+						i2 = i;
+					}
+				}
+
+			}
+			if (!osbtacle) { // si les roquen no han colisionat amb algo push sino stop
+				if (numIs == 1) {
+					vIs[i1]->setPosition(glm::vec2(vIs[i1]->getposicionx() - 32 + 2, vIs[i1]->getposiciony() - 32));
+				}
+				else if (numIs == 2) {
+					vIs[i1]->setPosition(glm::vec2(vIs[i1]->getposicionx() - 32 + 2, vIs[i1]->getposiciony() - 32));
+					vIs[i2]->setPosition(glm::vec2(vIs[i2]->getposicionx() - 32 + 2, vIs[i2]->getposiciony() - 32));
+				}
+			}
+		}
+		if (hihaAnd) {
+			int numAnd = 0;
+			int i1, i2;
+			bool osbtacle = false;
+			for (int i = 0; i < vAnd.size(); i++) {
+				if (vAnd[i]->collisionMoveRight(glm::vec2(pos.x, pos.y), size)) {
+
+					// Mira limits
+					if (collisionMoveRightLimit(glm::vec2(pos.x + 32 + 2, pos.y), size)) { // Miro si a la psosicio on es va a moure es colisio o no.
+						accio = "STOP";
+						return;
+					}
+					// -------------------------------------CARTELLS--------------------------------------------
+					if (hihaIs) {
+						for (int j = 0; j < vIs.size(); j++) { // Cartells is
+							if (vIs[j]->collisionMoveRight(glm::vec2((vAnd[i]->getposicionx() - 32), (vAnd[i]->getposiciony() - 32)), size)) {
+								accio = "STOP";
+								return;
+							}
+						}
+					}
+					for (int j = 0; j < vAnd.size(); j++) {
+						if (vAnd[j]->collisionMoveRight(glm::vec2((vAnd[i]->getposicionx() - 32), (vAnd[i]->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+					if (hihaBaba) { //Cartell Baba
+						if (baba->collisionMoveRight(glm::vec2((vAnd[i]->getposicionx() - 32), (vAnd[i]->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+					if (hihaYou) { // Cartell You
+						if (you->collisionMoveRight(glm::vec2((vAnd[i]->getposicionx() - 32), (vAnd[i]->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+					if (hihaFlag) { // Cartell FALG
+						if (flagC->collisionMoveRight(glm::vec2((vAnd[i]->getposicionx() - 32), (vAnd[i]->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+					if (hihaWin) { // Cartell Win
+						if (win->collisionMoveRight(glm::vec2((vAnd[i]->getposicionx() - 32), (vAnd[i]->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+					if (hihaWall) { // Cartell Wall
+						if (wall->collisionMoveRight(glm::vec2((vAnd[i]->getposicionx() - 32), (vAnd[i]->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+					if (hihaStop) { // Cartell Stop
+						if (stop->collisionMoveRight(glm::vec2((vAnd[i]->getposicionx() - 32), (vAnd[i]->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+					if (hihaLava) { // Cartell Lava
+						if (lava->collisionMoveRight(glm::vec2((vAnd[i]->getposicionx() - 32), (vAnd[i]->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+					if (hihaDead) { // Cartell Dead
+						if (die->collisionMoveRight(glm::vec2((vAnd[i]->getposicionx() - 32), (vAnd[i]->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+					if (hihaRockCar) { // Cartell Rock
+						if (rockCar->collisionMoveRight(glm::vec2((vAnd[i]->getposicionx() - 32), (vAnd[i]->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+					if (hihaPush) { // Cartell Push 
+						if (push->collisionMoveRight(glm::vec2((vAnd[i]->getposicionx() - 32), (vAnd[i]->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+					// ---------------------------------------------OBJECTES----------------------------------------
+
+					accio = "PUSH";
+					++numAnd; // Player colisiona amb roca
+					if (numAnd == 1) { // si es la primera es mira i es gurada la i ;
+						i1 = i;
+					}
+					else if (numAnd == 2) { // si es la segona es mira i es gurada la i;
+						i2 = i;
+					}
+				}
+
+			}
+			if (!osbtacle) { // si les roquen no han colisionat amb algo push sino stop
+				if (numAnd == 1) {
+					vAnd[i1]->setPosition(glm::vec2(vAnd[i1]->getposicionx() - 32 + 2, vAnd[i1]->getposiciony() - 32));
+				}
+				else if (numAnd == 2) {
+					vAnd[i1]->setPosition(glm::vec2(vAnd[i1]->getposicionx() - 32 + 2, vAnd[i1]->getposiciony() - 32));
+					vAnd[i2]->setPosition(glm::vec2(vAnd[i2]->getposicionx() - 32 + 2, vAnd[i2]->getposiciony() - 32));
+				}
+			}
+		}
+		if (hihaBaba) {
+			int i1;
+			bool osbtacle = false;
+				if (baba->collisionMoveRight(glm::vec2(pos.x, pos.y), size)) {
+
+					// Mira limits
+					if (collisionMoveRightLimit(glm::vec2(pos.x + 32 + 2, pos.y), size)) { // Miro si a la psosicio on es va a moure es colisio o no.
+						accio = "STOP";
+						return;
+					}
+					// -------------------------------------CARTELLS--------------------------------------------
+					if (hihaIs) {
+						for (int j = 0; j < vIs.size(); j++) { // Cartells is
+							if (vIs[j]->collisionMoveRight(glm::vec2((baba->getposicionx() - 32), (baba->getposiciony() - 32)), size)) {
+								accio = "STOP";
+								return;
+							}
+						}
+					}
+					if (hihaAnd) {
+						for (int j = 0; j < vAnd.size(); j++) {
+							if (vAnd[j]->collisionMoveRight(glm::vec2((baba->getposicionx() - 32), (baba->getposiciony() - 32)), size)) {
+								accio = "STOP";
+								return;
+							}
+						}
+					}
+					if (hihaYou) { // Cartell You
+						if (you->collisionMoveRight(glm::vec2((baba->getposicionx() - 32), (baba->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+					if (hihaFlag) { // Cartell FALG
+						if (flagC->collisionMoveRight(glm::vec2((baba->getposicionx() - 32), (baba->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+					if (hihaWin) { // Cartell Win
+						if (win->collisionMoveRight(glm::vec2((baba->getposicionx() - 32), (baba->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+					if (hihaWall) { // Cartell Wall
+						if (wall->collisionMoveRight(glm::vec2((baba->getposicionx() - 32), (baba->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+					if (hihaStop) { // Cartell Stop
+						if (stop->collisionMoveRight(glm::vec2((baba->getposicionx() - 32), (baba->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+					if (hihaLava) { // Cartell Lava
+						if (lava->collisionMoveRight(glm::vec2((baba->getposicionx() - 32), (baba->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+					if (hihaDead) { // Cartell Dead
+						if (die->collisionMoveRight(glm::vec2((baba->getposicionx() - 32), (baba->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+					if (hihaRockCar) { // Cartell Rock
+						if (rockCar->collisionMoveRight(glm::vec2((baba->getposicionx() - 32), (baba->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+					if (hihaPush) { // Cartell Push 
+						if (push->collisionMoveRight(glm::vec2((baba->getposicionx() - 32), (baba->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+					// ---------------------------------------------OBJECTES----------------------------------------
+
+					accio = "PUSH";
+					baba->setPosition(glm::vec2(baba->getposicionx() - 32 + 2, baba->getposiciony() - 32));
+
+			}
+		}
+		if (hihaYou) {
+			int i1;
+			bool osbtacle = false;
+			if (you->collisionMoveRight(glm::vec2(pos.x, pos.y), size)) {
+
+				// Mira limits
+				if (collisionMoveRightLimit(glm::vec2(pos.x + 32 + 2, pos.y), size)) { // Miro si a la psosicio on es va a moure es colisio o no.
+					accio = "STOP";
+					return;
+				}
+				// -------------------------------------CARTELLS--------------------------------------------
+				if (hihaIs) {
+					for (int j = 0; j < vIs.size(); j++) { // Cartells is
+						if (vIs[j]->collisionMoveRight(glm::vec2((you->getposicionx() - 32), (you->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+				}
+				if (hihaAnd) {
+					for (int j = 0; j < vAnd.size(); j++) {
+						if (vAnd[j]->collisionMoveRight(glm::vec2((you->getposicionx() - 32), (you->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+				}
+				if (hihaBaba) { // Cartell Baba
+					if (baba->collisionMoveRight(glm::vec2((you->getposicionx() - 32), (you->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaFlag) { // Cartell FALG
+					if (flagC->collisionMoveRight(glm::vec2((you->getposicionx() - 32), (you->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaWin) { // Cartell Win
+					if (win->collisionMoveRight(glm::vec2((you->getposicionx() - 32), (you->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaWall) { // Cartell Wall
+					if (wall->collisionMoveRight(glm::vec2((you->getposicionx() - 32), (you->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaStop) { // Cartell Stop
+					if (stop->collisionMoveRight(glm::vec2((you->getposicionx() - 32), (you->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaLava) { // Cartell Lava
+					if (lava->collisionMoveRight(glm::vec2((you->getposicionx() - 32), (you->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaDead) { // Cartell Dead
+					if (die->collisionMoveRight(glm::vec2((you->getposicionx() - 32), (you->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaRockCar) { // Cartell Rock
+					if (rockCar->collisionMoveRight(glm::vec2((you->getposicionx() - 32), (you->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaPush) { // Cartell Push 
+					if (push->collisionMoveRight(glm::vec2((you->getposicionx() - 32), (you->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				// ---------------------------------------------OBJECTES----------------------------------------
+
+				accio = "PUSH";
+				you->setPosition(glm::vec2(you->getposicionx() - 32 + 2, you->getposiciony() - 32));
+
+			}
+		}
+		if (hihaFlag) {
+			int i1;
+			bool osbtacle = false;
+			if (flagC->collisionMoveRight(glm::vec2(pos.x, pos.y), size)) {
+
+				// Mira limits
+				if (collisionMoveRightLimit(glm::vec2(pos.x + 32 + 2, pos.y), size)) { // Miro si a la psosicio on es va a moure es colisio o no.
+					accio = "STOP";
+					return;
+				}
+				// -------------------------------------CARTELLS--------------------------------------------
+				if (hihaIs) {
+					for (int j = 0; j < vIs.size(); j++) { // Cartells is
+						if (vIs[j]->collisionMoveRight(glm::vec2((flagC->getposicionx() - 32), (flagC->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+				}
+				if (hihaAnd) {
+					for (int j = 0; j < vAnd.size(); j++) {
+						if (vAnd[j]->collisionMoveRight(glm::vec2((flagC->getposicionx() - 32), (flagC->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+				}
+				if (hihaBaba) { // Cartell Baba
+					if (baba->collisionMoveRight(glm::vec2((flagC->getposicionx() - 32), (flagC->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaYou) { // Cartell FALG
+					if (you->collisionMoveRight(glm::vec2((flagC->getposicionx() - 32), (flagC->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaWin) { // Cartell Win
+					if (win->collisionMoveRight(glm::vec2((flagC->getposicionx() - 32), (flagC->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaWall) { // Cartell Wall
+					if (wall->collisionMoveRight(glm::vec2((flagC->getposicionx() - 32), (flagC->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaStop) { // Cartell Stop
+					if (stop->collisionMoveRight(glm::vec2((flagC->getposicionx() - 32), (flagC->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaLava) { // Cartell Lava
+					if (lava->collisionMoveRight(glm::vec2((flagC->getposicionx() - 32), (flagC->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaDead) { // Cartell Dead
+					if (die->collisionMoveRight(glm::vec2((flagC->getposicionx() - 32), (flagC->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaRockCar) { // Cartell Rock
+					if (rockCar->collisionMoveRight(glm::vec2((flagC->getposicionx() - 32), (flagC->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaPush) { // Cartell Push 
+					if (push->collisionMoveRight(glm::vec2((flagC->getposicionx() - 32), (flagC->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				// ---------------------------------------------OBJECTES----------------------------------------
+
+				accio = "PUSH";
+				flagC->setPosition(glm::vec2(flagC->getposicionx() - 32 + 2, flagC->getposiciony() - 32));
+
+			}
+		}
+		if (hihaWin) {
+			int i1;
+			bool osbtacle = false;
+			if (win->collisionMoveRight(glm::vec2(pos.x, pos.y), size)) {
+
+				// Mira limits
+				if (collisionMoveRightLimit(glm::vec2(pos.x + 32 + 2, pos.y), size)) { // Miro si a la psosicio on es va a moure es colisio o no.
+					accio = "STOP";
+					return;
+				}
+				// -------------------------------------CARTELLS--------------------------------------------
+				if (hihaIs) {
+					for (int j = 0; j < vIs.size(); j++) { // Cartells is
+						if (vIs[j]->collisionMoveRight(glm::vec2((win->getposicionx() - 32), (win->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+				}
+				if (hihaAnd) {
+					for (int j = 0; j < vAnd.size(); j++) {
+						if (vAnd[j]->collisionMoveRight(glm::vec2((win->getposicionx() - 32), (win->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+				}
+				if (hihaBaba) { // Cartell Baba
+					if (baba->collisionMoveRight(glm::vec2((win->getposicionx() - 32), (win->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaYou) { // Cartell FALG
+					if (you->collisionMoveRight(glm::vec2((win->getposicionx() - 32), (win->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaFlag) { // Cartell Win
+					if (flagC->collisionMoveRight(glm::vec2((win->getposicionx() - 32), (win->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaWall) { // Cartell Wall
+					if (wall->collisionMoveRight(glm::vec2((win->getposicionx() - 32), (win->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaStop) { // Cartell Stop
+					if (stop->collisionMoveRight(glm::vec2((win->getposicionx() - 32), (win->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaLava) { // Cartell Lava
+					if (lava->collisionMoveRight(glm::vec2((win->getposicionx() - 32), (win->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaDead) { // Cartell Dead
+					if (die->collisionMoveRight(glm::vec2((win->getposicionx() - 32), (win->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaRockCar) { // Cartell Rock
+					if (rockCar->collisionMoveRight(glm::vec2((win->getposicionx() - 32), (win->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaPush) { // Cartell Push 
+					if (push->collisionMoveRight(glm::vec2((win->getposicionx() - 32), (win->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				// ---------------------------------------------OBJECTES----------------------------------------
+
+				accio = "PUSH";
+				win->setPosition(glm::vec2(win->getposicionx() - 32 + 2, win->getposiciony() - 32));
+
+			}
+		}
+		if (hihaWall) {
+			int i1;
+			bool osbtacle = false;
+			if (wall->collisionMoveRight(glm::vec2(pos.x, pos.y), size)) {
+
+				// Mira limits
+				if (collisionMoveRightLimit(glm::vec2(pos.x + 32 + 2, pos.y), size)) { // Miro si a la psosicio on es va a moure es colisio o no.
+					accio = "STOP";
+					return;
+				}
+				// -------------------------------------CARTELLS--------------------------------------------
+				if (hihaIs) {
+					for (int j = 0; j < vIs.size(); j++) { // Cartells is
+						if (vIs[j]->collisionMoveRight(glm::vec2((wall->getposicionx() - 32), (wall->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+				}
+				if (hihaAnd) {
+					for (int j = 0; j < vAnd.size(); j++) {
+						if (vAnd[j]->collisionMoveRight(glm::vec2((wall->getposicionx() - 32), (wall->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+				}
+				if (hihaBaba) { // Cartell Baba
+					if (baba->collisionMoveRight(glm::vec2((wall->getposicionx() - 32), (wall->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaYou) { // Cartell FALG
+					if (you->collisionMoveRight(glm::vec2((wall->getposicionx() - 32), (wall->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaFlag) { // Cartell Win
+					if (flagC->collisionMoveRight(glm::vec2((wall->getposicionx() - 32), (wall->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaWin) { // Cartell Wall
+					if (win->collisionMoveRight(glm::vec2((wall->getposicionx() - 32), (wall->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaStop) { // Cartell Stop
+					if (stop->collisionMoveRight(glm::vec2((wall->getposicionx() - 32), (wall->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaLava) { // Cartell Lava
+					if (lava->collisionMoveRight(glm::vec2((wall->getposicionx() - 32), (wall->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaDead) { // Cartell Dead
+					if (die->collisionMoveRight(glm::vec2((wall->getposicionx() - 32), (wall->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaRockCar) { // Cartell Rock
+					if (rockCar->collisionMoveRight(glm::vec2((wall->getposicionx() - 32), (wall->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaPush) { // Cartell Push 
+					if (push->collisionMoveRight(glm::vec2((wall->getposicionx() - 32), (wall->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				// ---------------------------------------------OBJECTES----------------------------------------
+
+				accio = "PUSH";
+				wall->setPosition(glm::vec2(wall->getposicionx() - 32 + 2, wall->getposiciony() - 32));
+
+			}
+		}
+		if (hihaStop) {
+			int i1;
+			bool osbtacle = false;
+			if (stop->collisionMoveRight(glm::vec2(pos.x, pos.y), size)) {
+
+				// Mira limits
+				if (collisionMoveRightLimit(glm::vec2(pos.x + 32 + 2, pos.y), size)) { // Miro si a la psosicio on es va a moure es colisio o no.
+					accio = "STOP";
+					return;
+				}
+				// -------------------------------------CARTELLS--------------------------------------------
+				if (hihaIs) {
+					for (int j = 0; j < vIs.size(); j++) { // Cartells is
+						if (vIs[j]->collisionMoveRight(glm::vec2((stop->getposicionx() - 32), (stop->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+				}
+				if (hihaAnd) {
+					for (int j = 0; j < vAnd.size(); j++) {
+						if (vAnd[j]->collisionMoveRight(glm::vec2((stop->getposicionx() - 32), (stop->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+				}
+				if (hihaBaba) { // Cartell Baba
+					if (baba->collisionMoveRight(glm::vec2((stop->getposicionx() - 32), (stop->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaYou) { // Cartell FALG
+					if (you->collisionMoveRight(glm::vec2((stop->getposicionx() - 32), (stop->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaFlag) { // Cartell Win
+					if (flagC->collisionMoveRight(glm::vec2((stop->getposicionx() - 32), (stop->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaWin) { // Cartell Wall
+					if (win->collisionMoveRight(glm::vec2((stop->getposicionx() - 32), (stop->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaWall) { // Cartell Stop
+					if (wall->collisionMoveRight(glm::vec2((stop->getposicionx() - 32), (stop->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaLava) { // Cartell Lava
+					if (lava->collisionMoveRight(glm::vec2((stop->getposicionx() - 32), (stop->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaDead) { // Cartell Dead
+					if (die->collisionMoveRight(glm::vec2((stop->getposicionx() - 32), (stop->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaRockCar) { // Cartell Rock
+					if (rockCar->collisionMoveRight(glm::vec2((stop->getposicionx() - 32), (stop->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaPush) { // Cartell Push 
+					if (push->collisionMoveRight(glm::vec2((stop->getposicionx() - 32), (stop->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				// ---------------------------------------------OBJECTES----------------------------------------
+
+				accio = "PUSH";
+				stop->setPosition(glm::vec2(stop->getposicionx() - 32 + 2, stop->getposiciony() - 32));
+
+			}
+		}
+		if (hihaLava) {
+			int i1;
+			bool osbtacle = false;
+			if (lava->collisionMoveRight(glm::vec2(pos.x, pos.y), size)) {
+
+				// Mira limits
+				if (collisionMoveRightLimit(glm::vec2(pos.x + 32 + 2, pos.y), size)) { // Miro si a la psosicio on es va a moure es colisio o no.
+					accio = "STOP";
+					return;
+				}
+				// -------------------------------------CARTELLS--------------------------------------------
+				if (hihaIs) {
+					for (int j = 0; j < vIs.size(); j++) { // Cartells is
+						if (vIs[j]->collisionMoveRight(glm::vec2((lava->getposicionx() - 32), (lava->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+				}
+				if (hihaAnd) {
+					for (int j = 0; j < vAnd.size(); j++) {
+						if (vAnd[j]->collisionMoveRight(glm::vec2((lava->getposicionx() - 32), (lava->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+				}
+				if (hihaBaba) { // Cartell Baba
+					if (baba->collisionMoveRight(glm::vec2((lava->getposicionx() - 32), (lava->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaYou) { // Cartell FALG
+					if (you->collisionMoveRight(glm::vec2((lava->getposicionx() - 32), (lava->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaFlag) { // Cartell Win
+					if (flagC->collisionMoveRight(glm::vec2((lava->getposicionx() - 32), (lava->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaWin) { // Cartell Wall
+					if (win->collisionMoveRight(glm::vec2((lava->getposicionx() - 32), (lava->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaWall) { // Cartell Stop
+					if (wall->collisionMoveRight(glm::vec2((lava->getposicionx() - 32), (lava->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaStop) { // Cartell Lava
+					if (stop->collisionMoveRight(glm::vec2((lava->getposicionx() - 32), (lava->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaDead) { // Cartell Dead
+					if (die->collisionMoveRight(glm::vec2((lava->getposicionx() - 32), (lava->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaRockCar) { // Cartell Rock
+					if (rockCar->collisionMoveRight(glm::vec2((lava->getposicionx() - 32), (lava->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaPush) { // Cartell Push 
+					if (push->collisionMoveRight(glm::vec2((lava->getposicionx() - 32), (lava->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				// ---------------------------------------------OBJECTES----------------------------------------
+
+				accio = "PUSH";
+				lava->setPosition(glm::vec2(lava->getposicionx() - 32 + 2, lava->getposiciony() - 32));
+
+			}
+		}
+		if (hihaDead) {
+			int i1;
+			bool osbtacle = false;
+			if (die->collisionMoveRight(glm::vec2(pos.x, pos.y), size)) {
+
+				// Mira limits
+				if (collisionMoveRightLimit(glm::vec2(pos.x + 32 + 2, pos.y), size)) { // Miro si a la psosicio on es va a moure es colisio o no.
+					accio = "STOP";
+					return;
+				}
+				// -------------------------------------CARTELLS--------------------------------------------
+				if (hihaIs) {
+					for (int j = 0; j < vIs.size(); j++) { // Cartells is
+						if (vIs[j]->collisionMoveRight(glm::vec2((die->getposicionx() - 32), (die->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+				}
+				if (hihaAnd) {
+					for (int j = 0; j < vAnd.size(); j++) {
+						if (vAnd[j]->collisionMoveRight(glm::vec2((die->getposicionx() - 32), (die->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+				}
+				if (hihaBaba) { // Cartell Baba
+					if (baba->collisionMoveRight(glm::vec2((die->getposicionx() - 32), (die->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaYou) { // Cartell FALG
+					if (you->collisionMoveRight(glm::vec2((die->getposicionx() - 32), (die->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaFlag) { // Cartell Win
+					if (flagC->collisionMoveRight(glm::vec2((die->getposicionx() - 32), (die->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaWin) { // Cartell Wall
+					if (win->collisionMoveRight(glm::vec2((die->getposicionx() - 32), (die->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaWall) { // Cartell Stop
+					if (wall->collisionMoveRight(glm::vec2((die->getposicionx() - 32), (die->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaStop) { // Cartell Dead
+					if (stop->collisionMoveRight(glm::vec2((die->getposicionx() - 32), (die->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaLava) { // Cartell Lava
+					if (lava->collisionMoveRight(glm::vec2((die->getposicionx() - 32), (die->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaRockCar) { // Cartell Rock
+					if (rockCar->collisionMoveRight(glm::vec2((die->getposicionx() - 32), (die->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaPush) { // Cartell Push 
+					if (push->collisionMoveRight(glm::vec2((die->getposicionx() - 32), (die->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				// ---------------------------------------------OBJECTES----------------------------------------
+
+				accio = "PUSH";
+				die->setPosition(glm::vec2(die->getposicionx() - 32 + 2, die->getposiciony() - 32));
+
+			}
+		}
+		if (hihaRockCar) {
+			int i1;
+			bool osbtacle = false;
+			if (rockCar->collisionMoveRight(glm::vec2(pos.x, pos.y), size)) {
+
+				// Mira limits
+				if (collisionMoveRightLimit(glm::vec2(pos.x + 32 + 2, pos.y), size)) { // Miro si a la psosicio on es va a moure es colisio o no.
+					accio = "STOP";
+					return;
+				}
+				// -------------------------------------CARTELLS--------------------------------------------
+				if (hihaIs) {
+					for (int j = 0; j < vIs.size(); j++) { // Cartells is
+						if (vIs[j]->collisionMoveRight(glm::vec2((rockCar->getposicionx() - 32), (rockCar->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+				}
+				if (hihaAnd) {
+					for (int j = 0; j < vAnd.size(); j++) {
+						if (vAnd[j]->collisionMoveRight(glm::vec2((rockCar->getposicionx() - 32), (rockCar->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+				}
+				if (hihaBaba) { // Cartell Baba
+					if (baba->collisionMoveRight(glm::vec2((rockCar->getposicionx() - 32), (rockCar->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaYou) { // Cartell FALG
+					if (you->collisionMoveRight(glm::vec2((rockCar->getposicionx() - 32), (rockCar->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaFlag) { // Cartell Win
+					if (flagC->collisionMoveRight(glm::vec2((rockCar->getposicionx() - 32), (rockCar->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaWin) { // Cartell Wall
+					if (win->collisionMoveRight(glm::vec2((rockCar->getposicionx() - 32), (rockCar->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaWall) { // Cartell Stop
+					if (wall->collisionMoveRight(glm::vec2((rockCar->getposicionx() - 32), (rockCar->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaStop) { // Cartell Dead
+					if (stop->collisionMoveRight(glm::vec2((rockCar->getposicionx() - 32), (rockCar->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaLava) { // Cartell Lava
+					if (lava->collisionMoveRight(glm::vec2((rockCar->getposicionx() - 32), (rockCar->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaDead) { // Cartell Rock
+					if (die->collisionMoveRight(glm::vec2((rockCar->getposicionx() - 32), (rockCar->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaPush) { // Cartell Push 
+					if (push->collisionMoveRight(glm::vec2((rockCar->getposicionx() - 32), (rockCar->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				// ---------------------------------------------OBJECTES----------------------------------------
+
+				accio = "PUSH";
+				rockCar->setPosition(glm::vec2(rockCar->getposicionx() - 32 + 2, rockCar->getposiciony() - 32));
+
+			}
+		}
+		if (hihaPush) {
+			int i1;
+			bool osbtacle = false;
+			if (push->collisionMoveRight(glm::vec2(pos.x, pos.y), size)) {
+
+				// Mira limits
+				if (collisionMoveRightLimit(glm::vec2(pos.x + 32 + 2, pos.y), size)) { // Miro si a la psosicio on es va a moure es colisio o no.
+					accio = "STOP";
+					return;
+				}
+				// -------------------------------------CARTELLS--------------------------------------------
+				if (hihaIs) {
+					for (int j = 0; j < vIs.size(); j++) { // Cartells is
+						if (vIs[j]->collisionMoveRight(glm::vec2((push->getposicionx() - 32), (push->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+				}
+				if (hihaAnd) {
+					for (int j = 0; j < vAnd.size(); j++) {
+						if (vAnd[j]->collisionMoveRight(glm::vec2((push->getposicionx() - 32), (push->getposiciony() - 32)), size)) {
+							accio = "STOP";
+							return;
+						}
+					}
+				}
+				if (hihaBaba) { // Cartell Baba
+					if (baba->collisionMoveRight(glm::vec2((push->getposicionx() - 32), (push->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaYou) { // Cartell FALG
+					if (you->collisionMoveRight(glm::vec2((push->getposicionx() - 32), (push->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaFlag) { // Cartell Win
+					if (flagC->collisionMoveRight(glm::vec2((push->getposicionx() - 32), (push->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaWin) { // Cartell Wall
+					if (win->collisionMoveRight(glm::vec2((push->getposicionx() - 32), (push->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaWall) { // Cartell Stop
+					if (wall->collisionMoveRight(glm::vec2((push->getposicionx() - 32), (push->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaStop) { // Cartell Dead
+					if (stop->collisionMoveRight(glm::vec2((push->getposicionx() - 32), (push->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaLava) { // Cartell Lava
+					if (lava->collisionMoveRight(glm::vec2((push->getposicionx() - 32), (push->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaDead) { // Cartell Rock
+					if (die->collisionMoveRight(glm::vec2((push->getposicionx() - 32), (push->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				if (hihaRockCar) { // Cartell Push 
+					if (rockCar->collisionMoveRight(glm::vec2((push->getposicionx() - 32), (push->getposiciony() - 32)), size)) {
+						accio = "STOP";
+						return;
+					}
+				}
+				// ---------------------------------------------OBJECTES----------------------------------------
+
+				accio = "PUSH";
+				push->setPosition(glm::vec2(push->getposicionx() - 32 + 2, push->getposiciony() - 32));
+
+			}
+		}
+
+		// ------------------------------------------------- OBJECTES ---------------------------------------------------- (Falta a tots el xoc amb objectes + els estats)
+		if (hihaRock) { // --------------------------------- (Falta objectes + els estats)
 			int numRocks = 0;
 			int i1, i2;
 			bool osbtacle = false;
@@ -992,41 +2095,7 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 			}
 		}
 
-		if (hihaBaba) { //Cartell Baba
-			if (baba->collisionMoveRight(glm::vec2(pos.x, pos.y), size)) {
-				bool colisio = false;
-				if (collisionMoveRightLimit(glm::vec2(pos.x + 32 + 2, pos.y), size)) { // Miro si a la psosicio on es va a moure es colisio o no.
-					accio = "STOP";
-					colisio = true;
-					return;
-				}
-				else {
-					if (hihaRock) { // miro si hi ha una roca radera del caretll, si es aixi no es pot moure
-						for (int i2 = 0; i2 < vRocks.size(); i2++) {
 
-							if (vRocks[i2]->collisionMoveRight(glm::vec2(baba->getposicionx() - 32 , baba->getposiciony() - 32), size)) {
-								accio = "STOP";
-								return;
-								colisio = true;
-							}
-						}
-					}
-					/*
-					if () { // MIrar si radera del cartel baba hi ha is;
-
-					}
-					if () { // MIrar si radera del cartel baba hi ha And;
-
-					}
-					if () { // MIrar si radera del cartel baba hi ha And;
-
-					}
-					*/
-
-					if (!colisio) baba->setPosition(glm::vec2(baba->getposicionx() - 32 + 2, baba->getposiciony() - 32));
-				}
-			}
-		}
 	}
 }
 
