@@ -1,12 +1,11 @@
 #include <GL/glew.h>
 #include <GL/glut.h>
-#include <irrKlang.h>
 
 
 #include "Game.h"
 #include "Menu.h"
 
-using namespace irrklang;
+
 
 void Game::init()
 {
@@ -15,16 +14,6 @@ void Game::init()
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 	scene.init();
 	menu.init();
-}
-
-void Game::sounds(int id) {
-
-	ISoundEngine* engine = createIrrKlangDevice();
-
-	if (id == 1) {
-		engine->play2D("sounds/Menu.mp3", true);
-
-	}
 }
 
 bool Game::update(int deltaTime)
@@ -36,7 +25,6 @@ bool Game::update(int deltaTime)
 		break;
 	case MENU:
 		menu.update(deltaTime);
-		sounds(1);
 		break;
 	default:
 		break;
@@ -70,9 +58,11 @@ void Game::keyPressed(int key)
 		else {
 			state = PLAYING;
 		}
+		menu.sounds(0);
 	}
 	else if (key == 109) { //M
 		state = MENU;
+		menu.sounds(2);
 	}
 	else if (key == 13) {
 		state = PLAYING;

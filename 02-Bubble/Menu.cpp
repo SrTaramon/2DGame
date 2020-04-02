@@ -2,11 +2,18 @@
 #include <iostream>
 #include <cmath>
 #include <glm/gtc/matrix_transform.hpp>
+#include <irrKlang.h>
 
+using namespace irrklang;
+
+#pragma comment(lib, "irrKlang.lib")
+
+ISoundEngine* engine = createIrrKlangDevice();
 
 
 Menu::Menu() {
 	quad = NULL;
+	unCop = true;
 }
 
 Menu::~Menu() {
@@ -27,10 +34,35 @@ void Menu::init()
 	textura.loadFromFile("images/test.jpg", TEXTURE_PIXEL_FORMAT_RGB);
 
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
+
+}
+
+void Menu::sounds(int id) {
+
+
+	if (!engine) {
+		return;
+	}
+	if (id == 0) {
+		engine->drop();
+		unCop = true;
+	}
+	else if (id == 1) {
+		if (engine) {
+			engine->play2D("sounds/MenuWAV.wav", true);
+		}
+	}
+	else if (id == 2) {
+		engine = createIrrKlangDevice();
+	}
 }
 
 void Menu::update(int deltaTime)
 {
+	if (unCop) {
+		sounds(1);
+		unCop = false;
+	}
 	currentTime += deltaTime;
 }
 
