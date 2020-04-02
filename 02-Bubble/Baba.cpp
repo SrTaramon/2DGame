@@ -65,32 +65,17 @@ bool Baba::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size) {
 	y = sprite->getposiciony() - 32;
 	int y2 = sprite->getposiciony() - 32 + 32;
 
-	int px = pos.x;
+	int px = pos.x - 32;
 	int py = pos.y;
 	int py2 = pos.y + 32;
 
 
-	if (((px) > x & px < x + size.x)) {
-
-		if (py > y) {
-			if (py < y2) {
-				return true;
-			}
-			else return false;
-		}
-		else if (py < y) {
-			if (py2 > y) {
-				return true;
-			}
-			else false;
-		}
-		else return true;
-
+	if ((px) == x) {
+		if (py >= y2) return false;
+		else if (py2 <= y) return false;
+		else  return true;
 	}
-
-
-
-	return false;
+	else return false;
 }
 
 bool Baba::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size) {
