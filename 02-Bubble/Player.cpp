@@ -106,7 +106,7 @@ void Player::update(int deltaTime)
 		}
 		if (accio == "STOP")
 		{
-			sprite->changeAnimation(STAND_RIGHT);
+			sprite->changeAnimation(STAND_RIGHT); 
 		} 
 		/*for (int i = 0; i < rocks.size(); ++i){
 			if (rocks[i]->collisionWallMoveRight(posPlayer, glm::ivec2(32, 32), rocks)) {
@@ -120,14 +120,33 @@ void Player::update(int deltaTime)
 	}
 	else if (Game::instance().getSpecialKey(GLUT_KEY_UP))
 	{
+
 		if (sprite->animation() != MOVE_UP)
+			sprite->changeAnimation(MOVE_UP);
+
+		string accio;
+		map->collisionMoveUp(posPlayer, glm::ivec2(32, 32), accio, &posPlayer.y);
+		int z;
+		if (accio == "PUSH") {
+			posPlayer.y -= 2;
+		}
+		if (accio == "STOP")
+		{
+			sprite->changeAnimation(STAND_UP);
+		}
+		if (accio == "DIE") {
+
+		}
+
+		/*if (sprite->animation() != MOVE_UP)
 			sprite->changeAnimation(MOVE_UP);
 		posPlayer.y -= 2;
 		if (map->collisionMoveUp(posPlayer, glm::ivec2(32, 32), &posPlayer.y))
 		{
 			//posPlayer.y += 2;
 			sprite->changeAnimation(STAND_UP);
-		}
+		}*/
+		
 		/*for (int i = 0; i < rocks.size(); ++i) {
 			if (rocks[i]->collisionWallMoveUp(posPlayer, glm::ivec2(32, 32), rocks)) {
 				posPlayer.y += 2;
@@ -140,14 +159,30 @@ void Player::update(int deltaTime)
 	}
 	else if (Game::instance().getSpecialKey(GLUT_KEY_DOWN))
 	{
+
 		if (sprite->animation() != MOVE_DOWN)
+			sprite->changeAnimation(MOVE_DOWN);
+
+		string accio;
+		map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), accio, &posPlayer.y);
+		int z;
+		if (accio == "PUSH") {
+			posPlayer.y += 2;
+		}
+		if (accio == "STOP")
+		{
+			sprite->changeAnimation(STAND_DOWN);
+		}
+
+		/*if (sprite->animation() != MOVE_DOWN)
 			sprite->changeAnimation(MOVE_DOWN);
 		posPlayer.y += 2;
 		if (map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y))
 		{
 			//posPlayer.y -= 2;
 			sprite->changeAnimation(STAND_DOWN);
-		}
+		}*/
+		
 		/*for (int i = 0; i < rocks.size(); ++i) {
 			if (rocks[i]->collisionWallMoveDown(posPlayer, glm::ivec2(32, 32), rocks)) {
 				posPlayer.y -= 2;

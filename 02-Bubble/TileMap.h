@@ -66,14 +66,20 @@ public:
 
 	//bool collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size) const;
 	/*bool collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) const;*/
-	bool collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, int *posY) const;
-	bool collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, int* posY) const;
+	//bool collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, int *posY) const;
+	//bool collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, int* posY) const;
 	
 	void collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, string &accio) const;
 	bool collisionMoveRightLimit(const glm::ivec2& pos, const glm::ivec2& size) const;
 
 	void collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, string& accio) const;
 	bool collisionMoveLeftLimit(const glm::ivec2& pos, const glm::ivec2& size) const;
+
+	void collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, string& accio, int* posY) const;
+	bool collisionMoveUpLimit(const glm::ivec2& pos, const glm::ivec2& size, int* posY) const;
+
+	void collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, string& accio, int* posY) const;
+	bool collisionMoveDownLimit(const glm::ivec2& pos, const glm::ivec2& size, int* posY) const;
 
 private:
 	bool loadLevel(const string &levelFile, ShaderProgram& program);

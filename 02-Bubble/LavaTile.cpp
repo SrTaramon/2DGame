@@ -104,7 +104,7 @@ bool LavaTile::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size) 
 	y = sprite->getposiciony() - 32;
 	int y2 = sprite->getposiciony() - 32 + 32;
 
-	int px = pos.x - 32;
+	int px = pos.x - 32 + 2;
 	int py = pos.y;
 	int py2 = pos.y + 32;
 
@@ -120,59 +120,39 @@ bool LavaTile::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size) 
 bool LavaTile::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size) {
 	int x, y;
 	x = sprite->getposicionx() - 32;
-	y = sprite->getposiciony() - 16;
-	int x2 = sprite->getposicionx() - 32 + 32;
+	y = sprite->getposiciony() - 32 + 32;
+	int x2 = x + 32;
 	int px = pos.x;
+	int px2 = pos.x + 32 + 2;
 	int py = pos.y;
-	int px2 = pos.x + 32;
 
-	if (((py) > y& py < y + size.y)) {
-		if (x < px) {
-			if (px < x2) {
-				return true;
-			}
-			else return false;
-		}
-		else if (px < x) {
-			if (x < px2) {
-				return true;
-			}
-			else return false;
-		}
-		else return true;
+
+
+	if ((py) == y) {
+		if (px2 <= x) return false;
+		else if (px >= x2) return false;
+		else  return true;
 	}
-
-
-	return false;
+	else return false;
 }
 
 bool LavaTile::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size) {
 	int x, y;
 	x = sprite->getposicionx() - 32;
-	y = sprite->getposiciony() - 16;
-	int x2 = sprite->getposicionx() - 32 + 32;
+	y = sprite->getposiciony() - 32;
+	int x2 = x + 32;
 	int px = pos.x;
+	int px2 = pos.x + 32 - 2;
 	int py = pos.y + 32;
-	int px2 = pos.x + 32;
 
-	if (((py) > y& py < y + size.y)) {
-		if (x < px) {
-			if (px < x2) {
-				return true;
-			}
-			else return false;
-		}
-		else if (px < x) {
-			if (x < px2) {
-				return true;
-			}
-			else return false;
-		}
-		else return true;
+
+
+	if ((py) == y) {
+		if (px2 <= x) return false;
+		else if (px >= x2) return false;
+		else  return true;
 	}
-
-
-	return false;
+	else return false;
 }
 
 
