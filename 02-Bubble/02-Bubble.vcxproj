@@ -22,10 +22,12 @@
     <ClInclude Include="And.h" />
     <ClInclude Include="AnimKeyframes.h" />
     <ClInclude Include="Baba.h" />
+    <ClInclude Include="Credits.h" />
     <ClInclude Include="Die.h" />
     <ClInclude Include="FlagCar.h" />
     <ClInclude Include="Flagg.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Instruccions.h" />
     <ClInclude Include="Is.h" />
     <ClInclude Include="Lava.h" />
     <ClInclude Include="LavaTile.h" />
@@ -51,10 +53,12 @@
   <ItemGroup>
     <ClCompile Include="And.cpp" />
     <ClCompile Include="Baba.cpp" />
+    <ClCompile Include="Credits.cpp" />
     <ClCompile Include="Die.cpp" />
     <ClCompile Include="FlagCar.cpp" />
     <ClCompile Include="Flagg.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Instruccions.cpp" />
     <ClCompile Include="Is.cpp" />
     <ClCompile Include="Lava.cpp" />
     <ClCompile Include="LavaTile.cpp" />

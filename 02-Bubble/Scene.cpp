@@ -3,7 +3,13 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "Scene.h"
 #include "Game.h"
+#include <irrKlang.h>
 
+using namespace irrklang;
+
+#pragma comment(lib, "irrKlang.lib")
+
+ISoundEngine* engineS = createIrrKlangDevice();
 
 #define SCREEN_X 32
 #define SCREEN_Y 32
@@ -16,6 +22,7 @@ Scene::Scene()
 {
 	map = NULL;
 	player = NULL;
+	unCop = true;
 }
 
 Scene::~Scene()
@@ -40,8 +47,32 @@ void Scene::init()
 	currentTime = 0.0f;
 }
 
+void Scene::sounds(int id) {
+
+
+	if (!engineS) {
+		return;
+	}
+	if (id == 0 && engineS) {
+		engineS->drop();
+	}
+	else if (id == 1) {
+		if (engineS) {
+			engineS->play2D("sounds/Playing.wav", true);
+		}
+	}
+	else if (id == 2) {
+		unCop = true;
+		engineS = createIrrKlangDevice();
+	}
+}
+
 void Scene::update(int deltaTime)
 {
+	if (unCop) {
+		sounds(1);
+		unCop = false;
+	}
 	currentTime += deltaTime;
 	map->update(deltaTime);
 	player->update(deltaTime);
