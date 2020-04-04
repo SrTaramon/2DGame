@@ -25,13 +25,13 @@ void Instruccions::init()
 	initShaders();
 
 	glm::vec2 geom[2] = { glm::vec2(0.f, 0.f), glm::vec2(640.f, 480.f) };
-	glm::vec2 texCoords[2] = { glm::vec2(0.f, 0.f), glm::vec2(3.f, 3.f) };
+	glm::vec2 texCoords[2] = { glm::vec2(0.f, 0.f), glm::vec2(1.f, 1.f) };
 
 	//quad = Quad::createQuad(0.f, 0.f, 128.f, 128.f, simpleProgram);
 	wallpaper = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
 	currentTime = 0.0f;
 
-	textura.loadFromFile("images/baba.jpg", TEXTURE_PIXEL_FORMAT_RGB);
+	textura.loadFromFile("images/instruccions.png", TEXTURE_PIXEL_FORMAT_RGB);
 
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 
