@@ -4,6 +4,8 @@
 
 #include "Scene.h"
 #include "Menu.h"
+#include "Credits.h"
+#include "Instruccions.h"
 
 
 #define SCREEN_WIDTH 640
@@ -44,7 +46,10 @@ public:
 	bool getSpecialKey(int key) const;
 
 private:
+	Instruccions ins;
+	Credits credit;
 	Menu menu;
+	bool insCreat, credCreat, menuCreat, playCreat;
 	bool bPlay;                       // Continue to play game?
 	Scene scene;                      // Scene to render
 	bool keys[256], specialKeys[256]; // Store key states so that 
@@ -54,7 +59,8 @@ private:
 	{
 		PLAYING,
 		MENU,
-		CREDITS
+		CREDITS,
+		INSTRUCTIONS
 	};
 	int state;
 };
