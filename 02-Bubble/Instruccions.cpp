@@ -49,6 +49,7 @@ void Instruccions::sounds(int id) {
 	else if (id == 1) {
 		if (engineI) {
 			engineI->play2D("sounds/Ins.wav", true);
+			engineI->setSoundVolume(0.2);
 		}
 	}
 	else if (id == 2) {

@@ -49,6 +49,7 @@ void Menu::sounds(int id) {
 	else if (id == 1) {
 		if (engine) {
 			engine->play2D("sounds/MenuWAV.wav", true);
+			engine->setSoundVolume(0.5);
 		}
 	}
 	else if (id == 2) {

@@ -49,6 +49,7 @@ void Credits::sounds(int id) {
 	else if (id == 1) {
 		if (engineC) {
 			engineC->play2D("sounds/Credits.wav", true);
+			engineC->setSoundVolume(0.5);
 		}
 	}
 	else if (id == 2) {

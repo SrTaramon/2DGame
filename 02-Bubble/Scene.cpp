@@ -59,6 +59,7 @@ void Scene::sounds(int id) {
 	else if (id == 1) {
 		if (engineS) {
 			engineS->play2D("sounds/Playing.wav", true);
+			engineS->setSoundVolume(0.2);
 		}
 	}
 	else if (id == 2) {
