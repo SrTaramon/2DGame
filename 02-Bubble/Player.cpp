@@ -20,6 +20,7 @@ enum PlayerAnims
 void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 {
 	bJumping = false;
+	lvlId = 0;
 	spritesheet.loadFromFile("images/Player.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(0.25, 0.25), &spritesheet, &shaderProgram); //tamany quad on aplico imag
 	sprite->setNumberAnimations(8);
@@ -81,16 +82,12 @@ void Player::update(int deltaTime)
 		{
 			sprite->changeAnimation(STAND_LEFT);
 		}
-
-		/*for (int i = 0; i < rocks.size(); ++i) {
-			if (rocks[i]->collisionWallMoveLeft(posPlayer, glm::ivec2(32, 32), rocks)) {
-				posPlayer.x += 2;
-				sprite->changeAnimation(STAND_RIGHT);
-			}
-			else if (rocks[i]->collisionMoveLeft(posPlayer, glm::ivec2(32, 32))) {
-				rocks[i]->setPosition(glm::ivec2((rocks[i]->getposicionx() - 32) - 2, (rocks[i]->getposiciony() - 32)));
-			}
-		}*/
+		if (accio == "WIN") {
+			Game::instance().changeLvl(++lvlId);
+		}
+		if (accio == "DIE") {
+			Game::instance().changeLvl(lvlId);
+		}
 	}
 	else if(Game::instance().getSpecialKey(GLUT_KEY_RIGHT))
 	{
@@ -106,92 +103,36 @@ void Player::update(int deltaTime)
 		}
 		if (accio == "STOP")
 		{
-			sprite->changeAnimation(STAND_RIGHT); 
+			sprite->changeAnimation(STAND_RIGHT);
 		} 
-		/*for (int i = 0; i < rocks.size(); ++i){
-			if (rocks[i]->collisionWallMoveRight(posPlayer, glm::ivec2(32, 32), rocks)) {
-				posPlayer.x -= 2;
-				sprite->changeAnimation(STAND_RIGHT);
-			}
-			else if (rocks[i]->collisionMoveRight(posPlayer, glm::ivec2(32, 32))) {
-				rocks[i]->setPosition(glm::ivec2((rocks[i]->getposicionx() - 32) + 2, (rocks[i]->getposiciony() - 32)));
-			}
-		}*/
+		if (accio == "WIN") {
+			Game::instance().changeLvl(++lvlId);
+		}
+		if (accio == "DIE") {
+			Game::instance().changeLvl(lvlId);
+		}
 	}
 	else if (Game::instance().getSpecialKey(GLUT_KEY_UP))
 	{
-
 		if (sprite->animation() != MOVE_UP)
-			sprite->changeAnimation(MOVE_UP);
-
-		string accio;
-		map->collisionMoveUp(posPlayer, glm::ivec2(32, 32), accio, &posPlayer.y);
-		int z;
-		if (accio == "PUSH") {
-			posPlayer.y -= 2;
-		}
-		if (accio == "STOP")
-		{
-			sprite->changeAnimation(STAND_UP);
-		}
-		if (accio == "DIE") {
-
-		}
-
-		/*if (sprite->animation() != MOVE_UP)
 			sprite->changeAnimation(MOVE_UP);
 		posPlayer.y -= 2;
 		if (map->collisionMoveUp(posPlayer, glm::ivec2(32, 32), &posPlayer.y))
 		{
 			//posPlayer.y += 2;
 			sprite->changeAnimation(STAND_UP);
-		}*/
-		
-		/*for (int i = 0; i < rocks.size(); ++i) {
-			if (rocks[i]->collisionWallMoveUp(posPlayer, glm::ivec2(32, 32), rocks)) {
-				posPlayer.y += 2;
-				sprite->changeAnimation(STAND_RIGHT);
-			}
-			else if (rocks[i]->collisionMoveUp(posPlayer, glm::ivec2(32, 32))) {
-				rocks[i]->setPosition(glm::ivec2((rocks[i]->getposicionx() - 32) , (rocks[i]->getposiciony() - 32 - 2)));
-			}
-		}*/
+		}
 	}
 	else if (Game::instance().getSpecialKey(GLUT_KEY_DOWN))
 	{
-
 		if (sprite->animation() != MOVE_DOWN)
-			sprite->changeAnimation(MOVE_DOWN);
-
-		string accio;
-		map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), accio, &posPlayer.y);
-		int z;
-		if (accio == "PUSH") {
-			posPlayer.y += 2;
-		}
-		if (accio == "STOP")
-		{
-			sprite->changeAnimation(STAND_DOWN);
-		}
-
-		/*if (sprite->animation() != MOVE_DOWN)
 			sprite->changeAnimation(MOVE_DOWN);
 		posPlayer.y += 2;
 		if (map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y))
 		{
 			//posPlayer.y -= 2;
 			sprite->changeAnimation(STAND_DOWN);
-		}*/
-		
-		/*for (int i = 0; i < rocks.size(); ++i) {
-			if (rocks[i]->collisionWallMoveDown(posPlayer, glm::ivec2(32, 32), rocks)) {
-				posPlayer.y -= 2;
-				sprite->changeAnimation(STAND_RIGHT);
-			}
-			else if (rocks[i]->collisionMoveDown(posPlayer, glm::ivec2(32, 32))) {
-				rocks[i]->setPosition(glm::ivec2((rocks[i]->getposicionx() - 32) , (rocks[i]->getposiciony() - 32 + 2)));
-			}
-		}*/
+		}
 	}
 	else
 	{
@@ -204,41 +145,6 @@ void Player::update(int deltaTime)
 		else if (sprite->animation() == MOVE_DOWN)
 			sprite->changeAnimation(MOVE_DOWN);
 	}
-	
-	/*if(bJumping)
-	{
-		if (sprite->animation() != MOVE_UP) {
-			sprite->changeAnimation(MOVE_UP);
-		}
-		jumpAngle += JUMP_ANGLE_STEP;
-		if(jumpAngle == 180)
-		{
-			bJumping = false;
-			posPlayer.y = startY;
-		}
-		else
-		{
-			posPlayer.y = int(startY - 96 * sin(3.14159f * jumpAngle / 180.f));
-			if(jumpAngle > 90)
-				bJumping = !map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y);
-		}
-	}
-	else
-	{
-		if (sprite->animation() != MOVE_DOWN) {
-			sprite->changeAnimation(MOVE_DOWN);
-		}
-		posPlayer.y += FALL_STEP;
-		if(map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y))
-		{
-			if(Game::instance().getSpecialKey(GLUT_KEY_UP))
-			{
-				bJumping = true;
-				jumpAngle = 0;
-				startY = posPlayer.y;
-			}
-		}
-	}*/
 	
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 }

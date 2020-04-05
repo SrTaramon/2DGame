@@ -15,7 +15,12 @@ void Game::init()
 	menuCreat = true;
 	playCreat = false;
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
-	scene.init();
+	for (int i = 0; i < lvls.size(); ++i) {
+		Scene* s = new Scene();
+		lvls.push_back(s);
+		lvls[i]->init(i);
+	}
+	currentlvl = 0;
 	menu.init();
 	credit.init();
 	ins.init();
@@ -26,7 +31,7 @@ bool Game::update(int deltaTime)
 	switch (state)
 	{
 	case PLAYING:
-		scene.update(deltaTime);
+		lvls[currentlvl]->update(deltaTime);
 		break;
 	case MENU:
 		menu.update(deltaTime);
@@ -53,7 +58,7 @@ void Game::render()
 		menu.render();
 		break;
 	case PLAYING:
-		scene.render();
+		lvls[currentlvl]->render();
 		break;
 	case INSTRUCTIONS:
 		ins.render();
@@ -64,6 +69,10 @@ void Game::render()
 	default:
 		break;
 	}
+}
+
+void Game::changeLvl(int lvlId) {
+	currentlvl = lvlId;
 }
 
 void Game::keyPressed(int key)
@@ -88,7 +97,7 @@ void Game::keyPressed(int key)
 			menu.sounds(0);
 		}
 		playCreat = true;
-		scene.sounds(2);
+		lvls[currentlvl]->sounds(2);
 	}
 	else if (key == 109) { //M
 		if (state != MENU) {
@@ -103,7 +112,7 @@ void Game::keyPressed(int key)
 			}
 			if (playCreat) {
 				playCreat = false;
-				scene.sounds(0);
+				lvls[currentlvl]->sounds(0);
 			}
 			menu.sounds(2);
 			menuCreat = true;
@@ -122,7 +131,7 @@ void Game::keyPressed(int key)
 			}
 			if (playCreat) {
 				playCreat = false;
-				scene.sounds(0);
+				lvls[currentlvl]->sounds(0);
 			}
 			credit.sounds(2);
 			credCreat = true;
@@ -141,7 +150,7 @@ void Game::keyPressed(int key)
 			}
 			if (playCreat) {
 				playCreat = false;
-				scene.sounds(0);
+				lvls[currentlvl]->sounds(0);
 			}
 			ins.sounds(2);
 			insCreat = true;

@@ -20,7 +20,7 @@ public:
 	Scene();
 	~Scene();
 
-	void init();
+	void init(int lvlId);
 	void update(int deltaTime);
 	void sounds(int id);
 	void render();
