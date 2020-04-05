@@ -3,7 +3,13 @@
 
 
 #include "Scene.h"
+#include "Scene1.h"
+#include "Scene2.h"
+#include "Scene3.h"
+#include "Scene4.h"
 #include "Menu.h"
+#include "Credits.h"
+#include "Instruccions.h"
 
 
 #define SCREEN_WIDTH 640
@@ -30,6 +36,7 @@ public:
 	void init();
 	bool update(int deltaTime);
 	void render();
+	void changeLvl(int lvlId);
 	
 	// Input callback methods
 	void keyPressed(int key);
@@ -44,9 +51,18 @@ public:
 	bool getSpecialKey(int key) const;
 
 private:
+
+	int currentlvl;
+	Scene scene;
+	Scene1 scene1;
+	Scene2 scene2;
+	Scene3 scene3;
+	Scene4 scene4;
+	Instruccions ins;
+	Credits credit;
 	Menu menu;
+	bool insCreat, credCreat, menuCreat, playCreat;
 	bool bPlay;                       // Continue to play game?
-	Scene scene;                      // Scene to render
 	bool keys[256], specialKeys[256]; // Store key states so that 
 	                                  // we can have access at any time
 
@@ -54,7 +70,8 @@ private:
 	{
 		PLAYING,
 		MENU,
-		CREDITS
+		CREDITS,
+		INSTRUCTIONS
 	};
 	int state;
 };

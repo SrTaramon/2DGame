@@ -3,19 +3,26 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "Scene.h"
 #include "Game.h"
+#include <irrKlang.h>
 
+using namespace irrklang;
+
+#pragma comment(lib, "irrKlang.lib")
+
+ISoundEngine* engineS = createIrrKlangDevice();
 
 #define SCREEN_X 32
 #define SCREEN_Y 32
 
-#define INIT_PLAYER_X_TILES 4
-#define INIT_PLAYER_Y_TILES 25
+#define INIT_PLAYER_X_TILES 1
+#define INIT_PLAYER_Y_TILES 4
 
 
 Scene::Scene()
 {
 	map = NULL;
 	player = NULL;
+	unCop = true;
 }
 
 Scene::~Scene()
@@ -32,16 +39,42 @@ void Scene::init()
 	initShaders();
 	map = TileMap::createTileMap("levels/level00.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	player = new Player();
-	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getMapSizex(), INIT_PLAYER_Y_TILES * map->getMapSizey()));
+	player->setLvl(0);
+	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, 0);
+	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * 32, INIT_PLAYER_Y_TILES * 32));
 	player->setTileMap(map);
 
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 	currentTime = 0.0f;
 }
 
+void Scene::sounds(int id) {
+
+
+	if (!engineS) {
+		return;
+	}
+	if (id == 0 && engineS) {
+		engineS->drop();
+	}
+	else if (id == 1) {
+		if (engineS) {
+			engineS->play2D("sounds/Playing.wav", true);
+			engineS->setSoundVolume(0.2);
+		}
+	}
+	else if (id == 2) {
+		unCop = true;
+		engineS = createIrrKlangDevice();
+	}
+}
+
 void Scene::update(int deltaTime)
 {
+	if (unCop) {
+		sounds(1);
+		unCop = false;
+	}
 	currentTime += deltaTime;
 	map->update(deltaTime);
 	player->update(deltaTime);

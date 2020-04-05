@@ -25,13 +25,13 @@ void Menu::init()
 	initShaders();
 
 	glm::vec2 geom[2] = { glm::vec2(0.f, 0.f), glm::vec2(640.f, 480.f) };
-	glm::vec2 texCoords[2] = { glm::vec2(0.f, 0.f), glm::vec2(3.f, 3.f) };
+	glm::vec2 texCoords[2] = { glm::vec2(0.f, 0.f), glm::vec2(1.f, 1.f) };
 
 	//quad = Quad::createQuad(0.f, 0.f, 128.f, 128.f, simpleProgram);
 	wallpaper = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
 	currentTime = 0.0f;
 
-	textura.loadFromFile("images/test.jpg", TEXTURE_PIXEL_FORMAT_RGB);
+	textura.loadFromFile("images/menu.png", TEXTURE_PIXEL_FORMAT_RGB);
 
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 
@@ -43,16 +43,17 @@ void Menu::sounds(int id) {
 	if (!engine) {
 		return;
 	}
-	if (id == 0) {
+	if (id == 0 && engine) {
 		engine->drop();
-		unCop = true;
 	}
 	else if (id == 1) {
 		if (engine) {
 			engine->play2D("sounds/MenuWAV.wav", true);
+			engine->setSoundVolume(0.5);
 		}
 	}
 	else if (id == 2) {
+		unCop = true;
 		engine = createIrrKlangDevice();
 	}
 }

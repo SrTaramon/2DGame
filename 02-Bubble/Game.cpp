@@ -3,17 +3,23 @@
 
 
 #include "Game.h"
-#include "Menu.h"
 
 
 
 void Game::init()
 {
-	state = PLAYING;
+	state = MENU;
 	bPlay = true;
+	insCreat = false;
+	credCreat = false;
+	menuCreat = true;
+	playCreat = false;
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
-	scene.init();
+	currentlvl = 0;
+	changeLvl(0);
 	menu.init();
+	credit.init();
+	ins.init();
 }
 
 bool Game::update(int deltaTime)
@@ -21,10 +27,29 @@ bool Game::update(int deltaTime)
 	switch (state)
 	{
 	case PLAYING:
-		scene.update(deltaTime);
+		if (currentlvl==0)
+			scene.update(deltaTime);
+		if (currentlvl == 1)
+			scene1.update(deltaTime);
+		if (currentlvl == 2)
+			scene2.update(deltaTime);
+		if (currentlvl == 3)
+			scene3.update(deltaTime);
+		if (currentlvl == 4)
+			scene4.update(deltaTime);
+		if (currentlvl == 5) {
+			credit.update(deltaTime);
+			state = CREDITS;
+		}
 		break;
 	case MENU:
 		menu.update(deltaTime);
+		break;
+	case INSTRUCTIONS:
+		ins.update(deltaTime);
+		break;
+	case CREDITS:
+		credit.update(deltaTime);
 		break;
 	default:
 		break;
@@ -42,30 +67,134 @@ void Game::render()
 		menu.render();
 		break;
 	case PLAYING:
-		scene.render();
+		if (currentlvl == 0)
+			scene.render();
+		if (currentlvl == 1)
+			scene1.render();
+		if (currentlvl == 2)
+			scene2.render();
+		if (currentlvl == 3)
+			scene3.render();
+		if (currentlvl == 4)
+			scene4.render();
+		if (currentlvl == 5) {
+			credit.render();
+			state = CREDITS;
+		}
+		break;
+	case INSTRUCTIONS:
+		ins.render();
+		break;
+	case CREDITS:
+		credit.render();
 		break;
 	default:
 		break;
 	}
 }
 
+void Game::changeLvl(int lvlId) {
+	if (lvlId == 0) {
+		scene.init();
+	}
+	else if (lvlId == 1) {
+		scene1.init();
+	}
+	else if (lvlId ==2 ) {
+		scene2.init();
+	}
+	else if (lvlId == 3) {
+		scene3.init();
+	}
+	else if (lvlId == 4) {
+		scene4.init();
+	}
+	else if (lvlId == 5) {
+		scene.sounds(0);
+	}
+	currentlvl = lvlId;
+}
+
 void Game::keyPressed(int key)
 {
 	if (key == 27) { // Escape code
-		if (state != MENU) {
+		if (state != MENU && state != CREDITS && state != INSTRUCTIONS) {
 			bPlay = false;
 		}
 		else {
 			state = PLAYING;
 		}
-		menu.sounds(0);
+		if (insCreat) {
+			insCreat = false;
+			ins.sounds(0);
+		}
+		if (credCreat) {
+			credCreat = false;
+			credit.sounds(0);
+		}
+		if (menuCreat){
+			menuCreat = false;
+			menu.sounds(0);
+		}
+		playCreat = true;
+		scene.sounds(2);
 	}
 	else if (key == 109) { //M
-		state = MENU;
-		menu.sounds(2);
+		if (state != MENU) {
+			state = MENU;
+			if (insCreat) {
+				insCreat = false;
+				ins.sounds(0);
+			}
+			if (credCreat) {
+				credCreat = false;
+				credit.sounds(0);
+			}
+			if (playCreat) {
+				playCreat = false;
+				scene.sounds(0);
+			}
+			menu.sounds(2);
+			menuCreat = true;
+		}
 	}
-	else if (key == 13) {
-		state = PLAYING;
+	else if (key == 99) { // C
+		if (state != CREDITS) {
+			state = CREDITS;
+			if (insCreat) {
+				insCreat = false;
+				ins.sounds(0);
+			}
+			if (menuCreat) {
+				menuCreat = false;
+				menu.sounds(0);
+			}
+			if (playCreat) {
+				playCreat = false;
+				scene.sounds(0);
+			}
+			credit.sounds(2);
+			credCreat = true;
+		}
+	}
+	else if (key == 105) {
+		if (state != INSTRUCTIONS) {
+			state = INSTRUCTIONS;
+			if (credCreat) {
+				credCreat = false;
+				credit.sounds(0);
+			}
+			if (menuCreat) {
+				menuCreat = false;
+				menu.sounds(0);
+			}
+			if (playCreat) {
+				playCreat = false;
+				scene.sounds(0);
+			}
+			ins.sounds(2);
+			insCreat = true;
+		}
 	}
 	keys[key] = true;
 }

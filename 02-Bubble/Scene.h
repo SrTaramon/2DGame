@@ -22,6 +22,7 @@ public:
 
 	void init();
 	void update(int deltaTime);
+	void sounds(int id);
 	void render();
 
 private:
@@ -33,6 +34,7 @@ private:
 	ShaderProgram texProgram;
 	float currentTime;
 	glm::mat4 projection;
+	bool unCop;
 
 };
 
