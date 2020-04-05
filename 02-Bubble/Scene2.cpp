@@ -1,46 +1,38 @@
 #include <iostream>
 #include <cmath>
 #include <glm/gtc/matrix_transform.hpp>
-#include "Scene.h"
+#include "Scene2.h"
 #include "Game.h"
-#include <irrKlang.h>
-
-using namespace irrklang;
-
-#pragma comment(lib, "irrKlang.lib")
-
-ISoundEngine* engineS = createIrrKlangDevice();
 
 #define SCREEN_X 32
 #define SCREEN_Y 32
 
-#define INIT_PLAYER_X_TILES 1
-#define INIT_PLAYER_Y_TILES 4
+#define INIT_PLAYER_X_TILES 4
+#define INIT_PLAYER_Y_TILES 1
 
 
-Scene::Scene()
+Scene2::Scene2()
 {
 	map = NULL;
 	player = NULL;
-	unCop = true;
 }
 
-Scene::~Scene()
+Scene2::~Scene2()
 {
-	if(map != NULL)
+	if (map != NULL)
 		delete map;
-	if(player != NULL)
+	if (player != NULL)
 		delete player;
 }
 
 
-void Scene::init()
+void Scene2::init()
 {
 	initShaders();
 	map = TileMap::createTileMap("levels/level00.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	player = new Player();
-	player->setLvl(0);
-	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, 0);
+	player->setLvl(2);
+	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, 2);
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * 32, INIT_PLAYER_Y_TILES * 32));
 	player->setTileMap(map);
 
@@ -48,39 +40,14 @@ void Scene::init()
 	currentTime = 0.0f;
 }
 
-void Scene::sounds(int id) {
-
-
-	if (!engineS) {
-		return;
-	}
-	if (id == 0 && engineS) {
-		engineS->drop();
-	}
-	else if (id == 1) {
-		if (engineS) {
-			engineS->play2D("sounds/Playing.wav", true);
-			engineS->setSoundVolume(0.2);
-		}
-	}
-	else if (id == 2) {
-		unCop = true;
-		engineS = createIrrKlangDevice();
-	}
-}
-
-void Scene::update(int deltaTime)
+void Scene2::update(int deltaTime)
 {
-	if (unCop) {
-		sounds(1);
-		unCop = false;
-	}
 	currentTime += deltaTime;
 	map->update(deltaTime);
 	player->update(deltaTime);
 }
 
-void Scene::render()
+void Scene2::render()
 {
 	glm::mat4 modelview;
 
@@ -94,18 +61,18 @@ void Scene::render()
 	player->render();
 }
 
-void Scene::initShaders()
+void Scene2::initShaders()
 {
 	Shader vShader, fShader;
 
 	vShader.initFromFile(VERTEX_SHADER, "shaders/texture.vert");
-	if(!vShader.isCompiled())
+	if (!vShader.isCompiled())
 	{
 		cout << "Vertex Shader Error" << endl;
 		cout << "" << vShader.log() << endl << endl;
 	}
 	fShader.initFromFile(FRAGMENT_SHADER, "shaders/texture.frag");
-	if(!fShader.isCompiled())
+	if (!fShader.isCompiled())
 	{
 		cout << "Fragment Shader Error" << endl;
 		cout << "" << fShader.log() << endl << endl;
@@ -114,7 +81,7 @@ void Scene::initShaders()
 	texProgram.addShader(vShader);
 	texProgram.addShader(fShader);
 	texProgram.link();
-	if(!texProgram.isLinked())
+	if (!texProgram.isLinked())
 	{
 		cout << "Shader Linking Error" << endl;
 		cout << "" << texProgram.log() << endl << endl;

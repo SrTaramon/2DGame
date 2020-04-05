@@ -15,12 +15,8 @@ void Game::init()
 	menuCreat = true;
 	playCreat = false;
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
-	for (int i = 0; i < lvls.size(); ++i) {
-		Scene* s = new Scene();
-		lvls.push_back(s);
-		lvls[i]->init(i);
-	}
 	currentlvl = 0;
+	changeLvl(0);
 	menu.init();
 	credit.init();
 	ins.init();
@@ -31,7 +27,20 @@ bool Game::update(int deltaTime)
 	switch (state)
 	{
 	case PLAYING:
-		lvls[currentlvl]->update(deltaTime);
+		if (currentlvl==0)
+			scene.update(deltaTime);
+		if (currentlvl == 1)
+			scene1.update(deltaTime);
+		if (currentlvl == 2)
+			scene2.update(deltaTime);
+		if (currentlvl == 3)
+			scene3.update(deltaTime);
+		if (currentlvl == 4)
+			scene4.update(deltaTime);
+		if (currentlvl == 5) {
+			credit.update(deltaTime);
+			state = CREDITS;
+		}
 		break;
 	case MENU:
 		menu.update(deltaTime);
@@ -58,7 +67,20 @@ void Game::render()
 		menu.render();
 		break;
 	case PLAYING:
-		lvls[currentlvl]->render();
+		if (currentlvl == 0)
+			scene.render();
+		if (currentlvl == 1)
+			scene1.render();
+		if (currentlvl == 2)
+			scene2.render();
+		if (currentlvl == 3)
+			scene3.render();
+		if (currentlvl == 4)
+			scene4.render();
+		if (currentlvl == 5) {
+			credit.render();
+			state = CREDITS;
+		}
 		break;
 	case INSTRUCTIONS:
 		ins.render();
@@ -72,6 +94,24 @@ void Game::render()
 }
 
 void Game::changeLvl(int lvlId) {
+	if (lvlId == 0) {
+		scene.init();
+	}
+	else if (lvlId == 1) {
+		scene1.init();
+	}
+	else if (lvlId ==2 ) {
+		scene2.init();
+	}
+	else if (lvlId == 3) {
+		scene3.init();
+	}
+	else if (lvlId == 4) {
+		scene4.init();
+	}
+	else if (lvlId == 5) {
+		scene.sounds(0);
+	}
 	currentlvl = lvlId;
 }
 
@@ -97,7 +137,7 @@ void Game::keyPressed(int key)
 			menu.sounds(0);
 		}
 		playCreat = true;
-		lvls[currentlvl]->sounds(2);
+		scene.sounds(2);
 	}
 	else if (key == 109) { //M
 		if (state != MENU) {
@@ -112,7 +152,7 @@ void Game::keyPressed(int key)
 			}
 			if (playCreat) {
 				playCreat = false;
-				lvls[currentlvl]->sounds(0);
+				scene.sounds(0);
 			}
 			menu.sounds(2);
 			menuCreat = true;
@@ -131,7 +171,7 @@ void Game::keyPressed(int key)
 			}
 			if (playCreat) {
 				playCreat = false;
-				lvls[currentlvl]->sounds(0);
+				scene.sounds(0);
 			}
 			credit.sounds(2);
 			credCreat = true;
@@ -150,7 +190,7 @@ void Game::keyPressed(int key)
 			}
 			if (playCreat) {
 				playCreat = false;
-				lvls[currentlvl]->sounds(0);
+				scene.sounds(0);
 			}
 			ins.sounds(2);
 			insCreat = true;

@@ -17,10 +17,10 @@ enum PlayerAnims
 };
 
 
-void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
+void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, int lvl)
 {
 	bJumping = false;
-	lvlId = 0;
+	lvlId = lvl;
 	spritesheet.loadFromFile("images/Player.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(0.25, 0.25), &spritesheet, &shaderProgram); //tamany quad on aplico imag
 	sprite->setNumberAnimations(8);
@@ -83,7 +83,8 @@ void Player::update(int deltaTime)
 			sprite->changeAnimation(STAND_LEFT);
 		}
 		if (accio == "WIN") {
-			Game::instance().changeLvl(++lvlId);
+			lvlId += 1;
+			Game::instance().changeLvl(lvlId);
 		}
 		if (accio == "DIE") {
 			Game::instance().changeLvl(lvlId);
@@ -106,7 +107,8 @@ void Player::update(int deltaTime)
 			sprite->changeAnimation(STAND_RIGHT);
 		} 
 		if (accio == "WIN") {
-			Game::instance().changeLvl(++lvlId);
+			lvlId += 1;
+			Game::instance().changeLvl(lvlId);
 		}
 		if (accio == "DIE") {
 			Game::instance().changeLvl(lvlId);
@@ -128,7 +130,8 @@ void Player::update(int deltaTime)
 			sprite->changeAnimation(STAND_UP);
 		}
 		if (accio == "WIN") {
-			Game::instance().changeLvl(++lvlId);
+			lvlId += 1;
+			Game::instance().changeLvl(lvlId);
 		}
 		if (accio == "DIE") {
 			Game::instance().changeLvl(lvlId);
@@ -150,7 +153,8 @@ void Player::update(int deltaTime)
 			sprite->changeAnimation(STAND_DOWN);
 		}
 		if (accio == "WIN") {
-			Game::instance().changeLvl(++lvlId);
+			lvlId += 1;
+			Game::instance().changeLvl(lvlId);
 		}
 		if (accio == "DIE") {
 			Game::instance().changeLvl(lvlId);
@@ -169,6 +173,10 @@ void Player::update(int deltaTime)
 	}
 	
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
+}
+
+void Player::setLvl(int id) {
+	lvlId = id;
 }
 
 void Player::render()

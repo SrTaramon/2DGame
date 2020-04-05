@@ -3,6 +3,10 @@
 
 
 #include "Scene.h"
+#include "Scene1.h"
+#include "Scene2.h"
+#include "Scene3.h"
+#include "Scene4.h"
 #include "Menu.h"
 #include "Credits.h"
 #include "Instruccions.h"
@@ -49,7 +53,11 @@ public:
 private:
 
 	int currentlvl;
-	vector< Scene* > lvls;
+	Scene scene;
+	Scene1 scene1;
+	Scene2 scene2;
+	Scene3 scene3;
+	Scene4 scene4;
 	Instruccions ins;
 	Credits credit;
 	Menu menu;

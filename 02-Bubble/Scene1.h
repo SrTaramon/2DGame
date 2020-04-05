@@ -1,5 +1,5 @@
-#ifndef _SCENE_INCLUDE
-#define _SCENE_INCLUDE
+#ifndef _SCENE1_INCLUDE
+#define _SCENE1_INCLUDE
 
 
 #include <glm/glm.hpp>
@@ -13,28 +13,26 @@
 // It is responsible for updating and render them.
 
 
-class Scene
+class Scene1
 {
 
 public:
-	Scene();
-	~Scene();
+	Scene1();
+	~Scene1();
 
 	void init();
 	void update(int deltaTime);
-	void sounds(int id);
 	void render();
 
 private:
 	void initShaders();
 
 private:
-	TileMap *map;
-	Player *player;
+	TileMap* map;
+	Player* player;
 	ShaderProgram texProgram;
 	float currentTime;
 	glm::mat4 projection;
-	bool unCop;
 
 };
 
