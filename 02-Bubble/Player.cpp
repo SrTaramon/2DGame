@@ -116,22 +116,44 @@ void Player::update(int deltaTime)
 	{
 		if (sprite->animation() != MOVE_UP)
 			sprite->changeAnimation(MOVE_UP);
-		posPlayer.y -= 2;
-		if (map->collisionMoveUp(posPlayer, glm::ivec2(32, 32), &posPlayer.y))
+
+		string accio;
+		map->collisionMoveUp(posPlayer, glm::ivec2(32, 32), accio, &posPlayer.y);
+		int z;
+		if (accio == "PUSH") {
+			posPlayer.y -= 2;
+		}
+		if (accio == "STOP")
 		{
-			//posPlayer.y += 2;
 			sprite->changeAnimation(STAND_UP);
+		}
+		if (accio == "WIN") {
+			Game::instance().changeLvl(++lvlId);
+		}
+		if (accio == "DIE") {
+			Game::instance().changeLvl(lvlId);
 		}
 	}
 	else if (Game::instance().getSpecialKey(GLUT_KEY_DOWN))
 	{
 		if (sprite->animation() != MOVE_DOWN)
 			sprite->changeAnimation(MOVE_DOWN);
-		posPlayer.y += 2;
-		if (map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y))
+
+		string accio;
+		map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), accio, &posPlayer.y);
+		int z;
+		if (accio == "PUSH") {
+			posPlayer.y += 2;
+		}
+		if (accio == "STOP")
 		{
-			//posPlayer.y -= 2;
 			sprite->changeAnimation(STAND_DOWN);
+		}
+		if (accio == "WIN") {
+			Game::instance().changeLvl(++lvlId);
+		}
+		if (accio == "DIE") {
+			Game::instance().changeLvl(lvlId);
 		}
 	}
 	else
