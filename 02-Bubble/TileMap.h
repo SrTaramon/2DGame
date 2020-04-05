@@ -69,6 +69,8 @@ public:
 	//bool collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, int *posY) const;
 	//bool collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, int* posY) const;
 	
+	void readLvlStates();
+
 	void collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, string &accio) const;
 	bool collisionMoveRightLimit(const glm::ivec2& pos, const glm::ivec2& size) const;
 
@@ -138,8 +140,9 @@ private:
 
 	enum {
 		flagWIN,
-		falgPUSH,
-		flagNOTHING
+		flagPUSH,
+		flagNOTHING,
+		flagSTOP
 	};
 
 	enum {

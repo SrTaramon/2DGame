@@ -71,10 +71,8 @@ TileMap::TileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProg
 	loadLevel(levelFile, program);
 	prepareArrays(minCoords, program);
 	//Aixo s'ha de fer al moment de lleguir el nivell
-	stateRock = rockPUSH;
-	stateFlag = flagWIN;
-	stateWall = wallSTOP;
-	stateLava = lavaDIE;
+	readLvlStates();
+
 }
 
 TileMap::~TileMap()
@@ -554,6 +552,7 @@ bool TileMap::loadLevel(const string& levelFile, ShaderProgram& program)
 					flag = new Flagg();
 					flag->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
 					flag->setPosition(glm::vec2(32 * i, 32 * j));
+					map[j * mapSize.x + i] = 2;
 				}
 				else if (tile == '3') { // Wall poden haver molts
 
@@ -562,6 +561,7 @@ bool TileMap::loadLevel(const string& levelFile, ShaderProgram& program)
 					wa->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
 					wa->setPosition(glm::vec2(32 * i, 32 * j));
 					vWall.push_back(wa);
+					map[j * mapSize.x + i] = 3;
 				}
 				else if (tile == '4') { // Rocks poden haver molts
 
@@ -570,6 +570,7 @@ bool TileMap::loadLevel(const string& levelFile, ShaderProgram& program)
 					rock->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
 					rock->setPosition(glm::vec2(32 * i, 32 * j));
 					vRocks.push_back(rock);
+					map[j * mapSize.x + i] = 4;
 				}
 				else if (tile == '5') { // Lava poden haver molts
 
@@ -578,6 +579,7 @@ bool TileMap::loadLevel(const string& levelFile, ShaderProgram& program)
 					lavaTile->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
 					lavaTile->setPosition(glm::vec2(32 * i, 32 * j));
 					vLavas.push_back(lavaTile);
+					map[j * mapSize.x + i] = 5;
 
 				} // --------------------------------------------- CARTELLS ---------------------------------------------
 				else if (tile == 'I') { // Cartell IS
@@ -587,6 +589,7 @@ bool TileMap::loadLevel(const string& levelFile, ShaderProgram& program)
 					is->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
 					is->setPosition(glm::vec2(32 * i, 32 * j));
 					vIs.push_back(is);
+					map[j * mapSize.x + i] = 6;
 				}
 				else if (tile == 'A') { // Cartell AND
 					
@@ -595,6 +598,7 @@ bool TileMap::loadLevel(const string& levelFile, ShaderProgram& program)
 					an->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
 					an->setPosition(glm::vec2(32 * i, 32 * j));
 					vAnd.push_back(an);
+					map[j * mapSize.x + i] = 7;
 				}
 				else if (tile == 'B') { // Cartell BABA
 
@@ -602,6 +606,7 @@ bool TileMap::loadLevel(const string& levelFile, ShaderProgram& program)
 					baba = new Baba();
 					baba->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
 					baba->setPosition(glm::vec2(32 * i, 32 * j));
+					map[j * mapSize.x + i] = 8;
 				}
 				else if (tile == 'Y') { // Cartell YOU
 
@@ -609,6 +614,7 @@ bool TileMap::loadLevel(const string& levelFile, ShaderProgram& program)
 					you = new You();
 					you->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
 					you->setPosition(glm::vec2(32 * i, 32 * j));
+					map[j * mapSize.x + i] = 9;
 				}
 				else if (tile == 'F') { // Cartell FLAG
 
@@ -616,6 +622,7 @@ bool TileMap::loadLevel(const string& levelFile, ShaderProgram& program)
 					flagC = new FlagCar();
 					flagC->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
 					flagC->setPosition(glm::vec2(32 * i, 32 * j));
+					map[j * mapSize.x + i] = 10;
 				}
 				else if (tile == 'W') { // Cartell WIN
 
@@ -623,6 +630,7 @@ bool TileMap::loadLevel(const string& levelFile, ShaderProgram& program)
 					win = new Win();
 					win->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
 					win->setPosition(glm::vec2(32 * i, 32 * j));
+					map[j * mapSize.x + i] = 11;
 				}
 				else if (tile == 'w') { // Cartell WALL
 
@@ -630,6 +638,7 @@ bool TileMap::loadLevel(const string& levelFile, ShaderProgram& program)
 					wall = new Wall();
 					wall->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
 					wall->setPosition(glm::vec2(32 * i, 32 * j));
+					map[j * mapSize.x + i] = 12;
 				}
 				else if (tile == 'S') { // Cartell WALL
 
@@ -637,6 +646,7 @@ bool TileMap::loadLevel(const string& levelFile, ShaderProgram& program)
 					stop = new Stop();
 					stop->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
 					stop->setPosition(glm::vec2(32 * i, 32 * j));
+					map[j * mapSize.x + i] = 13;
 				}
 				else if (tile == 'L') { // Cartell WALL
 
@@ -644,6 +654,7 @@ bool TileMap::loadLevel(const string& levelFile, ShaderProgram& program)
 					lava = new Lava();
 					lava->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
 					lava->setPosition(glm::vec2(32 * i, 32 * j));
+					map[j * mapSize.x + i] = 14;
 				}
 				else if (tile == 'D') { // Cartell WALL
 
@@ -651,6 +662,7 @@ bool TileMap::loadLevel(const string& levelFile, ShaderProgram& program)
 					die = new Die();
 					die->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
 					die->setPosition(glm::vec2(32 * i, 32 * j));
+					map[j * mapSize.x + i] = 15;
 				}
 				else if (tile == 'R') { // Cartell WALL
 
@@ -658,6 +670,7 @@ bool TileMap::loadLevel(const string& levelFile, ShaderProgram& program)
 					rockCar = new RockCar();
 					rockCar->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
 					rockCar->setPosition(glm::vec2(32 * i, 32 * j));
+					map[j * mapSize.x + i] = 16;
 				}
 				else if (tile == 'P') { // Cartell WALL
 
@@ -665,6 +678,7 @@ bool TileMap::loadLevel(const string& levelFile, ShaderProgram& program)
 					push = new Push();
 					push->init(glm::ivec2(SCREEN_X, SCREEN_Y), program);
 					push->setPosition(glm::vec2(32 * i, 32 * j));
+					map[j * mapSize.x + i] = 17;
 				}
 
 			}
@@ -942,7 +956,6 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 								}
 								else if (stateWall == wallNOTHING) {
 									accio = "PUSH";
-									return;
 								}
 							}
 						}
@@ -960,7 +973,6 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 								}
 								else if (stateRock == rockNOTHING) {
 									accio = "PUSH";
-									return;
 								}
 							}
 						}
@@ -981,7 +993,6 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 								}
 								else if (stateLava == lavaNOTHING) {
 									accio = "PUSH";
-									return;
 								}
 							}
 						}
@@ -1109,7 +1120,6 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 								}
 								else if (stateWall == wallNOTHING) {
 									accio = "PUSH";
-									return;
 								}
 							}
 						}
@@ -1127,7 +1137,6 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 								}
 								else if (stateRock == rockNOTHING) {
 									accio = "PUSH";
-									return;
 								}
 							}
 						}
@@ -1148,7 +1157,6 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 								}
 								else if (stateLava == lavaNOTHING) {
 									accio = "PUSH";
-									return;
 								}
 							}
 						}
@@ -1271,7 +1279,6 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 								}
 								else if (stateWall == wallNOTHING) {
 									accio = "PUSH";
-									return;
 								}
 							}
 						}
@@ -1289,7 +1296,6 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 								}
 								else if (stateRock == rockNOTHING) {
 									accio = "PUSH";
-									return;
 								}
 							}
 						}
@@ -1310,7 +1316,6 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 								}
 								else if (stateLava == lavaNOTHING) {
 									accio = "PUSH";
-									return;
 								}
 							}
 						}
@@ -1416,7 +1421,6 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 							}
 							else if (stateWall == wallNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -1434,7 +1438,6 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 							}
 							else if (stateRock == rockNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -1455,7 +1458,6 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 							}
 							else if (stateLava == lavaNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -1561,7 +1563,6 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 							}
 							else if (stateWall == wallNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -1579,7 +1580,6 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 							}
 							else if (stateRock == rockNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -1600,7 +1600,6 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 							}
 							else if (stateLava == lavaNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -1706,7 +1705,6 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 							}
 							else if (stateWall == wallNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -1724,7 +1722,6 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 							}
 							else if (stateRock == rockNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -1745,7 +1742,6 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 							}
 							else if (stateLava == lavaNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -1851,7 +1847,6 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 							}
 							else if (stateWall == wallNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -1869,7 +1864,6 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 							}
 							else if (stateRock == rockNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -1890,7 +1884,6 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 							}
 							else if (stateLava == lavaNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -1997,7 +1990,6 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 							}
 							else if (stateWall == wallNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -2015,7 +2007,6 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 							}
 							else if (stateRock == rockNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -2036,7 +2027,6 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 							}
 							else if (stateLava == lavaNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -2142,7 +2132,6 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 							}
 							else if (stateWall == wallNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -2160,7 +2149,6 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 							}
 							else if (stateRock == rockNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -2181,7 +2169,6 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 							}
 							else if (stateLava == lavaNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -2287,7 +2274,6 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 							}
 							else if (stateWall == wallNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -2305,7 +2291,6 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 							}
 							else if (stateRock == rockNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -2326,7 +2311,6 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 							}
 							else if (stateLava == lavaNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -2432,7 +2416,6 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 							}
 							else if (stateWall == wallNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -2450,7 +2433,6 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 							}
 							else if (stateRock == rockNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -2471,7 +2453,6 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 							}
 							else if (stateLava == lavaNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -2577,7 +2558,6 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 							}
 							else if (stateWall == wallNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -2595,7 +2575,6 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 							}
 							else if (stateRock == rockNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -2616,7 +2595,6 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 							}
 							else if (stateLava == lavaNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -2640,7 +2618,6 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 				}
 				else if (stateFlag == flagNOTHING) {
 					accio = "PUSH";
-					return;
 				}
 
 			}
@@ -2800,7 +2777,7 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 					}
 					else {
 						accio = "PUSH";
-						return;
+						osbtacle = true;
 					}
 
 					++numWall; // Player colisiona amb roca
@@ -2822,7 +2799,8 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 				}
 			}
 		}
-		if (hihaRock) { // --------------------------------- (Falta objectes + els estats)
+		if (hihaRock)
+		{ // --------------------------------- (Falta objectes + els estats)
 			int numRocks = 0;
 			int i1, i2;
 			bool osbtacle = false;
@@ -2937,7 +2915,6 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 										}
 										else if (stateWall == wallNOTHING) {
 											accio = "PUSH";
-											return;
 										}
 									}
 								}
@@ -2959,7 +2936,6 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 										}
 										else if (stateLava == lavaNOTHING) {
 											accio = "PUSH";
-											return;
 										}
 									}
 								}
@@ -2976,7 +2952,7 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 					} 
 					else {
 						accio = "PUSH";
-						return;
+						osbtacle = true;
 					}
 
 					++numRocks; // Player colisiona amb roca
@@ -3119,7 +3095,6 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 										}
 										else if (stateWall == wallNOTHING) {
 											accio = "PUSH";
-											return;
 										}
 									}
 								}
@@ -3144,7 +3119,6 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 										}
 										else if (stateRock == rockNOTHING) {
 											accio = "PUSH";
-											return;
 										}
 									}
 								}
@@ -3155,7 +3129,7 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 					}
 					else {
 						accio = "PUSH";
-						return;
+						osbtacle = true;
 					}
 
 					++numLava; // Player colisiona amb roca
@@ -3310,7 +3284,6 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 								}
 								else if (stateWall == wallNOTHING) {
 									accio = "PUSH";
-									return;
 								}
 							}
 						}
@@ -3328,7 +3301,6 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 								}
 								else if (stateRock == rockNOTHING) {
 									accio = "PUSH";
-									return;
 								}
 							}
 						}
@@ -3349,7 +3321,6 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 								}
 								else if (stateLava == lavaNOTHING) {
 									accio = "PUSH";
-									return;
 								}
 							}
 						}
@@ -3477,7 +3448,6 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 								}
 								else if (stateWall == wallNOTHING) {
 									accio = "PUSH";
-									return;
 								}
 							}
 						}
@@ -3495,7 +3465,6 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 								}
 								else if (stateRock == rockNOTHING) {
 									accio = "PUSH";
-									return;
 								}
 							}
 						}
@@ -3516,7 +3485,6 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 								}
 								else if (stateLava == lavaNOTHING) {
 									accio = "PUSH";
-									return;
 								}
 							}
 						}
@@ -3639,7 +3607,6 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 								}
 								else if (stateWall == wallNOTHING) {
 									accio = "PUSH";
-									return;
 								}
 							}
 						}
@@ -3657,7 +3624,6 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 								}
 								else if (stateRock == rockNOTHING) {
 									accio = "PUSH";
-									return;
 								}
 							}
 						}
@@ -3678,7 +3644,6 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 								}
 								else if (stateLava == lavaNOTHING) {
 									accio = "PUSH";
-									return;
 								}
 							}
 						}
@@ -3784,7 +3749,6 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateWall == wallNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -3802,7 +3766,6 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateRock == rockNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -3823,7 +3786,6 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateLava == lavaNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -3929,7 +3891,6 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateWall == wallNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -3947,7 +3908,6 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateRock == rockNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -3968,7 +3928,6 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateLava == lavaNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -4074,7 +4033,6 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateWall == wallNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -4092,7 +4050,6 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateRock == rockNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -4113,7 +4070,6 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateLava == lavaNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -4219,7 +4175,6 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateWall == wallNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -4237,7 +4192,6 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateRock == rockNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -4258,7 +4212,6 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateLava == lavaNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -4365,7 +4318,6 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateWall == wallNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -4383,7 +4335,6 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateRock == rockNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -4404,7 +4355,6 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateLava == lavaNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -4510,7 +4460,6 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateWall == wallNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -4528,7 +4477,6 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateRock == rockNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -4549,7 +4497,6 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateLava == lavaNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -4655,7 +4602,6 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateWall == wallNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -4673,7 +4619,6 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateRock == rockNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -4694,7 +4639,6 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateLava == lavaNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -4800,7 +4744,6 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateWall == wallNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -4818,7 +4761,6 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateRock == rockNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -4839,7 +4781,6 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateLava == lavaNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -4945,7 +4886,6 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateWall == wallNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -4963,7 +4903,6 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateRock == rockNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -4984,7 +4923,6 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateLava == lavaNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -5008,7 +4946,6 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 				}
 				else if (stateFlag == flagNOTHING) {
 					accio = "PUSH";
-					return;
 				}
 
 			}
@@ -5139,7 +5076,6 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 										}
 										else if (stateLava == lavaNOTHING) {
 											accio = "PUSH";
-											return;
 										}
 									}
 								}
@@ -5157,7 +5093,6 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 										}
 										else if (stateRock == rockNOTHING) {
 											accio = "PUSH";
-											return;
 										}
 									}
 								}
@@ -5168,7 +5103,7 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 					}
 					else {
 						accio = "PUSH";
-						return;
+						osbtacle = true;
 					}
 
 					++numWall; // Player colisiona amb roca
@@ -5304,8 +5239,7 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 											return;
 										}
 										else if (stateWall == wallNOTHING) {
-											accio = "PUSH";
-											return;
+											accio = "PUSH"
 										}
 									}
 								}
@@ -5327,7 +5261,6 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 										}
 										else if (stateLava == lavaNOTHING) {
 											accio = "PUSH";
-											return;
 										}
 									}
 								}
@@ -5344,7 +5277,7 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 					} 
 					else {
 						accio = "PUSH";
-						return;
+						osbtacle = true;
 					}
 
 					++numRocks; // Player colisiona amb roca
@@ -5487,7 +5420,6 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 										}
 										else if (stateWall == wallNOTHING) {
 											accio = "PUSH";
-											return;
 										}
 									}
 								}
@@ -5512,7 +5444,6 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 										}
 										else if (stateRock == rockNOTHING) {
 											accio = "PUSH";
-											return;
 										}
 									}
 								}
@@ -5523,7 +5454,7 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 					}
 					else {
 						accio = "PUSH";
-						return;
+						osbtacle = true;
 					}
 
 					++numLava; // Player colisiona amb roca
@@ -5682,7 +5613,6 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 								}
 								else if (stateWall == wallNOTHING) {
 									accio = "PUSH";
-									return;
 								}
 							}
 						}
@@ -5700,7 +5630,6 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 								}
 								else if (stateRock == rockNOTHING) {
 									accio = "PUSH";
-									return;
 								}
 							}
 						}
@@ -5721,7 +5650,6 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 								}
 								else if (stateLava == lavaNOTHING) {
 									accio = "PUSH";
-									return;
 								}
 							}
 						}
@@ -5849,7 +5777,6 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 								}
 								else if (stateWall == wallNOTHING) {
 									accio = "PUSH";
-									return;
 								}
 							}
 						}
@@ -5867,7 +5794,6 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 								}
 								else if (stateRock == rockNOTHING) {
 									accio = "PUSH";
-									return;
 								}
 							}
 						}
@@ -5888,7 +5814,6 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 								}
 								else if (stateLava == lavaNOTHING) {
 									accio = "PUSH";
-									return;
 								}
 							}
 						}
@@ -6011,7 +5936,6 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 							}
 							else if (stateWall == wallNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -6029,7 +5953,6 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 							}
 							else if (stateRock == rockNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -6050,7 +5973,6 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 							}
 							else if (stateLava == lavaNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -6156,7 +6078,6 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 							}
 							else if (stateWall == wallNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -6174,7 +6095,6 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 							}
 							else if (stateRock == rockNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -6195,7 +6115,6 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 							}
 							else if (stateLava == lavaNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -6301,7 +6220,6 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 							}
 							else if (stateWall == wallNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -6319,7 +6237,6 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 							}
 							else if (stateRock == rockNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -6340,7 +6257,6 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 							}
 							else if (stateLava == lavaNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -6446,7 +6362,6 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 							}
 							else if (stateWall == wallNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -6464,7 +6379,6 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 							}
 							else if (stateRock == rockNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -6485,7 +6399,6 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 							}
 							else if (stateLava == lavaNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -6591,7 +6504,6 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 							}
 							else if (stateWall == wallNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -6609,7 +6521,6 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 							}
 							else if (stateRock == rockNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -6630,7 +6541,6 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 							}
 							else if (stateLava == lavaNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -6737,7 +6647,6 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 							}
 							else if (stateWall == wallNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -6755,7 +6664,6 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 							}
 							else if (stateRock == rockNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -6776,7 +6684,6 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 							}
 							else if (stateLava == lavaNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -6882,7 +6789,6 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 							}
 							else if (stateWall == wallNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -6900,7 +6806,6 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 							}
 							else if (stateRock == rockNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -6921,7 +6826,6 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 							}
 							else if (stateLava == lavaNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -7027,7 +6931,6 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 							}
 							else if (stateWall == wallNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -7045,7 +6948,6 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 							}
 							else if (stateRock == rockNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -7066,7 +6968,6 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 							}
 							else if (stateLava == lavaNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -7172,7 +7073,6 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 							}
 							else if (stateWall == wallNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -7190,7 +7090,6 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 							}
 							else if (stateRock == rockNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -7211,7 +7110,6 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 							}
 							else if (stateLava == lavaNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -7317,7 +7215,6 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 							}
 							else if (stateWall == wallNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -7335,7 +7232,6 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 							}
 							else if (stateRock == rockNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -7356,7 +7252,6 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 							}
 							else if (stateLava == lavaNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -7380,7 +7275,6 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 				}
 				else if (stateFlag == flagNOTHING) {
 					accio = "PUSH";
-					return;
 				}
 
 			}
@@ -7511,7 +7405,6 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 										}
 										else if (stateLava == lavaNOTHING) {
 											accio = "PUSH";
-											return;
 										}
 									}
 								}
@@ -7529,7 +7422,6 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 										}
 										else if (stateRock == rockNOTHING) {
 											accio = "PUSH";
-											return;
 										}
 									}
 								}
@@ -7540,7 +7432,7 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 					}
 					else {
 						accio = "PUSH";
-						return;
+						osbtacle = true;
 					}
 
 					++numWall; // Player colisiona amb roca
@@ -7677,7 +7569,6 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 										}
 										else if (stateWall == wallNOTHING) {
 											accio = "PUSH";
-											return;
 										}
 									}
 								}
@@ -7699,7 +7590,6 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 										}
 										else if (stateLava == lavaNOTHING) {
 											accio = "PUSH";
-											return;
 										}
 									}
 								}
@@ -7716,7 +7606,7 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 					}
 					else {
 						accio = "PUSH";
-						return;
+						osbtacle = true;
 					}
 
 					++numRocks; // Player colisiona amb roca
@@ -7859,7 +7749,6 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 										}
 										else if (stateWall == wallNOTHING) {
 											accio = "PUSH";
-											return;
 										}
 									}
 								}
@@ -7884,7 +7773,6 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 										}
 										else if (stateRock == rockNOTHING) {
 											accio = "PUSH";
-											return;
 										}
 									}
 								}
@@ -7895,7 +7783,7 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 					}
 					else {
 						accio = "PUSH";
-						return;
+						osbtacle = true;
 					}
 
 					++numLava; // Player colisiona amb roca
@@ -8054,7 +7942,6 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 								}
 								else if (stateWall == wallNOTHING) {
 									accio = "PUSH";
-									return;
 								}
 							}
 						}
@@ -8072,7 +7959,6 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 								}
 								else if (stateRock == rockNOTHING) {
 									accio = "PUSH";
-									return;
 								}
 							}
 						}
@@ -8093,7 +7979,6 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 								}
 								else if (stateLava == lavaNOTHING) {
 									accio = "PUSH";
-									return;
 								}
 							}
 						}
@@ -8221,7 +8106,6 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 								}
 								else if (stateWall == wallNOTHING) {
 									accio = "PUSH";
-									return;
 								}
 							}
 						}
@@ -8239,7 +8123,6 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 								}
 								else if (stateRock == rockNOTHING) {
 									accio = "PUSH";
-									return;
 								}
 							}
 						}
@@ -8260,7 +8143,6 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 								}
 								else if (stateLava == lavaNOTHING) {
 									accio = "PUSH";
-									return;
 								}
 							}
 						}
@@ -8383,7 +8265,6 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateWall == wallNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -8401,7 +8282,6 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateRock == rockNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -8422,7 +8302,6 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateLava == lavaNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -8528,7 +8407,6 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateWall == wallNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -8546,7 +8424,6 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateRock == rockNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -8567,7 +8444,6 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateLava == lavaNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -8673,7 +8549,6 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateWall == wallNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -8691,7 +8566,6 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateRock == rockNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -8712,7 +8586,6 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateLava == lavaNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -8818,7 +8691,6 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateWall == wallNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -8836,7 +8708,6 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateRock == rockNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -8857,7 +8728,6 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateLava == lavaNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -8963,7 +8833,6 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateWall == wallNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -8981,7 +8850,6 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateRock == rockNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -9002,7 +8870,6 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateLava == lavaNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -9109,7 +8976,6 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateWall == wallNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -9127,7 +8993,6 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateRock == rockNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -9148,7 +9013,6 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateLava == lavaNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -9254,7 +9118,6 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateWall == wallNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -9272,7 +9135,6 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateRock == rockNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -9293,7 +9155,6 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateLava == lavaNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -9399,7 +9260,6 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateWall == wallNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -9417,7 +9277,6 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateRock == rockNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -9438,7 +9297,6 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateLava == lavaNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -9544,7 +9402,6 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateWall == wallNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -9562,7 +9419,6 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateRock == rockNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -9583,7 +9439,6 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateLava == lavaNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -9689,7 +9544,6 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateWall == wallNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -9707,7 +9561,6 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateRock == rockNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -9728,7 +9581,6 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 							}
 							else if (stateLava == lavaNOTHING) {
 								accio = "PUSH";
-								return;
 							}
 						}
 					}
@@ -9752,7 +9604,6 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 				}
 				else if (stateFlag == flagNOTHING) {
 					accio = "PUSH";
-					return;
 				}
 
 			}
@@ -9883,7 +9734,6 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 										}
 										else if (stateLava == lavaNOTHING) {
 											accio = "PUSH";
-											return;
 										}
 									}
 								}
@@ -9901,7 +9751,6 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 										}
 										else if (stateRock == rockNOTHING) {
 											accio = "PUSH";
-											return;
 										}
 									}
 								}
@@ -9912,7 +9761,7 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 					}
 					else {
 						accio = "PUSH";
-						return;
+						osbtacle = true;
 					}
 
 					++numWall; // Player colisiona amb roca
@@ -10049,7 +9898,6 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 										}
 										else if (stateWall == wallNOTHING) {
 											accio = "PUSH";
-											return;
 										}
 									}
 								}
@@ -10071,7 +9919,6 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 										}
 										else if (stateLava == lavaNOTHING) {
 											accio = "PUSH";
-											return;
 										}
 									}
 								}
@@ -10088,7 +9935,7 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 					}
 					else {
 						accio = "PUSH";
-						return;
+						osbtacle = true;
 					}
 
 					++numRocks; // Player colisiona amb roca
@@ -10231,7 +10078,6 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 										}
 										else if (stateWall == wallNOTHING) {
 											accio = "PUSH";
-											return;
 										}
 									}
 								}
@@ -10256,7 +10102,6 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 										}
 										else if (stateRock == rockNOTHING) {
 											accio = "PUSH";
-											return;
 										}
 									}
 								}
@@ -10267,7 +10112,7 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 					}
 					else {
 						accio = "PUSH";
-						return;
+						osbtacle = true;
 					}
 
 					++numLava; // Player colisiona amb roca
@@ -10293,7 +10138,121 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 	}
 }
 
+void TileMap::readLvlStates(){
+	stateFlag = flagNOTHING;
+	stateWall = wallNOTHING;
+	stateRock = rockNOTHING;
+	stateLava = lavaNOTHING;
+	for (int x = 0; x < mapSize.x; x++)
+	{
+		for (int y = 0; y < mapSize.y; ++y) {
+			
+			if (map[(x * mapSize.x) + y] == 6) { // Cartell is 
+				// Miro horitzontalment
+				if (y - 1 >= 0) {
+					if (map[(x * mapSize.x) + (y - 1)] == 10) { // Miro el costt esquerra del is hi ha FLAG
+						if (y + 1 < mapSize.y) {
+							if (map[(x * mapSize.x) + (y + 1)] == 11) { // Miro el costt dret del is
+								stateFlag = flagWIN;
+							}
+							if (map[(x * mapSize.x) + (y + 1)] == 13) { // Miro el costt dret del is
+								stateFlag = flagSTOP;
+							}
+							if (map[(x * mapSize.x) + (y + 1)] == 17) { // Miro el costt dret del is
+								stateFlag = flagPUSH;
+							}
+						}
+					}
+					if (map[(x * mapSize.x) + (y - 1)] == 12) {
+						if (y + 1 < mapSize.y) {
+							if (map[(x * mapSize.x) + (y + 1)] == 13) { // Miro el costt dret del is
+								stateWall = wallSTOP;
+							}
+							if (map[(x * mapSize.x) + (y + 1)] == 17) { // Miro el costt dret del is
+								stateWall = wallPUSH;
+							}
+						}
+					}
+					if (map[(x * mapSize.x) + (y - 1)] == 16) {
+						if (y + 1 < mapSize.y) {
+							if (map[(x * mapSize.x) + (y + 1)] == 13) { // Miro el costt dret del is
+								stateRock = rockSTOP;
+							}
+							if (map[(x * mapSize.x) + (y + 1)] == 17) { // Miro el costt dret del is
+								stateRock = rockPUSH;
+							}
+						}
+					}
+					if (map[(x * mapSize.x) + (y - 1)] == 14) {
+						if (y + 1 < mapSize.y) {
+							if (map[(x * mapSize.x) + (y + 1)] == 13) { // Miro el costt dret del is
+								stateLava = lavaSTOP;
+							}
+							if (map[(x * mapSize.x) + (y + 1)] == 15) { // Miro el costt dret del is
+								stateLava = lavaDIE;
+							}
+							if (map[(x * mapSize.x) + (y + 1)] == 17) { // Miro el costt dret del is
+								stateLava = lavaPUSH;
+							}
+						}
+					}
+				}
+				// MIro Verticalment
+				if (x - 1 >= 0) {
+					if (map[((x - 1) * mapSize.x) + y] == 10) {
+						if (x + 1 < mapSize.x) {
+							if (map[((x + 1) * mapSize.x) + y] == 11) { // Miro el costt dret del is
+								stateFlag = flagWIN;
+							}
+							if (map[((x + 1) * mapSize.x) + y] == 13) { // Miro el costt dret del is
+								stateFlag = flagSTOP;
+							}
+							if (map[((x + 1) * mapSize.x) + y] == 17) { // Miro el costt dret del is
+								stateFlag = flagPUSH;
+							}
+						}
+					}
+					if (map[((x - 1) * mapSize.x) + y] == 12) {
+						if (x + 1 < mapSize.x) {
+							if (map[((x + 1) * mapSize.x) + y] == 13) { // Miro el costt dret del is
+								stateWall = wallSTOP;
+							}
+							if (map[((x + 1) * mapSize.x) + y] == 17) { // Miro el costt dret del is
+								stateWall = wallPUSH;
+							}
+						}
+					}
+					if (map[((x - 1) * mapSize.x) + y] == 16) {
+						if (x + 1 < mapSize.x) {
+							if (map[((x + 1) * mapSize.x) + y] == 13) { // Miro el costt dret del is
+								stateRock = rockSTOP;
+							}
+							if (map[((x + 1) * mapSize.x) + y] == 17) { // Miro el costt dret del is
+								stateRock = rockPUSH;
+							}
+						}
+					}
+					if (map[((x - 1) * mapSize.x) + y] == 14) {
+						if (x + 1 < mapSize.x) {
+							if (map[((x + 1) * mapSize.x) + y] == 13) { // Miro el costt dret del is
+								stateLava = lavaSTOP;
+							}
+							if (map[((x + 1) * mapSize.x) + y] == 15) { // Miro el costt dret del is
+								stateLava = lavaDIE;
+							}
+							if (map[((x + 1) * mapSize.x) + y] == 17) { // Miro el costt dret del is
+								stateLava = lavaPUSH;
+							}
+						}
+					}
+				}
+			}
+			if (map[(x * mapSize.x) + y] == 7) { // Cartell and 
 
+			}
+		}
+	}
+}
 
 
 
