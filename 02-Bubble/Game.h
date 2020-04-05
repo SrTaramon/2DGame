@@ -32,6 +32,7 @@ public:
 	void init();
 	bool update(int deltaTime);
 	void render();
+	void changeLvl(int lvlId);
 	
 	// Input callback methods
 	void keyPressed(int key);
@@ -46,12 +47,14 @@ public:
 	bool getSpecialKey(int key) const;
 
 private:
+
+	int currentlvl;
+	vector< Scene* > lvls;
 	Instruccions ins;
 	Credits credit;
 	Menu menu;
 	bool insCreat, credCreat, menuCreat, playCreat;
 	bool bPlay;                       // Continue to play game?
-	Scene scene;                      // Scene to render
 	bool keys[256], specialKeys[256]; // Store key states so that 
 	                                  // we can have access at any time
 
