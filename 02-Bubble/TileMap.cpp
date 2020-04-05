@@ -5239,7 +5239,7 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 											return;
 										}
 										else if (stateWall == wallNOTHING) {
-											accio = "PUSH"
+											accio = "PUSH";
 										}
 									}
 								}
