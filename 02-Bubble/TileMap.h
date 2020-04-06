@@ -70,17 +70,18 @@ public:
 	//bool collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, int* posY) const;
 	
 	void readLvlStates();
+	void reReadStates();
 
-	void collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, string &accio) const;
+	void collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, string &accio);
 	bool collisionMoveRightLimit(const glm::ivec2& pos, const glm::ivec2& size) const;
 
-	void collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, string& accio) const;
+	void collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, string& accio);
 	bool collisionMoveLeftLimit(const glm::ivec2& pos, const glm::ivec2& size) const;
 
-	void collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, string& accio, int* posY) const;
+	void collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, string& accio, int* posY);
 	bool collisionMoveUpLimit(const glm::ivec2& pos, const glm::ivec2& size, int* posY) const;
 
-	void collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, string& accio, int* posY) const;
+	void collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, string& accio, int* posY);
 	bool collisionMoveDownLimit(const glm::ivec2& pos, const glm::ivec2& size, int* posY) const;
 
 private:
