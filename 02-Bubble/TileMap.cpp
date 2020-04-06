@@ -10358,10 +10358,6 @@ void TileMap::reReadStates() {
 					}
 				}
 			}
-			if (stateFlagAnt != stateFlag) {
-				engineT->play2D("sounds/on.wav", false);
-				stateFlagAnt = stateFlag;
-			}
 		}
 		// statesWALL
 		if (hihaWall) {
@@ -10376,10 +10372,6 @@ void TileMap::reReadStates() {
 						stateWall = wallPUSH;
 					}
 				}
-			}
-			if (stateWallAnt != stateWall) {
-				engineT->play2D("sounds/on.wav", false);
-				stateWallAnt = stateWall;
 			}
 		}
 		// statesROCK
@@ -10401,10 +10393,6 @@ void TileMap::reReadStates() {
 					}
 				}
 			}
-			if (stateRockAnt != stateRock) {
-				engineT->play2D("sounds/on.wav", false);
-				stateRockAnt = stateRock;
-			}
 		}
 		// stateLAVA
 		if (hihaLava) {
@@ -10424,10 +10412,6 @@ void TileMap::reReadStates() {
 						stateLava = lavaDIE;
 					}
 				}
-			}
-			if (stateLavaAnt != stateLava) {
-				engineT->play2D("sounds/on.wav", false);
-				stateLavaAnt = stateLava;
 			}
 		}
 
@@ -10451,10 +10435,6 @@ void TileMap::reReadStates() {
 				}
 				
 			}
-			if (stateFlagAnt != stateFlag) {
-				engineT->play2D("sounds/on.wav", false);
-				stateFlagAnt = stateFlag;
-			}
 		}
 		// statesWALL
 		if (hihaWall) {
@@ -10469,10 +10449,6 @@ void TileMap::reReadStates() {
 						stateWall = wallPUSH;
 					}
 				}
-			}
-			if (stateWallAnt != stateWall) {
-				engineT->play2D("sounds/on.wav", false);
-				stateWallAnt = stateWall;
 			}
 		}
 		// statesROCK
@@ -10493,10 +10469,6 @@ void TileMap::reReadStates() {
 						stateRock = rockWIN;
 					}
 				}
-			}
-			if (stateRockAnt != stateRock) {
-				engineT->play2D("sounds/on.wav", false);
-				stateRockAnt = stateRock;
 			}
 		}
 		// stateLAVA
@@ -10525,6 +10497,22 @@ void TileMap::reReadStates() {
 		}
 		
 
+	 }
+	 if (stateFlagAnt != stateFlag) {
+		 engineT->play2D("sounds/on.wav", false);
+		 stateFlagAnt = stateFlag;
+	 }
+	 if (stateWallAnt != stateWall) {
+		 engineT->play2D("sounds/on.wav", false);
+		 stateWallAnt = stateWall;
+	 }
+	 if (stateRockAnt != stateRock) {
+		 engineT->play2D("sounds/on.wav", false);
+		 stateRockAnt = stateRock;
+	 }
+	 if (stateLavaAnt != stateLava) {
+		 engineT->play2D("sounds/on.wav", false);
+		 stateLavaAnt = stateLava;
 	 }
 }
 
