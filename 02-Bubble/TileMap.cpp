@@ -10490,10 +10490,6 @@ void TileMap::reReadStates() {
 					}
 				}
 			}
-			if (stateLavaAnt != stateLava) {
-				engineT->play2D("sounds/on.wav", false);
-				stateLavaAnt = stateLava;
-			}
 		}
 		
 
