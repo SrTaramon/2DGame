@@ -29,7 +29,7 @@ Scene2::~Scene2()
 void Scene2::init()
 {
 	initShaders();
-	map = TileMap::createTileMap("levels/level00.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+	map = TileMap::createTileMap("levels/level02.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	player = new Player();
 	player->setLvl(2);
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, 2);
