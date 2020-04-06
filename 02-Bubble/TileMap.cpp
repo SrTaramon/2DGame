@@ -10455,6 +10455,11 @@ void TileMap::reReadStates() {
 						stateRock = rockPUSH;
 					}
 				}
+				if (hihaWin) {
+					if (win->collisionMoveRight(glm::vec2(vIs[i]->getposicionx() - 32, vIs[i]->getposiciony() - 32), glm::vec2(32, 32))) {// ROCK is PUSH
+						stateRock = rockWIN;
+					}
+				}
 			}
 		}
 		// stateLAVA
