@@ -160,7 +160,7 @@ private:
 		lavaNOTHING
 	};
 
-	int stateRock, stateFlag, stateWall, stateLava;
+	int stateRock, stateFlag, stateWall, stateLava, stateRockAnt, stateFlagAnt, stateWallAnt, stateLavaAnt;
 
 };
 

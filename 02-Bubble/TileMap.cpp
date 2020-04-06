@@ -3,10 +3,15 @@
 #include <sstream>
 #include <vector>
 #include "TileMap.h"
+#include <irrKlang.h>
+
+#pragma comment(lib, "irrKlang.lib")
 
 
+using namespace irrklang;
 using namespace std;
 
+ISoundEngine* engineT = createIrrKlangDevice();
 
 #define SCREEN_X 32
 #define SCREEN_Y 32
@@ -10311,6 +10316,10 @@ void TileMap::readLvlStates(){
 
 void TileMap::reReadStates() {
 
+	stateFlagAnt = flagNOTHING;
+	stateWallAnt = wallNOTHING;
+	stateRockAnt = rockNOTHING;
+	stateLavaAnt = lavaNOTHING;
 	stateFlag = flagNOTHING;
 	stateWall = wallNOTHING;
 	stateRock = rockNOTHING;
@@ -10337,6 +10346,10 @@ void TileMap::reReadStates() {
 					}
 				}
 			}
+			if (stateFlagAnt != stateFlag) {
+				engineT->play2D("sounds/on.wav", false);
+				stateFlagAnt = stateFlag;
+			}
 		}
 		// statesWALL
 		if (hihaWall) {
@@ -10351,6 +10364,10 @@ void TileMap::reReadStates() {
 						stateWall = wallPUSH;
 					}
 				}
+			}
+			if (stateWallAnt != stateWall) {
+				engineT->play2D("sounds/on.wav", false);
+				stateWallAnt = stateWall;
 			}
 		}
 		// statesROCK
@@ -10372,6 +10389,10 @@ void TileMap::reReadStates() {
 					}
 				}
 			}
+			if (stateRockAnt != stateRock) {
+				engineT->play2D("sounds/on.wav", false);
+				stateRockAnt = stateRock;
+			}
 		}
 		// stateLAVA
 		if (hihaLava) {
@@ -10391,6 +10412,10 @@ void TileMap::reReadStates() {
 						stateLava = lavaDIE;
 					}
 				}
+			}
+			if (stateLavaAnt != stateLava) {
+				engineT->play2D("sounds/on.wav", false);
+				stateLavaAnt = stateLava;
 			}
 		}
 
@@ -10414,6 +10439,10 @@ void TileMap::reReadStates() {
 				}
 				
 			}
+			if (stateFlagAnt != stateFlag) {
+				engineT->play2D("sounds/on.wav", false);
+				stateFlagAnt = stateFlag;
+			}
 		}
 		// statesWALL
 		if (hihaWall) {
@@ -10429,6 +10458,10 @@ void TileMap::reReadStates() {
 					}
 				}
 			}
+			if (stateWallAnt != stateWall) {
+				engineT->play2D("sounds/on.wav", false);
+				stateWallAnt = stateWall;
+			}
 		}
 		// statesROCK
 		if (hihaRockCar) {
@@ -10443,6 +10476,10 @@ void TileMap::reReadStates() {
 						stateRock = rockPUSH;
 					}
 				}
+			}
+			if (stateRockAnt != stateRock) {
+				engineT->play2D("sounds/on.wav", false);
+				stateRockAnt = stateRock;
 			}
 		}
 		// stateLAVA
@@ -10463,6 +10500,10 @@ void TileMap::reReadStates() {
 						stateLava = lavaDIE;
 					}
 				}
+			}
+			if (stateLavaAnt != stateLava) {
+				engineT->play2D("sounds/on.wav", false);
+				stateLavaAnt = stateLava;
 			}
 		}
 		

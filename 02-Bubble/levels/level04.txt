@@ -9,7 +9,7 @@ images/lavaTile2.png  	--
 1RIS1     FI41
 14441        1
 1   1        1
-1         W  1
+1      W     1
 1         1111
 1   A        1
 1           41
