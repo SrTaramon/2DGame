@@ -2823,6 +2823,10 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 						accio = "STOP";
 						return;
 					}
+					else if (stateRock == rockWIN) {
+						accio = "WIN";
+						return;
+					}
 					else if (stateRock == rockPUSH) {
 						//es podria fer un while  fer push de totes les pedres amb una variable o eso creo 
 						//int contWhile = 32;
@@ -5158,6 +5162,10 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 
 					if (stateRock == rockSTOP) {
 						accio = "STOP";
+						return;
+					}
+					else if (stateRock == rockWIN) {
+						accio = "WIN";
 						return;
 					}
 					else if (stateRock == rockPUSH) {
@@ -7499,6 +7507,10 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 
 					if (stateRock == rockSTOP) {
 						accio = "STOP";
+						return;
+					}
+					else if (stateRock == rockWIN) {
+						accio = "WIN";
 						return;
 					}
 					else if (stateRock == rockPUSH) {
