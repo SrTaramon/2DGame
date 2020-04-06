@@ -3,15 +3,15 @@ TILEMAP
 32 32 							-- Tile size & block size
 2							    -- Number of textures
 images/blocks.png 	-- Tilesheet
-images/blocks2.png  	--
+images/lavaTile2.png  	--
 3 3 								-- Number of tiles in tilesheet
 11111111111111
-1FIW         1
-1BIY         1
-1      555   1
-1      525   1
-1      555   1
+1 4 1      121
+1   1      111
+1   1  R     1
 1            1
-1   LID      1
-1            1
+1         1111
+1      FIW   1
+11111        1
+1BIY1        1
 11111111111111

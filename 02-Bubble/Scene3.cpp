@@ -7,7 +7,7 @@
 #define SCREEN_X 32
 #define SCREEN_Y 32
 
-#define INIT_PLAYER_X_TILES 4
+#define INIT_PLAYER_X_TILES 6
 #define INIT_PLAYER_Y_TILES 1
 
 
@@ -29,7 +29,7 @@ Scene3::~Scene3()
 void Scene3::init()
 {
 	initShaders();
-	map = TileMap::createTileMap("levels/level00.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+	map = TileMap::createTileMap("levels/level03.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	player = new Player();
 	player->setLvl(3);
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, 3);
