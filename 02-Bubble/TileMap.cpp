@@ -10328,10 +10328,10 @@ void TileMap::readLvlStates(){
 
 void TileMap::reReadStates() {
 
-	stateFlagAnt = flagNOTHING;
-	stateWallAnt = wallNOTHING;
-	stateRockAnt = rockNOTHING;
-	stateLavaAnt = lavaNOTHING;
+	stateFlagAnt = stateFlag;
+	stateWallAnt = stateWall;
+	stateRockAnt = stateRock;
+	stateLavaAnt = stateLava;
 	stateFlag = flagNOTHING;
 	stateWall = wallNOTHING;
 	stateRock = rockNOTHING;
