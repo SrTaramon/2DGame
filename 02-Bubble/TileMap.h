@@ -136,6 +136,7 @@ private:
 	{
 		rockSTOP,
 		rockPUSH,
+		rockWIN,
 		rockNOTHING
 	};
 

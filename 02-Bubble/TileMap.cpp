@@ -9842,6 +9842,10 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 						accio = "STOP";
 						return;
 					}
+					else if (stateRock == rockWIN) {
+						accio = "WIN";
+						return;
+					}
 					else if (stateRock == rockPUSH) {
 						//es podria fer un while  fer push de totes les pedres amb una variable o eso creo 
 						//int contWhile = 32;
@@ -10229,6 +10233,9 @@ void TileMap::readLvlStates(){
 							if (map[(x * mapSize.x) + (y + 1)] == 17) { // Miro el costt dret del is
 								stateRock = rockPUSH;
 							}
+							if (map[(x * mapSize.x) + (y + 1)] == 11) { // Miro el costt dret del is
+								stateRock = rockWIN;
+							}
 						}
 					}
 					if (map[(x * mapSize.x) + (y - 1)] == 14) {
@@ -10359,6 +10366,11 @@ void TileMap::reReadStates() {
 						stateRock = rockPUSH;
 					}
 				}
+				if (hihaWin) {
+					if (win->collisionMoveDown(glm::vec2(vIs[i]->getposicionx() - 32, vIs[i]->getposiciony() - 32), glm::vec2(32, 32))) {// ROCK is PUSH
+						stateRock = rockWIN;
+					}
+				}
 			}
 		}
 		// stateLAVA
@@ -10403,7 +10415,6 @@ void TileMap::reReadStates() {
 				
 			}
 		}
-		
 		// statesWALL
 		if (hihaWall) {
 			if (wall->collisionMoveLeft(glm::vec2(vIs[i]->getposicionx() - 32, vIs[i]->getposiciony() - 32), glm::vec2(32, 32))) {
@@ -10419,7 +10430,6 @@ void TileMap::reReadStates() {
 				}
 			}
 		}
-		
 		// statesROCK
 		if (hihaRockCar) {
 			if (rockCar->collisionMoveLeft(glm::vec2(vIs[i]->getposicionx() - 32, vIs[i]->getposiciony() - 32), glm::vec2(32, 32))) {
@@ -10435,7 +10445,6 @@ void TileMap::reReadStates() {
 				}
 			}
 		}
-		
 		// stateLAVA
 		if (hihaLava) {
 			if (lava->collisionMoveLeft(glm::vec2(vIs[i]->getposicionx() - 32, vIs[i]->getposiciony() - 32), glm::vec2(32, 32))) {
