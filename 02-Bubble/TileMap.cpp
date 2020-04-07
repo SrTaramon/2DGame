@@ -10737,10 +10737,11 @@ void TileMap::reReadStates(string& accio) {
 					if (you->collisionMoveRight(glm::vec2(vIs[i]->getposicionx() - 32, vIs[i]->getposiciony() - 32), glm::vec2(32, 32))) {
 						if (hihaAnd) {
 							for (int j = 0; j < vAnd.size(); j++) {
-								if (vAnd[i]->collisionMoveRight(glm::vec2(you->getposicionx() - 32, you->getposiciony() - 32), glm::vec2(32, 32))) {
+								if (vAnd[j]->collisionMoveRight(glm::vec2(you->getposicionx() - 32, you->getposiciony() - 32), glm::vec2(32, 32))) {
 									if (hihaWin) {
-										if (win->collisionMoveRight(glm::vec2(vAnd[i]->getposicionx() - 32, vAnd[i]->getposiciony() - 32), glm::vec2(32, 32))) {
+										if (win->collisionMoveRight(glm::vec2(vAnd[j]->getposicionx() - 32, vAnd[j]->getposiciony() - 32), glm::vec2(32, 32))) {
 											accio = "WIN";
+											engineT->play2D("sounds/on.wav", false);
 										}
 									}
 								}

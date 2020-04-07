@@ -1,0 +1,18 @@
+Integrants el grup:
+- Oriol Maristany Sala
+- Sergi Taramon Garcia
+
+Funcionalitats implementades + instruccions:
+- El moviment del personatje
+- Unió de cartells o trencament d'unions per a desfer l'acció:
+	Baba + is + you: el baba és el personatge principal
+	Rock/Wall/Lava + is + stop: l'objecte no es poden moure
+	Rock/Wall/Lava + is + push: l'objecte es pot empenyar
+	Flag/Rock + is + win: tocar l'objecte fa passar de nivell
+	Lava + is + die: tocat la lava implica morir i repetir el nivell
+	L'utilització de l'operador "and" permet l'unió de dos accions com per exemple Baba + is + you + and + win (baba ets tu i guanyes)
+	Prémer "I" per viatjar a la pantalla instruccions
+	Prémer "M" per viatjar al menú
+	Prémer "C" per viatjar als credits
+	PRemer "esc" per a tornar al joc
+
