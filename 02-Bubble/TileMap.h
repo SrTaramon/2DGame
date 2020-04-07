@@ -70,7 +70,7 @@ public:
 	//bool collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, int* posY) const;
 	
 	void readLvlStates();
-	void reReadStates();
+	void reReadStates(string& accio);
 
 	void collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, string &accio);
 	bool collisionMoveRightLimit(const glm::ivec2& pos, const glm::ivec2& size) const;

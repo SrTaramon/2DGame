@@ -1022,7 +1022,12 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 					vIs[i1]->setPosition(glm::vec2(vIs[i1]->getposicionx() - 32 + 2, vIs[i1]->getposiciony() - 32));
 					vIs[i2]->setPosition(glm::vec2(vIs[i2]->getposicionx() - 32 + 2, vIs[i2]->getposiciony() - 32));
 				}
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 			}
 		}
 		if (hihaAnd) {
@@ -1188,7 +1193,12 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 					vAnd[i1]->setPosition(glm::vec2(vAnd[i1]->getposicionx() - 32 + 2, vAnd[i1]->getposiciony() - 32));
 					vAnd[i2]->setPosition(glm::vec2(vAnd[i2]->getposicionx() - 32 + 2, vAnd[i2]->getposiciony() - 32));
 				}
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 			}
 		}
 		if (hihaBaba) {
@@ -1330,7 +1340,12 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 
 					accio = "PUSH";
 					baba->setPosition(glm::vec2(baba->getposicionx() - 32 + 2, baba->getposiciony() - 32));
-					reReadStates();
+					string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 
 			}
 		}
@@ -1473,7 +1488,12 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 
 				accio = "PUSH";
 				you->setPosition(glm::vec2(you->getposicionx() - 32 + 2, you->getposiciony() - 32));
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 
 			}
 		}
@@ -1616,7 +1636,12 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 
 				accio = "PUSH";
 				flagC->setPosition(glm::vec2(flagC->getposicionx() - 32 + 2, flagC->getposiciony() - 32));
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 
 			}
 		}
@@ -1759,7 +1784,12 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 
 				accio = "PUSH";
 				win->setPosition(glm::vec2(win->getposicionx() - 32 + 2, win->getposiciony() - 32));
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 
 			}
 		}
@@ -1903,7 +1933,12 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 
 				accio = "PUSH";
 				wall->setPosition(glm::vec2(wall->getposicionx() - 32 + 2, wall->getposiciony() - 32));
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 
 			}
 		}
@@ -2046,7 +2081,12 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 
 				accio = "PUSH";
 				stop->setPosition(glm::vec2(stop->getposicionx() - 32 + 2, stop->getposiciony() - 32));
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 
 			}
 		}
@@ -2189,7 +2229,12 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 
 				accio = "PUSH";
 				lava->setPosition(glm::vec2(lava->getposicionx() - 32 + 2, lava->getposiciony() - 32));
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 
 			}
 		}
@@ -2332,7 +2377,12 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 
 				accio = "PUSH";
 				die->setPosition(glm::vec2(die->getposicionx() - 32 + 2, die->getposiciony() - 32));
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 
 			}
 		}
@@ -2475,7 +2525,12 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 
 				accio = "PUSH";
 				rockCar->setPosition(glm::vec2(rockCar->getposicionx() - 32 + 2, rockCar->getposiciony() - 32));
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 
 			}
 		}
@@ -2618,7 +2673,12 @@ void TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 
 				accio = "PUSH";
 				push->setPosition(glm::vec2(push->getposicionx() - 32 + 2, push->getposiciony() - 32));
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 
 			}
 		}
@@ -3366,7 +3426,12 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 					vIs[i1]->setPosition(glm::vec2(vIs[i1]->getposicionx() - 32 - 2, vIs[i1]->getposiciony() - 32));
 					vIs[i2]->setPosition(glm::vec2(vIs[i2]->getposicionx() - 32 - 2, vIs[i2]->getposiciony() - 32));
 				}
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 			}
 		}
 		if (hihaAnd) {
@@ -3532,7 +3597,12 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 					vAnd[i1]->setPosition(glm::vec2(vAnd[i1]->getposicionx() - 32 - 2, vAnd[i1]->getposiciony() - 32));
 					vAnd[i2]->setPosition(glm::vec2(vAnd[i2]->getposicionx() - 32 - 2, vAnd[i2]->getposiciony() - 32));
 				}
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 			}
 		}
 		if (hihaBaba) {
@@ -3674,7 +3744,12 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 
 					accio = "PUSH";
 					baba->setPosition(glm::vec2(baba->getposicionx() - 32 - 2, baba->getposiciony() - 32));
-					reReadStates();
+					string acc;
+					reReadStates(acc);
+					if (acc == "WIN") {
+						accio = "WIN";
+						return;
+					}
 
 			}
 		}
@@ -3817,7 +3892,12 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 
 				accio = "PUSH";
 				you->setPosition(glm::vec2(you->getposicionx() - 32 - 2, you->getposiciony() - 32));
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 
 			}
 		}
@@ -3960,7 +4040,12 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 
 				accio = "PUSH";
 				flagC->setPosition(glm::vec2(flagC->getposicionx() - 32 - 2, flagC->getposiciony() - 32));
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 
 			}
 		}
@@ -4103,7 +4188,12 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 
 				accio = "PUSH";
 				win->setPosition(glm::vec2(win->getposicionx() - 32 - 2, win->getposiciony() - 32));
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 
 			}
 		}
@@ -4247,7 +4337,12 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 
 				accio = "PUSH";
 				wall->setPosition(glm::vec2(wall->getposicionx() - 32 - 2, wall->getposiciony() - 32));
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 
 			}
 		}
@@ -4390,7 +4485,12 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 
 				accio = "PUSH";
 				stop->setPosition(glm::vec2(stop->getposicionx() - 32 - 2, stop->getposiciony() - 32));
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 
 			}
 		}
@@ -4533,7 +4633,12 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 
 				accio = "PUSH";
 				lava->setPosition(glm::vec2(lava->getposicionx() - 32 - 2, lava->getposiciony() - 32));
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 
 			}
 		}
@@ -4676,7 +4781,12 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 
 				accio = "PUSH";
 				die->setPosition(glm::vec2(die->getposicionx() - 32 - 2, die->getposiciony() - 32));
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 
 			}
 		}
@@ -4819,7 +4929,12 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 
 				accio = "PUSH";
 				rockCar->setPosition(glm::vec2(rockCar->getposicionx() - 32 - 2, rockCar->getposiciony() - 32));
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 
 			}
 		}
@@ -4962,7 +5077,12 @@ void TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, s
 
 				accio = "PUSH";
 				push->setPosition(glm::vec2(push->getposicionx() - 32 - 2, push->getposiciony() - 32));
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 
 			}
 		}
@@ -5711,7 +5831,12 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 					vIs[i1]->setPosition(glm::vec2(vIs[i1]->getposicionx() - 32, vIs[i1]->getposiciony() - 32 - 2));
 					vIs[i2]->setPosition(glm::vec2(vIs[i2]->getposicionx() - 32, vIs[i2]->getposiciony() - 32 - 2));
 				}
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 			}
 		}
 		if (hihaAnd) {
@@ -5877,7 +6002,12 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 					vAnd[i1]->setPosition(glm::vec2(vAnd[i1]->getposicionx() - 32, vAnd[i1]->getposiciony() - 32 - 2));
 					vAnd[i2]->setPosition(glm::vec2(vAnd[i2]->getposicionx() - 32, vAnd[i2]->getposiciony() - 32 - 2));
 				}
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 			}
 		}
 		if (hihaBaba) {
@@ -6019,7 +6149,12 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 
 				accio = "PUSH";
 				baba->setPosition(glm::vec2(baba->getposicionx() - 32, baba->getposiciony() - 32 - 2));
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 
 			}
 		}
@@ -6162,7 +6297,12 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 
 				accio = "PUSH";
 				you->setPosition(glm::vec2(you->getposicionx() - 32, you->getposiciony() - 32 - 2));
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 
 			}
 		}
@@ -6305,7 +6445,12 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 
 				accio = "PUSH";
 				flagC->setPosition(glm::vec2(flagC->getposicionx() - 32, flagC->getposiciony() - 32 - 2));
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 
 			}
 		}
@@ -6448,7 +6593,12 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 
 				accio = "PUSH";
 				win->setPosition(glm::vec2(win->getposicionx() - 32, win->getposiciony() - 32 - 2));
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 
 			}
 		}
@@ -6592,7 +6742,12 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 
 				accio = "PUSH";
 				wall->setPosition(glm::vec2(wall->getposicionx() - 32, wall->getposiciony() - 32 - 2));
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 
 			}
 		}
@@ -6735,7 +6890,12 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 
 				accio = "PUSH";
 				stop->setPosition(glm::vec2(stop->getposicionx() - 32, stop->getposiciony() - 32 - 2));
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 
 			}
 		}
@@ -6878,7 +7038,12 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 
 				accio = "PUSH";
 				lava->setPosition(glm::vec2(lava->getposicionx() - 32, lava->getposiciony() - 32 - 2));
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 
 			}
 		}
@@ -7021,7 +7186,12 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 
 				accio = "PUSH";
 				die->setPosition(glm::vec2(die->getposicionx() - 32, die->getposiciony() - 32 - 2));
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 
 			}
 		}
@@ -7164,7 +7334,12 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 
 				accio = "PUSH";
 				rockCar->setPosition(glm::vec2(rockCar->getposicionx() - 32, rockCar->getposiciony() - 32 - 2));
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 
 			}
 		}
@@ -7307,7 +7482,12 @@ void TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, str
 
 				accio = "PUSH";
 				push->setPosition(glm::vec2(push->getposicionx() - 32, push->getposiciony() - 32 - 2));
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 
 			}
 		}
@@ -8056,7 +8236,12 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 					vIs[i1]->setPosition(glm::vec2(vIs[i1]->getposicionx() - 32, vIs[i1]->getposiciony() - 32 + 2));
 					vIs[i2]->setPosition(glm::vec2(vIs[i2]->getposicionx() - 32, vIs[i2]->getposiciony() - 32 + 2));
 				}
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 			}
 		}
 		if (hihaAnd) {
@@ -8222,7 +8407,12 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 					vAnd[i1]->setPosition(glm::vec2(vAnd[i1]->getposicionx() - 32, vAnd[i1]->getposiciony() - 32 + 2));
 					vAnd[i2]->setPosition(glm::vec2(vAnd[i2]->getposicionx() - 32, vAnd[i2]->getposiciony() - 32 + 2));
 				}
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 			}
 		}
 		if (hihaBaba) {
@@ -8364,7 +8554,12 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 
 				accio = "PUSH";
 				baba->setPosition(glm::vec2(baba->getposicionx() - 32, baba->getposiciony() - 32 + 2));
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 
 			}
 		}
@@ -8507,7 +8702,12 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 
 				accio = "PUSH";
 				you->setPosition(glm::vec2(you->getposicionx() - 32, you->getposiciony() - 32 + 2));
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 
 			}
 		}
@@ -8650,7 +8850,12 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 
 				accio = "PUSH";
 				flagC->setPosition(glm::vec2(flagC->getposicionx() - 32, flagC->getposiciony() - 32 + 2));
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 
 			}
 		}
@@ -8793,7 +8998,12 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 
 				accio = "PUSH";
 				win->setPosition(glm::vec2(win->getposicionx() - 32, win->getposiciony() - 32 + 2));
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 
 			}
 		}
@@ -8937,7 +9147,12 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 
 				accio = "PUSH";
 				wall->setPosition(glm::vec2(wall->getposicionx() - 32, wall->getposiciony() - 32 + 2));
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 
 			}
 		}
@@ -9080,7 +9295,12 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 
 				accio = "PUSH";
 				stop->setPosition(glm::vec2(stop->getposicionx() - 32, stop->getposiciony() - 32 + 2));
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 
 			}
 		}
@@ -9223,7 +9443,12 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 
 				accio = "PUSH";
 				lava->setPosition(glm::vec2(lava->getposicionx() - 32, lava->getposiciony() - 32 + 2));
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 
 			}
 		}
@@ -9366,7 +9591,12 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 
 				accio = "PUSH";
 				die->setPosition(glm::vec2(die->getposicionx() - 32, die->getposiciony() - 32 + 2));
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 
 			}
 		}
@@ -9509,7 +9739,12 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 
 				accio = "PUSH";
 				rockCar->setPosition(glm::vec2(rockCar->getposicionx() - 32, rockCar->getposiciony() - 32 + 2));
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 
 			}
 		}
@@ -9652,7 +9887,12 @@ void TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, s
 
 				accio = "PUSH";
 				push->setPosition(glm::vec2(push->getposicionx() - 32, push->getposiciony() - 32 + 2));
-				reReadStates();
+				string acc;
+				reReadStates(acc);
+				if (acc == "WIN") {
+					accio = "WIN";
+					return;
+				}
 
 			}
 		}
@@ -10326,7 +10566,7 @@ void TileMap::readLvlStates(){
 	}
 }
 
-void TileMap::reReadStates() {
+void TileMap::reReadStates(string& accio) {
 
 	stateFlagAnt = stateFlag;
 	stateWallAnt = stateWall;
@@ -10487,6 +10727,44 @@ void TileMap::reReadStates() {
 				if (hihaDead) {
 					if (die->collisionMoveRight(glm::vec2(vIs[i]->getposicionx() - 32, vIs[i]->getposiciony() - 32), glm::vec2(32, 32))) {// ROCK is PUSH
 						stateLava = lavaDIE;
+					}
+				}
+			}
+		}
+		if (hihaBaba) {
+			if (baba->collisionMoveLeft(glm::vec2(vIs[i]->getposicionx() - 32, vIs[i]->getposiciony() - 32), glm::vec2(32, 32))) {
+				if (hihaYou) {
+					if (you->collisionMoveRight(glm::vec2(vIs[i]->getposicionx() - 32, vIs[i]->getposiciony() - 32), glm::vec2(32, 32))) {
+						if (hihaAnd) {
+							for (int j = 0; j < vAnd.size(); j++) {
+								if (vAnd[i]->collisionMoveRight(glm::vec2(you->getposicionx() - 32, you->getposiciony() - 32), glm::vec2(32, 32))) {
+									if (hihaWin) {
+										if (win->collisionMoveRight(glm::vec2(vAnd[i]->getposicionx() - 32, vAnd[i]->getposiciony() - 32), glm::vec2(32, 32))) {
+											accio = "WIN";
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
+			if (baba->collisionMoveUp(glm::vec2(vIs[i]->getposicionx() - 32, vIs[i]->getposiciony() - 32), glm::vec2(32, 32))) {
+				if (hihaYou) {
+					if (you->collisionMoveDown(glm::vec2(vIs[i]->getposicionx() - 32, vIs[i]->getposiciony() - 32), glm::vec2(32, 32))) {
+						if (hihaAnd) {
+							for (int j = 0; j < vAnd.size(); j++) {
+								if (vAnd[i]->collisionMoveDown(glm::vec2(you->getposicionx() - 32, you->getposiciony() - 32), glm::vec2(32, 32))) {
+									if (hihaWin) {
+										if (win->collisionMoveDown(glm::vec2(vAnd[i]->getposicionx() - 32, vAnd[i]->getposiciony() - 32), glm::vec2(32, 32))) {
+											accio = "WIN";
+											engineT->play2D("sounds/on.wav", false);
+										}
+									}
+								}
+							}
+						}
 					}
 				}
 			}
